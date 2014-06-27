@@ -12,7 +12,7 @@ describe('Scratch Controllers', function(){
   });
    // Import stuff
   beforeEach(module('scratch.controllers'));
-  beforeEach(module('scratch.directives'));
+  beforeEach(module('scratch.services'));
 
   describe("ProjectCtrl", function()
   {

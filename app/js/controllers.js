@@ -3,14 +3,27 @@
 
 angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource'])
   .controller('IndexCtrl', ['$scope', function($scope) {
-
+  	$scope.checkForScratchLink = function()
+  	{
+		// Check to see if the user's entered the Scratch website instead of a plain Project ID. If they have, parse it to get the project ID.
+  		// Example link http://scratch.mit.edu/projects/22564095/
+  		// If the project link appears
+  		if($scope.projectId.indexOf("http://scratch.mit.edu/projects/") !== -1)
+		{
+			// Remove it
+			$scope.projectId = $scope.projectId.substring(32);
+			// And also remove any trailing /s
+			$scope.projectId = $scope.projectId.replace(/\//g, "");
+			console.log($scope.projectId);
+		}
+  	}
   }])
   .controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', function($scope, Projects, ProjectDetails, $routeParams) {
   	
   	// Entering a project URL navigates the project back to Index. Therefore this is commented out.
+  	// Left here for future reference.
 
-  	// Check to see if the user's entered the Scratch website instead of a plain Project ID. If they have, parse it to get the project ID.
-  	// Example link http://scratch.mit.edu/projects/22564095/
+  	
   	//
   	// var projectId = $routeParams.projectId; 
   	// // If the Project link appears,
@@ -53,6 +66,7 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   	}
   	// This will then just be displayed on the view.
 
+  	// Function that does the logic to begin downloading the app contents
   	$scope.startDownloading = function()
   	{
   		$scope.isDownloading = true;
