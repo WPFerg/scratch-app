@@ -15,12 +15,16 @@
 
   		<div class="row app-details-row">
   			<h4 class="col-xs-8">Shared {{project.datetime_shared | dateTimeToReadable}}</h4>
-  			<button class="col-xs-4 btn btn-primary download-play-btn">Download</button>
+  			<button class="col-xs-4 btn btn-primary download-play-btn" ng-click="startDownloading()">Download</button>
   		</div>
 
 			<div class="app-details-row">
-      		<div class="progress progress-striped active">
-      			<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemax="0" style="width: 100%">Downloading (?/n)</div>
+      		<div class="progress progress-striped active" ng-show="isDownloading">
+      			<div class="progress-bar"role="progressbar"
+      					aria-valuenow="{{assetsDownloaded}}" aria-valuemax="{{projectInDepth.assetLength}}"
+      					ng-style="percentDownloaded()">
+      					Downloading ({{assetsDownloaded}}/{{projectInDepth.assetLength}})
+      			</div>
       		</div>
   		</div>
 
@@ -34,5 +38,4 @@
 	<div ng-hide="project.title">
 		<h1>That project doesn't exist.</h1>
 	</div>
-
 </div>

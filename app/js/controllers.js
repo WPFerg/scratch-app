@@ -1,5 +1,4 @@
 'use strict';
-
 /* Controllers */
 
 angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource'])
@@ -24,6 +23,38 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
 
   	// Get the project
   	$scope.project = ProjectDetails.get({"projectId": $routeParams.projectId});
+
+  	// Get the detailed information about the project.
+
+  	$scope.projectInDepth = {};
+  	Projects.get({"projectId": $routeParams.projectId}, function(data) {
+  		// Callback function after getting the projects.
+  		// Assign all the information to the scope
+
+  		// May seem weird but that's how I got it to work
+  		$scope.projectInDepth.children = data.children;
+  		$scope.projectInDepth.sounds = data.sounds;
+  		$scope.projectInDepth.costumes = data.costumes;
+  		$scope.projectInDepth.assetLength = data.children.length + data.sounds.length + data.costumes.length;
+  	});
+
+  	// Quick download stats variables
+  	$scope.assetsDownloaded = 0;
+
+  	$scope.isDownloading = false;
+
+  	// Test; ignore
+  	setInterval(function(){$scope.assetsDownloaded += 1; $scope.assetsDownloaded %= $scope.projectInDepth.assetLength}, 1000);
+
+  	// Function to return the percent downloaded
+  	$scope.percentDownloaded = function()
+  	{
+  		return {"width": ($scope.assetsDownloaded / $scope.projectInDepth.assetLength *100) + "%" };
+  	}
   	// This will then just be displayed on the view.
 
+  	$scope.startDownloading = function()
+  	{
+  		$scope.isDownloading = true;
+  	}
   }]);
