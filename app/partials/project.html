@@ -1,0 +1,10 @@
+<div ng-show="project.title">
+	<h1>{{project.title}}</h1>
+	<h2>by {{project.creator.username}}</h2>
+	<p ng-bind-html="project.description | newLine"></p>
+
+	<img src="{{project.thumbnail}}" alt="{{project.title + ' Thumbnail'}}" />
+</div>
+<div ng-hide="project.title">
+	<h1>That project doesn't exist.</h1>
+</div>

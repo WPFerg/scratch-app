@@ -3,13 +3,12 @@
 /* Controllers */
 
 angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource'])
-  .controller('MyCtrl1', ['$scope', 'Projects', '$http', function($scope, Projects, $http) {
-  	$scope.project = "No Project";
-  	$scope.project = Projects.get({projectId: "23600596"});
-  	alert("What");
-  	//$http.jsonp("//projects.scratch.mit.edu/internalapi/project/23600596/get/?callback=JSON_CALLBACK").success(function(data) { console.log(data.found); });
-  	console.log($scope.project);
+  .controller('IndexCtrl', ['$scope', function($scope) {
+
   }])
-  .controller('MyCtrl2', ['$scope', function($scope) {
+  .controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', function($scope, Projects, ProjectDetails, $routeParams) {
+  	// Get the project
+  	$scope.project = ProjectDetails.get({projectId: $routeParams.projectId});
+  	// This will then just be displayed on the view.
 
   }]);

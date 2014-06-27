@@ -9,6 +9,7 @@ var app = connect()
   .use(connect.static('.'))
 
 app.use('/projects/', proxy(url.parse('http://projects.scratch.mit.edu/internalapi/project/')));
+app.use('/projectdetails/', proxy(url.parse('http://scratch.mit.edu/api/v1/project/')));
 
 http.createServer(app).listen(3000);
 
