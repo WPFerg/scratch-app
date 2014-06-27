@@ -1,10 +1,38 @@
-<div ng-show="project.title">
-	<h1>{{project.title}}</h1>
-	<h2>by {{project.creator.username}}</h2>
-	<p ng-bind-html="project.description | newLine"></p>
-
-	<img src="{{project.thumbnail}}" alt="{{project.title + ' Thumbnail'}}" />
+<div class="navbar navbar-inverse navbar-fixed-top">
+	      <div class="navbar-brand top-border title-text">App Details</div>
 </div>
-<div ng-hide="project.title">
-	<h1>That project doesn't exist.</h1>
+
+<div class="page-has-navbar container">
+
+	<!-- Check to see if project is defined - check the project.title attr -->
+	<div class="app-details" ng-show="project.title">
+
+		<!-- Show relevant things -->
+  		<h1 class="col-xs-12">{{project.title}}</h1>
+  		<h3 class="col-xs-12">by {{project.creator.username}}</h3>
+
+  		<img class="app-picture-large" ng-src="{{project.thumbnail}}" alt="{{project.title + ' Thumbnail'}}" />
+
+  		<div class="row app-details-row">
+  			<h4 class="col-xs-8">Shared {{project.datetime_shared | dateTimeToReadable}}</h4>
+  			<button class="col-xs-4 btn btn-primary download-play-btn">Download</button>
+  		</div>
+
+			<div class="app-details-row">
+      		<div class="progress progress-striped active">
+      			<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemax="0" style="width: 100%">Downloading (?/n)</div>
+      		</div>
+  		</div>
+
+  		<!-- Run description through the newLine filter (def. in filters.js) in order to format the description with new lines. -->
+  		<div class="app-description" ng-bind-html="project.description | newLine">
+  		</div>
+
+	</div>
+
+	<!-- If not defined, then project doesn't exist. -->
+	<div ng-hide="project.title">
+		<h1>That project doesn't exist.</h1>
+	</div>
+
 </div>

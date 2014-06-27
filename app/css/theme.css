@@ -1,0 +1,302 @@
+/* All page styles */
+
+.container h1
+{
+	text-align: center;
+}
+
+.container
+{
+
+	/*display: flex;
+	display: -webkit-flex;
+
+	flex-direction: column;
+	-webkit-flex-direction: column;
+
+	flex-align: center;
+	-webkit-flex-align: center;
+	-webkit-aling-items: center;
+
+	justify-content: center;
+	-webkit-justify-content: center;*/
+
+	min-height: 90%;
+
+}
+
+.footer
+{
+	text-align: center;
+}
+/*Login page*/
+/*html
+{
+	display: table;
+	min-width: 100%;
+	min-height: 100%;
+}
+
+body
+{
+	display: table-cell;
+	vertical-align: middle;
+	padding: 5%;
+}*/
+
+/* ------------------------------ Navbar ------------------------------ */
+.navbar-inverse
+{
+	background-color: #0f8bc0;
+	border-color: #0f8bc0;
+	display: table;
+	/*table-layout:fixed;*/
+	width: 100%;
+	box-shadow: black 0px 0px 2px;
+	max-height: 50px;
+}
+
+.navbar-inverse .navbar-brand
+{
+	margin: auto;
+	width: 100%;
+	color: white;
+	display: table-cell;
+	/*white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;*/
+	max-height: 50px;
+}
+
+.navbar-inverse .navbar-brand:hover
+{
+	color: white;
+}
+
+.navbar-back
+{
+	color: #fff;
+	height: 100%;
+	width: 50px;
+	padding: 15px;
+	background-color: #0f8bc0;
+	border-right: 1px solid #06384D;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.navbar-back:active
+{
+	background-color: #0C6F9A;
+}
+
+.navbar-add-more-apps
+{
+	color: #fff;
+	height: 100%;
+	width: 50px;
+	padding: 15px;
+	background-color: #0f8bc0;
+	border-left: 1px solid #06384D;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.navbar-add-more-apps:active
+{
+	background-color: #0C6F9A;
+}
+
+.title-text
+{
+	margin: auto;
+	height: 100%;
+	text-align: center;
+	font-family: sans-serif;
+	font-weight: bold
+}
+
+/* ------------------------------ Login ------------------------------ */
+
+.login-title-container
+{
+	margin: 0px auto;
+	max-width: 100%;
+	text-align: center;
+}
+
+.login-title
+{
+	margin: auto;
+	max-width: 100%;
+}
+
+.login-body
+{
+	background-image: url('../media/app_login_backdrop.png');
+	background-color: #0f8bc0;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+	/* Added 27/6 -- works for Angular */
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+
+.login-field
+{
+	margin: 10px 0px;
+}
+
+.login-field.btn
+{
+	background-color: #0c6f9a;
+}
+
+.login-body a
+{
+	color: white;
+}
+
+.login-container
+{
+	min-height: 100%
+}
+
+.login-form-container
+{
+	padding: 0px 10px;
+}
+
+.page-has-navbar
+{
+	margin-top: 50px;
+}
+
+/*  ------------------------------ For App Details Page ------------------------------ */
+
+.row.app-details-row
+{
+	padding: 0px;
+}
+
+.app-picture-large
+{
+	width: 100%;
+	display:block;
+}
+
+.app-details-row
+{
+	margin: 1.5% 0px;
+}
+
+.app-details-row h4
+{
+	padding: 0px;
+}
+
+.app-details img
+{
+	display: block;
+}
+
+.app-details h3
+{
+	text-align: center;
+}
+
+/* ------------------------------ For list of downloaded/installed apps.  ------------------------------*/
+
+
+.app-list
+{
+	display: table;
+	width: 100%;
+}
+
+.app-badge
+{
+	outline: 1px solid #aaa;
+	border: 1px solid #aaa;
+
+	width: 100%;
+
+	overflow: hidden;
+
+	margin: 20px 0px;
+
+	display: table;
+}
+
+.app-badge-image
+{
+	padding: 0;
+	overflow: hidden;
+	width: 30%;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.app-badge-image img
+{
+	width: 100%;
+	margin: auto;
+}
+
+
+.app-badge-description
+{
+	margin: 0px;
+	padding: 10px;
+	display: table-cell; height: 100%; 
+	vertical-align: middle;
+	width: 60%;
+}
+
+.app-badge-description:active
+{
+	background-color: #eee;
+}
+
+.app-badge-action
+{
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+	display: table-cell;
+	height: 100%;
+	width: 100%;
+}
+
+.app-badge-download
+{
+	background-image: url('../media/download_icon.png');
+}
+
+.app-badge-download:active
+{
+	background-image: url('../media/download_icon.png');
+}
+
+/*	------------------------------ Clear button styles --------------------------------- */
+
+.btn-clear
+{
+	background-color: #fff;
+}
+
+.btn-clear:active
+{
+	background-color: #eee;
+	vertical-align: middle;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+}
