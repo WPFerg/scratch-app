@@ -33,7 +33,12 @@ exports.createManifest = function(projectId, callbackFunction)
 generateManifest = function(manifestData, callbackFunction)
 {
 	// Parse manifestData into JSON
-	manifestData = JSON.parse(manifestData);
+	try
+	{
+		manifestData = JSON.parse(manifestData);
+	} catch (err) {
+		callbackFunction("Not a valid scratch file.");
+	}
 
 	var manifest;
 
