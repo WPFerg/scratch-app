@@ -2,10 +2,24 @@
 
 /* Directives */
 
+// Create transaction visualisation
+var scratch = angular.module('scratch.directives', ['ngRoute']);
 
-angular.module('scratch.directives', ['ngResource']).
-  directive('appVersion', ['version', function(version) {
-    return function(scope, elm, attrs) {
-      elm.text(version);
-    };
-  }]);
+
+// Version notice directive
+scratch.directive('getAppVersion', function()
+{
+    return {
+    	restrict: 'E',
+    	scope:
+    	{
+
+    	},
+    	link: function(scope, element)
+    	{
+
+    	}
+  	}
+});
+
+// Copyright notice directive

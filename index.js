@@ -13,7 +13,7 @@ var app = connect()
 app.use('/projects/', proxy(url.parse('http://projects.scratch.mit.edu/internalapi/project/')));
 app.use('/projectdetails/', proxy(url.parse('http://scratch.mit.edu/api/v1/project/')));
 
-http.createServer(app).listen(process.env.PORT || 5000);
+http.createServer(app).listen(process.env.PORT || 3000);
 
 console.log("Listening on localhost:3000 for requests.");
 console.log("Proxy active. Forwarding on /projects");
