@@ -118,7 +118,36 @@ body
 	font-weight: bold
 }
 
+/* ------------------------------ Glyph ------------------------------ */
+
+.left-inner-addon
+{
+    position: relative;
+}
+
+.left-inner-addon input
+{
+    padding-left: 30px;    
+}
+
+.left-inner-addon i
+{
+    position: absolute;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
 /* ------------------------------ Login ------------------------------ */
+
+.login-details-notice
+{
+	position: absolute;
+	top: 95%;
+	left: 0;
+	right: 0;
+	text-align: center;
+	color: rgba(0, 0, 0, 0.7);
+}
 
 .login-title-container
 {

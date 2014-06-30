@@ -1,36 +1,77 @@
 <div class="login-body" style="height: 100%; width: 100%;">
 	
 
-  <!-- Centeralising content divs -->
-		<div style="display: table; margin:auto; height: 90%; width: 90%;">
-		<div style="display: table-cell; vertical-align: middle;">
-		<div style="margin-left: auto; margin-right: auto; width: 100%;">
-		
-			<!-- Main container -->
-			<div class="container" >
-		
-				<!-- Login page title image -->
-				<div class="login-title-container">
-					<img src="media/scratch_large_logo.png" class="login-title"></img>
-				</div>
+  	<!-- Centeralising content divs -->
+	<div style="display: table; margin:auto; height: 90%; width: 90%;">
+	<div style="display: table-cell; vertical-align: middle;">
+	<div style="margin-left: auto; margin-right: auto; width: 100%;">
 
-				<!-- Incorrect login message -->
-				<!--div class="alert alert-danger">
-					<b>Oh dear.</b> Your username and password wasn't correct.
-				</div-->
+		<!-- Main container -->
+		<div class="container" >
 
-				<!-- Login details and submission button -->
-				<div class="login-form-container">
-					<div class="row">
-						<form action="{{ '#/project/' + projectId }}">
-							<input type="text" ng-model="projectId" placeholder="Project ID" class="col-xs-12 login-field" ng-change="checkForScratchLink()" required />
-							<input type="submit" value="Go!" class="col-xs-12 btn btn-primary login-field" />
-						</form>
+			<!-- Login page title image -->
+			<div class="login-title-container">
+				<img src="media/scratch_large_logo.png" class="login-title"></img>
+			</div>
+
+			<!-- Incorrect login message -->
+			<!--div class="alert alert-danger">
+				<b>Oh dear.</b> Your username and password wasn't correct.
+			</div-->
+
+			<!-- Login details and submission button -->
+			<div class="row login-form-container">
+
+
+					<!-- Login details and submission button -->
+					<div class="login-form-container">
+						<div class="row">
+							<form action="{{ '#/project/' + projectId }}">
+
+								<!-- Username input box and glyph 
+								<div class="col-xs-12 left-inner-addon login-field">
+									<i class="glyphicon glyphicon-user"> </i>
+									<input type="text" class="form-control" placeholder="Username" />
+								</div> -->
+
+								<!-- Password input box and glyph
+								<div class="col-xs-12 left-inner-addon login-field">
+									<i class="glyphicon glyphicon-lock"> </i>
+									<input type="text" class="form-control" placeholder="Password" />
+								</div> -->
+
+								<!-- Username input box and glyph -->
+								<div class="col-xs-12 left-inner-addon login-field">
+									<i class="glyphicon glyphicon-user"> </i>
+									<input type="text" ng-model="projectId" placeholder="Project ID" class="form-control" ng-change="ng-changeckForScratchLink()" required />
+								</div>
+
+
+								<input type="submit" value="Go!" class="col-xs-12 btn btn-primary login-field" />
+
+								<!--<div class="col-xs-12 login-field">
+									<input type="submit" value="Login" class="btn btn-primary login-field form-control" onClick="window.location='downloaded_app.html';" />
+								</div>-->
+
+							</form>
+						</div>
 					</div>
-				</div>
+
+
+					<!-- Depreciated input items -->
+					<!-- <input type="text" placeholder="Username" class="col-xs-12 login-field form-control"  /> -->
+					<!-- <input type="password" placeholder="Password" class="col-xs-12 login-field form-control" /> -->
+					<!-- <input type="submit" value="Login" class="col-xs-12 btn btn-primary login-field form-control" onClick="window.location='downloaded_app.html';" /> -->
 
 			</div>
 
-		<!-- Close centeralised divs -->
-		</div> </div> </div>
+			<div class="login-details-notice">
+				<strong>Version Number & Copyright</strong>
+			</div>
+
+		</div>
+
+	<!-- Close centeralised divs -->
+	</div> </div> </div>
+
 </div>
