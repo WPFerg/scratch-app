@@ -4,6 +4,8 @@ var http = require('http');
 var url = require('url');
 var proxy = require('proxy-middleware');
 
+var manifest = require("./manifest");
+
 var app = connect()
   .use(connect.logger('dev'))
   .use(connect.static('.'))
