@@ -9,13 +9,19 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   		// Example link http://scratch.mit.edu/projects/22564095/
   		// If the project link appears
   		if($scope.projectId.indexOf("http://scratch.mit.edu/projects/") !== -1)
-		{
+		  {
 			// Remove it
-			$scope.projectId = $scope.projectId.substring(32);
-			// And also remove any trailing /s
-			$scope.projectId = $scope.projectId.replace(/\//g, "");
-			console.log($scope.projectId);
-		}
+  			$scope.projectId = $scope.projectId.replace(/http:\/\/scratch.mit.edu\/projects\//g, "");
+  			// And also remove any trailing /s
+  			$scope.projectId = $scope.projectId.replace(/\//g, "");
+  			// Check to see if the length's 8 characters. If it isn't, then set it to be the last 8 characters
+        // This prevents multiple pastes of Scratch URLS showing repeated numbers
+
+        if($scope.projectId.length > 8)
+        {
+          $scope.projectId = $scope.projectId.substring($scope.projectId.length - 8);
+        }
+		  }
   	}
   }])
   .controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', function($scope, Projects, ProjectDetails, $routeParams) {
