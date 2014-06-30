@@ -40,14 +40,16 @@
 									<input type="text" class="form-control" placeholder="Password" />
 								</div> -->
 
-								<!-- Username input box and glyph -->
+								<!-- Username input box and glyph  -->
 								<div class="col-xs-12 left-inner-addon login-field">
 									<i class="glyphicon glyphicon-user"> </i>
-									<input type="text" ng-model="projectId" placeholder="Project ID" class="form-control" ng-change="ng-changeckForScratchLink()" required />
+									<input type="text" ng-model="projectId" placeholder="Project ID" class="form-control" ng-change="checkForScratchLink()" required />
 								</div>
 
-
-								<input type="submit" value="Go!" class="col-xs-12 btn btn-primary login-field" />
+								
+								<div class="col-xs-12 login-field">
+									<input type="submit" value="Go!" class="col-xs-12 btn btn-primary login-field" />
+								</div>
 
 								<!--<div class="col-xs-12 login-field">
 									<input type="submit" value="Login" class="btn btn-primary login-field form-control" onClick="window.location='downloaded_app.html';" />
@@ -56,7 +58,6 @@
 							</form>
 						</div>
 					</div>
-
 
 					<!-- Depreciated input items -->
 					<!-- <input type="text" placeholder="Username" class="col-xs-12 login-field form-control"  /> -->
