@@ -1,0 +1,22 @@
+<html>
+<head>
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                <script>
+                                $("#status").text("Requesting...");
+ 
+                                window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+                                window.webkitStorageInfo.requestQuota(PERSISTENT, 5*1024*1024, requestSuccess, requestError);
+ 
+                                function requestSuccess()
+                                {
+                                                $("#status").text("Request successful.");
+                                }
+ 
+                                function requestError()
+                                {
+                                                $("#status").text("Request failed.");
+                                }
+                </script>
+</head>
+<div id="status"></div>
+</html>
