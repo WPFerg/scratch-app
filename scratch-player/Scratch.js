@@ -6323,7 +6323,7 @@ Expr = Sizzle.selectors = {
 
 		// Miscellaneous
 		"target": function( elem ) {
-			var hash = window.location && window.location.hash;
+			var hash = projectId || window.location && window.location.hash;
 			return hash && hash.slice( 1 ) === elem.id;
 		},
 
