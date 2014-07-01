@@ -1,4 +1,5 @@
 var http = require('http');
+var fs = require('fs');
 
 exports.createManifest = function(projectId, callbackFunction)
 {
@@ -19,7 +20,7 @@ exports.createManifest = function(projectId, callbackFunction)
 
 		// If there's no more data, we can generate the manifest.
 		response.on('end', function() {
-			generateManifest(str, callbackFunction);
+			generateManifest(projectId, str, callbackFunction);
 		});
 
 		// If there's an error, call the callback function with an error parameter
@@ -30,7 +31,7 @@ exports.createManifest = function(projectId, callbackFunction)
 	http.request(requestOpts, responseCallback).end();
 }
 
-generateManifest = function(manifestData, callbackFunction)
+generateManifest = function(projectId, manifestData, callbackFunction)
 {
 	// Parse manifestData into JSON
 	try
@@ -49,6 +50,12 @@ generateManifest = function(manifestData, callbackFunction)
 	// Create the manifest with an initial, constant, set of data
 	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\n\nCACHE";
 	
+	// Add the project details url (that has all the code/instructions)
+	manifest += "\n/projects/" + projectId + "/get/";
+
+	// Add the files in the /scrach-player/ directory to the manifest so they can be cached.
+	manifest += addFilesInFolder("scratch-player/");
+
 	// Add the project's root files to the manifest list
 	manifest += getFileList(manifestData, manifestFiles);
 
@@ -62,6 +69,37 @@ generateManifest = function(manifestData, callbackFunction)
 	callbackFunction(manifest);
 }
 
+// Gets and adds all files in a folder. Used recursively to add subfolders
+addFilesInFolder = function(folderUrl)
+{
+	// Initialise an empty string to store the paths to the scratch player files
+	var scratchPlayerFiles = "";
+
+	// Read the directory. If there's an error instantly return
+	var files = fs.readdirSync(folderUrl);
+
+	// For every file in the folder, check to see if it's a folder. If so, add those files. Otherwise,
+	// Just add it straight away.
+	for(var fileIndex in files) {
+
+		var file = files[fileIndex];
+
+		// Check if folder, by using fs stats
+		stats = fs.lstatSync(folderUrl + file + "/");
+
+		if(stats.isDirectory())
+		{
+			// If a folder, add its contents to the manifest.
+			scratchPlayerFiles += addFilesInFolder(folderUrl + file + "/");
+		} else {
+			// Add to the manifest
+			scratchPlayerFiles += ("\n/" + folderUrl + file);
+		}
+	}
+
+	return scratchPlayerFiles;
+}
+
 // Creates a file list based off the manifestData supplied. Looks for costumes and sounds.
 getFileList = function(manifestData, manifestFiles)
 {
@@ -70,7 +108,7 @@ getFileList = function(manifestData, manifestFiles)
 	// If the pen layer exists, and the file isn't in the manifest add that.
 	if(manifestData.penLayerMD5 && manifestFiles.indexOf(manifestData.penLayerMD5) === -1)
 	{
-		manifest += "\nasset/" + manifestData.penLayerMD5 + "/get/";
+		manifest += "\n/asset/" + manifestData.penLayerMD5 + "/get/";
 
 		manifestFiles.push(manifestData.penLayerMD5);
 	}
@@ -83,7 +121,7 @@ getFileList = function(manifestData, manifestFiles)
 		// Check to see if file exists. If it doesn't, add it. Otherwise, continue.
 		if(manifestFiles.indexOf(sound.md5) === -1)
 		{
-			manifest += "\nasset/" + sound.md5 + "/get/";
+			manifest += "\n/asset/" + sound.md5 + "/get/";
 
 			manifestFiles.push(sound.md5);
 		}
@@ -98,7 +136,7 @@ getFileList = function(manifestData, manifestFiles)
 		// Check to see if file exists. If it doesn't, add it. Otherwise, continue.
 		if(manifestFiles.indexOf(costume.baseLayerMD5) === -1)
 		{
-			manifest += "\nasset/" + costume.baseLayerMD5 + "/get/";
+			manifest += "\n/asset/" + costume.baseLayerMD5 + "/get/";
 
 			manifestFiles.push(costume.baseLayerMD5);
 		}
