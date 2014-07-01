@@ -15,23 +15,26 @@ app.use('/projectdetails/', proxy(url.parse('http://scratch.mit.edu/api/v1/proje
 app.use('/asset/', proxy(url.parse('http://cdn.scratch.mit.edu/internalapi/asset/')));
 app.use('/manifest', function(req, res) {
 
+
 	// Remove the leading /
 	var projectId = req.url.substring(1);
 	
-	// Return the response as plain text
-	res.setHeader("Content-Type", "text/plain");
 
 	// Ensure the project id is a number so it's the correct format.
 
-	if(parseInt(projectId))
+	if(parseInt(projectId).toString().length == 8)
 	{
 		// Project ID is a number, create the manifest.
 		manifest.createManifest(projectId, function(manifest) {
+			// Return the response as plain text cache manifest
+			res.setHeader("Content-Type", "text/cache-manifest");
 			res.end(manifest);
 		});
 	} else {
 		// Project ID isn't a number, show an error.
-		res.end("FAILURE: Project ID is not a number");
+		res.writeHead(400);
+		res.setHeader("Content-Type", "text/plain");
+		res.end("FAILURE: Project ID is invalid.");
 	}
 
 });

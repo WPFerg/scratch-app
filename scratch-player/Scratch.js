@@ -45,7 +45,7 @@ var IO = function()
     //this.base = 'http://scratch.mit.edu/internalapi/'; // Final base
     this.project_suffix = '/get/';
     this.asset_suffix = '/get/';
-    this.soundbank_base = 'soundbank/';
+    this.soundbank_base = '/soundbank/';
     this.spriteLayerCount = 0;
 
     // In production, simply use the local path (no proxy)
@@ -61,8 +61,8 @@ var IO = function()
     // 
 
     // Modify paths to use proxy as opposed to local addresses
-    this.project_base = 'proxy.php?domain=projects.scratch.mit.edu&resource=internalapi/project/';
-    this.asset_base = 'proxy.php?domain=cdn.scratch.mit.edu&resource=internalapi/asset/';
+    this.project_base = '/projects/';
+    this.asset_base = '/asset/';
 
 };
 
@@ -73,7 +73,7 @@ IO.prototype.loadProject = function(project_id)
     var self = this;
 
     // Load in json code from passed data
-    $.getJSON(this.project_base + project_id + this.project_suffix, function(data)
+    $.get(this.project_base + project_id + this.project_suffix, function(data)
     {
         // Save get request data to var[data]
         self.data = data;
@@ -133,7 +133,7 @@ IO.prototype.loadNotesDrums = function()
     {
         // Setup XML HTTP Request for iteration instance
         var request = new XMLHttpRequest();
-        request.open('GET', self.soundbank_base + escape(file), true);
+        request.open('GET', self.soundbank_base + file, true);
         request.responseType = 'arraybuffer';
 
         // Onload decode data
@@ -13706,12 +13706,12 @@ Instr.wavsLoaded = 0;
 
 Instr.wavs = {
     'AcousticGuitar_F3': 'instruments/AcousticGuitar_F3_22k.wav',
-    'AcousticPiano_As3': 'instruments/AcousticPiano(5)_A#3_22k.wav',
+    'AcousticPiano_As3': 'instruments/AcousticPiano(5)_A%233_22k.wav',
     'AcousticPiano_C4': 'instruments/AcousticPiano(5)_C4_22k.wav',
     'AcousticPiano_G4': 'instruments/AcousticPiano(5)_G4_22k.wav',
     'AcousticPiano_F5': 'instruments/AcousticPiano(5)_F5_22k.wav',
     'AcousticPiano_C6': 'instruments/AcousticPiano(5)_C6_22k.wav',
-    'AcousticPiano_Ds6': 'instruments/AcousticPiano(5)_D#6_22k.wav',
+    'AcousticPiano_Ds6': 'instruments/AcousticPiano(5)_D%236_22k.wav',
     'AcousticPiano_D7': 'instruments/AcousticPiano(5)_D7_22k.wav',
     'AltoSax_A3': 'instruments/AltoSax_A3_22K.wav',
     'AltoSax_C6': 'instruments/AltoSax(3)_C6_22k.wav',
@@ -13719,7 +13719,7 @@ Instr.wavs = {
     'BassTrombone_A2_2': 'instruments/BassTrombone_A2(2)_22k.wav',
     'BassTrombone_A2_3': 'instruments/BassTrombone_A2(3)_22k.wav',
     'Cello_C2': 'instruments/Cello(3b)_C2_22k.wav',
-    'Cello_As2': 'instruments/Cello(3)_A#2_22k.wav',
+    'Cello_As2': 'instruments/Cello(3)_A%232_22k.wav',
     'Choir_F3': 'instruments/Choir(4)_F3_22k.wav',
     'Choir_F4': 'instruments/Choir(4)_F4_22k.wav',
     'Choir_F5': 'instruments/Choir(4)_F5_22k.wav',

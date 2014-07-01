@@ -1,0 +1,47 @@
+<html manifest="/manifest/23899783">
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script>
+			// Get the project ID from #<projectID>
+			var projectId = window.location.hash.substr(1);
+
+			// Check to see if the project id exists
+			if(projectId === "")
+			{
+				alert("No project ID.");
+			} else {
+				// If so, set the HTML manifest to the manifest file.
+
+				$("html").attr("manifest", "/manifest/" + projectId);
+
+				var appCache = window.applicationCache;
+				
+				appCache.onprogress = function(e) {
+					$(".downloading-text").text("Downloading: " + e.loaded + "/" + e.total);
+				}
+
+				appCache.oncached = function(e) {
+					$(".downloading-text").text("Downloaded!");
+				}
+
+				appCache.onnoupdate = function(e) {
+					$(".downloading-text").text("Downloaded. No updates.");
+				}
+
+				appCache.onupdateready = function(e) {
+					console.log("Updating AppCache");
+					appCache.swapCache();
+					$(".downloading-text").text("Updated!");
+				}
+
+				appCache.onchecking = function(e) {
+					console.log("Checking for updates...");
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<button class="download-button">Download</button>
+		<span class="downloading-text"> Downloading: 0/0 </span>
+	</body>
+</html>

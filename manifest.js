@@ -48,13 +48,16 @@ generateManifest = function(projectId, manifestData, callbackFunction)
 	var manifestFiles = [];
 
 	// Create the manifest with an initial, constant, set of data
-	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\n\nCACHE";
-	
+	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\nNETWORK:\n*\nCACHE:";
+
 	// Add the project details url (that has all the code/instructions)
 	manifest += "\n/projects/" + projectId + "/get/";
 
 	// Add the files in the /scrach-player/ directory to the manifest so they can be cached.
 	manifest += addFilesInFolder("scratch-player/");
+
+	// Add the soundbank to the manifest -- it's always requested.
+	manifest += addFilesInFolder("soundbank/");
 
 	// Add the project's root files to the manifest list
 	manifest += getFileList(manifestData, manifestFiles);
@@ -92,7 +95,8 @@ addFilesInFolder = function(folderUrl)
 			// If a folder, add its contents to the manifest.
 			scratchPlayerFiles += addFilesInFolder(folderUrl + file + "/");
 		} else {
-			// Add to the manifest
+			// Add to the manifest, replace hashes with escape char so it's a file and not a page with a hash.
+			file = file.replace(/#/g, "\%23");
 			scratchPlayerFiles += ("\n/" + folderUrl + file);
 		}
 	}
