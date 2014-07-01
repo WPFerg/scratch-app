@@ -85,7 +85,7 @@ addFilesInFolder = function(folderUrl)
 		var file = files[fileIndex];
 
 		// Check if folder, by using fs stats
-		stats = fs.lstatSync(folderUrl + file + "/");
+		stats = fs.lstatSync(folderUrl + file);
 
 		if(stats.isDirectory())
 		{
