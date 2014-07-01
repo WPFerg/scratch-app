@@ -70,7 +70,7 @@ getFileList = function(manifestData, manifestFiles)
 	// If the pen layer exists, and the file isn't in the manifest add that.
 	if(manifestData.penLayerMD5 && manifestFiles.indexOf(manifestData.penLayerMD5) === -1)
 	{
-		manifest += "\npen/" + manifestData.penLayerMD5;
+		manifest += "\nasset/" + manifestData.penLayerMD5;
 
 		manifestFiles.push(manifestData.penLayerMD5);
 	}
@@ -83,7 +83,7 @@ getFileList = function(manifestData, manifestFiles)
 		// Check to see if file exists. If it doesn't, add it. Otherwise, continue.
 		if(manifestFiles.indexOf(sound.md5) === -1)
 		{
-			manifest += "\nsounds/" + sound.md5;
+			manifest += "\nasset/" + sound.md5;
 
 			manifestFiles.push(sound.md5);
 		}
@@ -98,7 +98,7 @@ getFileList = function(manifestData, manifestFiles)
 		// Check to see if file exists. If it doesn't, add it. Otherwise, continue.
 		if(manifestFiles.indexOf(costume.baseLayerMD5) === -1)
 		{
-			manifest += "\ncostumes/" + costume.baseLayerMD5;
+			manifest += "\nasset/" + costume.baseLayerMD5;
 
 			manifestFiles.push(costume.baseLayerMD5);
 		}
