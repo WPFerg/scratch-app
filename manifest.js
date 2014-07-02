@@ -57,7 +57,7 @@ generateManifest = function(projectId, manifestData, callbackFunction)
 	manifest += addFilesInFolder("scratch-player/");
 
 	// Add the soundbank to the manifest -- it's always requested.
-	manifest += addFilesInFolder("soundbank/");
+	//manifest += addFilesInFolder("soundbank/");
 
 	// Add the project's root files to the manifest list
 	manifest += getFileList(manifestData, manifestFiles);
