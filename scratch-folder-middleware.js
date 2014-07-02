@@ -11,6 +11,8 @@ exports.serveScratchFolder = function(req, res)
 	// If the url requests a folder, return that.
 	if(url.indexOf(".") !== -1 || url.indexOf("/") !== -1)
 	{
+		// Convert % notation to the #.
+		url = url.replace(/%23/g, '#');
 		// Get the file info and return it to the client
 		fs.readFile("scratch-player/" + url, function (err, data) {
 			if(err)
@@ -21,7 +23,7 @@ exports.serveScratchFolder = function(req, res)
 				if (err.code === "ENOENT")
 				{
 					responseCode = 404;
-					data = "File not found.";
+					data = url + " not found.";
 				}
 				res.writeHead(responseCode);
 			}
