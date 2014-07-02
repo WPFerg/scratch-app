@@ -40,13 +40,14 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   	// 	console.log(projectId);
   	// }
 
+    $scope.projectId = $routeParams.projectId
   	// Get the project
-  	$scope.project = ProjectDetails.get({"projectId": $routeParams.projectId});
+  	$scope.project = ProjectDetails.get({"projectId": $scope.projectId});
 
   	// Get the detailed information about the project.
 
   	$scope.projectInDepth = {};
-  	Projects.get({"projectId": $routeParams.projectId}, function(data) {
+  	Projects.get({"projectId": $scope.projectId}, function(data) {
   		// Callback function after getting the projects.
   		// Assign all the information to the scope
 
