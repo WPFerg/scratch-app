@@ -55,10 +55,15 @@ exports.serveScratchFolder = function(req, res)
 		fs.readFile("scratch-player/" + url, function (err, data) {
 			if(err)
 			{
-				// Internal server error 500
 				responseCode = 500;
 				data = "System Error -- Can't get file details";
-				res.setHeader(500);
+				// Internal server error 500
+				if (err.code === "ENOENT")
+				{
+					responseCode = 404;
+					data = "File not found.";
+				}
+				res.writeHead(responseCode);
 			}
 			res.end(data);
 		});
