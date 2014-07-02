@@ -10,16 +10,16 @@ KARMA_CONFIG = "./test/fixtures/karma.conf.js"
 
 # Performs code governance (lint + style) test
 lint:
-	@$(JSCS_PATH) ./js/*
+	@$(JSCS_PATH) ./scratch-player/js/*
 	@$(JSCS_PATH) ./test/unit/*
 
 # Package code for use in browser
 build:
-	@$(BROWSERIFY_PATH) js/Scratch.js --standalone Scratch --outfile "Scratch.js"
+	@$(BROWSERIFY_PATH) scratch-player/js/Scratch.js --standalone Scratch --outfile "scratch-player/Scratch.js"
 
 # Auto-package code for use in browser
 watch:
-	@$(WATCHIFY_PATH) js/Scratch.js --standalone Scratch --debug --outfile "Scratch.js"
+	@$(WATCHIFY_PATH) scratch-player/js/Scratch.js --standalone Scratch --debug --outfile "scratch-player/Scratch.js"
 
 # Performs unit tests
 unit:

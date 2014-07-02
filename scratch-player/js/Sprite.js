@@ -535,8 +535,7 @@ Sprite.prototype.updateCachedPenColor = function() {
     }
 };
 
-Sprite.prototype.stamp = function(canvas, opacity)
-{
+Sprite.prototype.stamp = function(canvas, opacity) {
     var drawWidth = this.textures[this.currentCostumeIndex].width * this.scale;
     var drawHeight = this.textures[this.currentCostumeIndex].height * this.scale;
     var drawX = this.scratchX + (480 / 2);

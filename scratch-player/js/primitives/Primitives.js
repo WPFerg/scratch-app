@@ -28,71 +28,39 @@ var LooksPrims = require('./LooksPrims'),
     SoundPrims = require('./SoundPrims'),
     VarListPrims = require('./VarListPrims');
 
-var Primitives = function() 
-{
+var Primitives = function() {}
 
-    // Create prim table object
-    this.primTable = {};
-
+Primitives.prototype.addPrimsTo = function(primTable) {
     // Math primitives
-    this.primTable['+']        = function(b) { return interp.numarg(b, 0) + interp.numarg(b, 1); };
-    this.primTable['-']        = function(b) { return interp.numarg(b, 0) - interp.numarg(b, 1); };
-    this.primTable['*']        = function(b) { return interp.numarg(b, 0) * interp.numarg(b, 1); };
-    this.primTable['/']        = function(b) { return interp.numarg(b, 0) / interp.numarg(b, 1); };
-    this.primTable['%']        = this.primModulo;
-    this.primTable['randomFrom:to:'] = this.primRandom;
-    this.primTable['<']        = function(b) { return (interp.numarg(b, 0) < interp.numarg(b, 1)); };
-    this.primTable['=']        = function(b) { return (interp.arg(b, 0) == interp.arg(b, 1)); };
-    this.primTable['>']        = function(b) { return (interp.numarg(b, 0) > interp.numarg(b, 1)); };
-    this.primTable['&']        = function(b) { return interp.boolarg(b, 0) && interp.boolarg(b, 1); };
-    this.primTable['|']        = function(b) { return interp.boolarg(b, 0) || interp.boolarg(b, 1); };
-    this.primTable['not']      = function(b) { return !interp.boolarg(b, 0); };
-    this.primTable['abs']      = function(b) { return Math.abs(interp.numarg(b, 0)); };
-    this.primTable['sqrt']     = function(b) { return Math.sqrt(interp.numarg(b, 0)); };
+    primTable['+']        = function(b) { return interp.numarg(b, 0) + interp.numarg(b, 1); };
+    primTable['-']        = function(b) { return interp.numarg(b, 0) - interp.numarg(b, 1); };
+    primTable['*']        = function(b) { return interp.numarg(b, 0) * interp.numarg(b, 1); };
+    primTable['/']        = function(b) { return interp.numarg(b, 0) / interp.numarg(b, 1); };
+    primTable['%']        = this.primModulo;
+    primTable['randomFrom:to:'] = this.primRandom;
+    primTable['<']        = function(b) { return (interp.numarg(b, 0) < interp.numarg(b, 1)); };
+    primTable['=']        = function(b) { return (interp.arg(b, 0) == interp.arg(b, 1)); };
+    primTable['>']        = function(b) { return (interp.numarg(b, 0) > interp.numarg(b, 1)); };
+    primTable['&']        = function(b) { return interp.boolarg(b, 0) && interp.boolarg(b, 1); };
+    primTable['|']        = function(b) { return interp.boolarg(b, 0) || interp.boolarg(b, 1); };
+    primTable['not']      = function(b) { return !interp.boolarg(b, 0); };
+    primTable['abs']      = function(b) { return Math.abs(interp.numarg(b, 0)); };
+    primTable['sqrt']     = function(b) { return Math.sqrt(interp.numarg(b, 0)); };
 
-    this.primTable['\\\\']               = this.primModulo;
-    this.primTable['rounded']            = function(b) { return Math.round(interp.numarg(b, 0)); };
-    this.primTable['computeFunction:of:'] = this.primMathFunction;
+    primTable['\\\\']               = this.primModulo;
+    primTable['rounded']            = function(b) { return Math.round(interp.numarg(b, 0)); };
+    primTable['computeFunction:of:'] = this.primMathFunction;
 
     // String primitives
-    this.primTable['concatenate:with:']  = function(b) { return '' + interp.arg(b, 0) + interp.arg(b, 1); };
-    this.primTable['letter:of:']         = this.primLetterOf;
-    this.primTable['stringLength:']      = function(b) { return interp.arg(b, 0).length; };
+    primTable['concatenate:with:']  = function(b) { return '' + interp.arg(b, 0) + interp.arg(b, 1); };
+    primTable['letter:of:']         = this.primLetterOf;
+    primTable['stringLength:']      = function(b) { return interp.arg(b, 0).length; };
 
-    // Add primitives
-    this.addPrims(new LooksPrims());
-    this.addPrims(new MotionAndPenPrims());
-    this.addPrims(new SensingPrims());
-    this.addPrims(new SoundPrims());
-    this.addPrims(new VarListPrims());
-
-}
-
-Primitives.prototype.addPrims = function(AdditionalPrims)
-{
-
-    // Check object for primitive table
-    if (typeof AdditionalPrims.primTable == 'undefined')
-    {
-
-        // Display error
-        console.log('Passed object does not have primitive table! Aborting table addition.');
-
-    } else {
-
-        // Add each primitive to current object
-        var table = this.primTable;
-        for (var Prim in AdditionalPrims.primTable)
-        {
-            table[Prim] = AdditionalPrims.primTable[Prim];
-        }
-        this.primTable = table;
-
-    }
-
-    // Return compiled table (may still be original table)
-    return this.primTable;
-
+    new VarListPrims().addPrimsTo(primTable);
+    new MotionAndPenPrims().addPrimsTo(primTable);
+    new LooksPrims().addPrimsTo(primTable);
+    new SensingPrims().addPrimsTo(primTable);
+    new SoundPrims().addPrimsTo(primTable);
 }
 
 Primitives.prototype.primRandom = function(b) {

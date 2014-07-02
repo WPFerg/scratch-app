@@ -15,27 +15,25 @@
 
 'use strict';
 
-var SoundPrims = function()
-{
-    // Create empty primitive table object
-    this.primTable = {};
+var SoundPrims = function() {};
 
-    this.primTable['playSound:'] = this.primPlaySound;
-    this.primTable['doPlaySoundAndWait'] = this.primPlaySoundUntilDone;
-    this.primTable['stopAllSounds'] = this.primStopAllSounds;
+SoundPrims.prototype.addPrimsTo = function(primTable) {
+    primTable['playSound:'] = this.primPlaySound;
+    primTable['doPlaySoundAndWait'] = this.primPlaySoundUntilDone;
+    primTable['stopAllSounds'] = this.primStopAllSounds;
 
-    this.primTable['playDrum'] = this.primPlayDrum;
-    this.primTable['rest:elapsed:from:'] = this.primPlayRest;
-    this.primTable['noteOn:duration:elapsed:from:'] = this.primPlayNote;
-    this.primTable['instrument:'] = this.primSetInstrument;
+    primTable['playDrum'] = this.primPlayDrum;
+    primTable['rest:elapsed:from:'] = this.primPlayRest;
+    primTable['noteOn:duration:elapsed:from:'] = this.primPlayNote;
+    primTable['instrument:'] = this.primSetInstrument;
 
-    /*this.primTable['changeVolumeBy:'] = this.primChangeVolume;
-    this.primTable['setVolumeTo:'] = this.primSetVolume;
-    this.primTable['volume'] = this.primVolume;*/
+    /*primTable['changeVolumeBy:'] = this.primChangeVolume;
+    primTable['setVolumeTo:'] = this.primSetVolume;
+    primTable['volume'] = this.primVolume;*/
 
-    this.primTable['changeTempoBy:'] = function(b) { runtime.stage.data.tempoBPM = runtime.stage.data.tempoBPM + interp.arg(b, 0); };
-    this.primTable['setTempoTo:'] = function(b) { runtime.stage.data.tempoBPM = interp.arg(b, 0); };
-    this.primTable['tempo'] = function(b) { return runtime.stage.data.tempoBPM; };
+    primTable['changeTempoBy:'] = function(b) { runtime.stage.data.tempoBPM = runtime.stage.data.tempoBPM + interp.arg(b, 0); };
+    primTable['setTempoTo:'] = function(b) { runtime.stage.data.tempoBPM = interp.arg(b, 0); };
+    primTable['tempo'] = function(b) { return runtime.stage.data.tempoBPM; };
 };
 
 var playSound = function(snd) {

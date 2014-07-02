@@ -15,45 +15,43 @@
 
 'use strict';
 
-var MotionAndPenPrims = function()
-{
-    // Create empty primitive table object
-    this.primTable = {};
+var MotionAndPenPrims = function() {};
 
-    this.primTable['forward:']           = this.primMove;
-    this.primTable['turnLeft:']          = this.primTurnLeft;
-    this.primTable['turnRight:']         = this.primTurnRight;
-    this.primTable['heading:']           = this.primSetDirection;
-    this.primTable['pointTowards:']      = this.primPointTowards;
-    this.primTable['gotoX:y:']           = this.primGoTo;
-    this.primTable['gotoSpriteOrMouse:']  = this.primGoToSpriteOrMouse;
-    this.primTable['glideSecs:toX:y:elapsed:from:'] = this.primGlide;
+MotionAndPenPrims.prototype.addPrimsTo = function(primTable) {
+    primTable['forward:']           = this.primMove;
+    primTable['turnLeft:']          = this.primTurnLeft;
+    primTable['turnRight:']         = this.primTurnRight;
+    primTable['heading:']           = this.primSetDirection;
+    primTable['pointTowards:']      = this.primPointTowards;
+    primTable['gotoX:y:']           = this.primGoTo;
+    primTable['gotoSpriteOrMouse:']  = this.primGoToSpriteOrMouse;
+    primTable['glideSecs:toX:y:elapsed:from:'] = this.primGlide;
 
-    this.primTable['changeXposBy:']      = this.primChangeX;
-    this.primTable['xpos:']              = this.primSetX;
-    this.primTable['changeYposBy:']      = this.primChangeY;
-    this.primTable['ypos:']              = this.primSetY;
+    primTable['changeXposBy:']      = this.primChangeX;
+    primTable['xpos:']              = this.primSetX;
+    primTable['changeYposBy:']      = this.primChangeY;
+    primTable['ypos:']              = this.primSetY;
 
-    this.primTable['bounceOffEdge']      = this.primBounceOffEdge;
-    this.primTable['setRotationStyle']   = this.primSetRotationStyle;
+    primTable['bounceOffEdge']      = this.primBounceOffEdge;
+    primTable['setRotationStyle']   = this.primSetRotationStyle;
 
-    this.primTable['xpos']               = this.primXPosition;
-    this.primTable['ypos']               = this.primYPosition;
-    this.primTable['heading']            = this.primDirection;
+    primTable['xpos']               = this.primXPosition;
+    primTable['ypos']               = this.primYPosition;
+    primTable['heading']            = this.primDirection;
 
-    this.primTable['clearPenTrails']     = this.primClear;
-    this.primTable['putPenDown']         = this.primPenDown;
-    this.primTable['putPenUp']           = this.primPenUp;
-    this.primTable['penColor:']          = this.primSetPenColor;
-    this.primTable['setPenHueTo:']       = this.primSetPenHue;
-    this.primTable['changePenHueBy:']    = this.primChangePenHue;
-    this.primTable['setPenShadeTo:']     = this.primSetPenShade;
-    this.primTable['changePenShadeBy:']  = this.primChangePenShade;
-    this.primTable['penSize:']           = this.primSetPenSize;
-    this.primTable['changePenSizeBy:']   = this.primChangePenSize;
+    primTable['clearPenTrails']     = this.primClear;
+    primTable['putPenDown']         = this.primPenDown;
+    primTable['putPenUp']           = this.primPenUp;
+    primTable['penColor:']          = this.primSetPenColor;
+    primTable['setPenHueTo:']       = this.primSetPenHue;
+    primTable['changePenHueBy:']    = this.primChangePenHue;
+    primTable['setPenShadeTo:']     = this.primSetPenShade;
+    primTable['changePenShadeBy:']  = this.primChangePenShade;
+    primTable['penSize:']           = this.primSetPenSize;
+    primTable['changePenSizeBy:']   = this.primChangePenSize;
 
-    this.primTable['stampCostume']       = this.primStamp;
-    this.primTable['stampTransparent']   = this.primStampTransparent;
+    primTable['stampCostume']       = this.primStamp;
+    primTable['stampTransparent']   = this.primStampTransparent;
 };
 
 MotionAndPenPrims.prototype.primMove = function(b) {
@@ -70,7 +68,6 @@ MotionAndPenPrims.prototype.primTurnLeft = function(b) {
     var d = s.direction - interp.numarg(b, 0);
     s.setDirection(d);
     if (s.visible) interp.redraw();
-    console.log('turning left');
 };
 
 MotionAndPenPrims.prototype.primTurnRight = function(b) {
@@ -78,7 +75,6 @@ MotionAndPenPrims.prototype.primTurnRight = function(b) {
     var d = s.direction + interp.numarg(b, 0);
     s.setDirection(d);
     if (s.visible) interp.redraw();
-    console.log('turning right');
 };
 
 MotionAndPenPrims.prototype.primSetDirection = function(b) {

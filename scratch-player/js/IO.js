@@ -72,7 +72,7 @@ IO.prototype.loadProject = function(project_id)
     var self = this;
 
     // Load in json code from passed data
-    $.get(this.project_base + project_id + this.project_suffix, function(data)
+    $.getJSON(this.project_base + project_id + this.project_suffix, function(data)
     {
         // Save get request data to var[data]
         self.data = data;
@@ -132,7 +132,7 @@ IO.prototype.loadNotesDrums = function()
     {
         // Setup XML HTTP Request for iteration instance
         var request = new XMLHttpRequest();
-        request.open('GET', self.soundbank_base + file, true);
+        request.open('GET', self.soundbank_base + escape(file), true);
         request.responseType = 'arraybuffer';
 
         // Onload decode data

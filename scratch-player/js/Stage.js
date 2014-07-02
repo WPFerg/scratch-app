@@ -36,7 +36,7 @@ var Stage = function(data)
 
     // Create a canvas and specify width and height.
     this.lineCanvas = document.createElement('canvas');
-    this.lineCanvas.width = 500;
+    this.lineCanvas.width = 480;
     this.lineCanvas.height = 360;
 
     // Get a context of the line canvas, set it as stage and call Sprite.

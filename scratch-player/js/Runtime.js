@@ -113,7 +113,6 @@ Runtime.prototype.loadStart = function()
     // Set finalization values
     setInterval(this.step, 33);
     this.projectLoaded = true;
-    console.log('Project finished loading.')
 };
 
 // -?- Terrible name for a function pointer as it has no descriptive quality -?-
@@ -200,7 +199,6 @@ Runtime.prototype.allStacksDo = function(PassedFunction)
     {
         PassedFunction(stack, stage);
     });
-
 };
 
 // Hat triggers
@@ -256,12 +254,8 @@ Runtime.prototype.startKeyHats = function(ch)
         }
     }
 
-    // Display key pressed for debugging purposes
-    console.log('Key Pressed: ' + keyName);
-
     // Initiate above function
     runtime.allStacksDo(startMatchingKeyHats);
-    
 };
 
 // Initiate all click events

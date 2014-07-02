@@ -191,8 +191,6 @@ Interpreter.prototype.stepActiveThread = function()
         return;
     }
 
-    console.log('stepping active thread start.')
-
     // Get next block
     var NextBlock = this.activeThread.nextBlock;
 
@@ -202,7 +200,7 @@ Interpreter.prototype.stepActiveThread = function()
     // Set yield value
     this.yield = false;
 
-    // Repeat FOREVER (unless broken inside)
+    // Repeat FOREVER?
     while (true)
     {
         if (this.activeThread.paused) return;
@@ -260,7 +258,6 @@ Interpreter.prototype.stepActiveThread = function()
             }
         }
     }
-
 };
 
 // Start/Stop given thread
@@ -453,24 +450,8 @@ Interpreter.prototype.initPrims = function()
     this.primitiveTable['timerReset'] = function(b) { interp.timerBase = Date.now(); };
     this.primitiveTable['timer'] = function(b) { return (Date.now() - interp.timerBase) / 1000; };
 
-    // -- SCOTT LOGIC [11:29 / 01_07_2014] --
-    //
-    // Original line of code
-    // new Primitives().addPrimsTo(this.primitiveTable);
-    //
-    // Modification to make code more intuative and easier to understand. The 'addPrims' method
-    // takes in a primitive object and appends the passed object primTable to the caller object.
-    // To keep the above primitiveTable it must be added to a mock object and then passed to the 
-    // 'addPrims' method.
-    //
-
-    // Create mock primitive object for passing to the prims addition method
-    var MockObject = {};
-    MockObject['primTable'] = this.primitiveTable;
-
-    // Create primitives temp object
-    this.primitiveTable = new Primitives().addPrims(MockObject);
-
+    // -?- Dont see the use of this as the constructed object is never used -?-
+    new Primitives().addPrimsTo(this.primitiveTable);
 };
 
 // Get the time
@@ -486,9 +467,7 @@ Interpreter.prototype.lookupPrim = function(op)
 
 // -?- What are you playing at? -?-
 Interpreter.prototype.primNoop = function(b)
-{
-    console.log(b.op);
-};
+{ console.log(b.op); };
 
 // Wait for primitive
 Interpreter.prototype.primWait = function(b)
@@ -526,15 +505,12 @@ Interpreter.prototype.broadcast = function(b, waitFlag)
     var pair;
     var done = true;
 
-    // Determine if this is the first broadcast
+    // Determine if this is the first broadcase
     if (interp.activeThread.firstTime)
     {
         // Initialise more variables
         var receivers = [];
         var msg = String(interp.arg(b, 0)).toLowerCase();
-
-        // Debug message
-        console.log('Broadcasting message for the first time "' + msg + '".');
 
         // Find receivers looking for specific broadcast message
         var findReceivers = function(stack, target)

@@ -18,28 +18,26 @@
 var Timer = require('../util/Timer'),
     LooksPrims = require('./LooksPrims');
 
-var SensingPrims = function()
-{
-    // Create empty primitive table object
-    this.primTable = {};
+var SensingPrims = function() {};
 
-    this.primTable['touching:']      = this.primTouching;
-    this.primTable['touchingColor:'] = this.primTouchingColor;
-    this.primTable['color:sees:']    = this.primColorTouchingColor;
+SensingPrims.prototype.addPrimsTo = function(primTable) {
+    primTable['touching:']      = this.primTouching;
+    primTable['touchingColor:'] = this.primTouchingColor;
+    primTable['color:sees:']    = this.primColorTouchingColor;
 
-    this.primTable['doAsk']              = this.primDoAsk;
-    this.primTable['answer']             = this.primAnswer;
+    primTable['doAsk']              = this.primDoAsk;
+    primTable['answer']             = this.primAnswer;
 
-    this.primTable['keyPressed:']  = this.primKeyPressed;
-    this.primTable['mousePressed'] = function(b) { return runtime.mouseDown; };
-    this.primTable['mouseX']       = function(b) { return runtime.mousePos[0]; };
-    this.primTable['mouseY']       = function(b) { return runtime.mousePos[1]; };
-    this.primTable['distanceTo:']  = this.primDistanceTo;
+    primTable['keyPressed:']  = this.primKeyPressed;
+    primTable['mousePressed'] = function(b) { return runtime.mouseDown; };
+    primTable['mouseX']       = function(b) { return runtime.mousePos[0]; };
+    primTable['mouseY']       = function(b) { return runtime.mousePos[1]; };
+    primTable['distanceTo:']  = this.primDistanceTo;
 
-    this.primTable['getAttribute:of:'] = this.primGetAttribute;
+    primTable['getAttribute:of:'] = this.primGetAttribute;
 
-    this.primTable['timeAndDate']  = function(b) { return runtime.getTimeString(interp.arg(b, 0)); };
-    this.primTable['timestamp'] = this.primTimestamp;    
+    primTable['timeAndDate']  = function(b) { return runtime.getTimeString(interp.arg(b, 0)); };
+    primTable['timestamp'] = this.primTimestamp;
 };
 
 SensingPrims.prototype.primTouching = function(b) {

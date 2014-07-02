@@ -15,42 +15,34 @@
 
 'use strict';
 
-var LooksPrims = function()
-{
-    // Create empty primitive table object
-    this.primTable = {};
+var LooksPrims = function() {};
 
-    this.primTable['show']               = this.primShow;
-    this.primTable['hide']               = this.primHide;
+LooksPrims.prototype.addPrimsTo = function(primTable) {
+    primTable['show']               = this.primShow;
+    primTable['hide']               = this.primHide;
 
-    this.primTable['nextCostume']        = this.primNextCostume;
-    this.primTable['lookLike:']          = this.primShowCostume;
-    this.primTable['costumeIndex']       = this.primCostumeNum;
+    primTable['nextCostume']        = this.primNextCostume;
+    primTable['lookLike:']          = this.primShowCostume;
+    primTable['costumeIndex']       = this.primCostumeNum;
 
-    this.primTable['nextScene']     = this.primNextCostume;
-    this.primTable['showBackground:']    = this.primShowCostume;
-    this.primTable['backgroundIndex']    = this.primCostumeNum;
+    primTable['nextScene']     = this.primNextCostume;
+    primTable['showBackground:']    = this.primShowCostume;
+    primTable['backgroundIndex']    = this.primCostumeNum;
 
-    this.primTable['startScene']         = this.primStartScene;
-    this.primTable['backgroundIndex']    = this.primCostumeNum;
+    primTable['startScene']         = this.primStartScene;
+    primTable['backgroundIndex']    = this.primCostumeNum;
 
-    this.primTable['changeSizeBy:']      = this.primChangeSize;
-    this.primTable['setSizeTo:']         = this.primSetSize;
-    this.primTable['scale']              = this.primSize;
+    primTable['changeSizeBy:']      = this.primChangeSize;
+    primTable['setSizeTo:']         = this.primSetSize;
+    primTable['scale']              = this.primSize;
 
-    this.primTable['comeToFront']        = this.primGoFront;
-    this.primTable['goBackByLayers:']    = this.primGoBack;
+    primTable['comeToFront']        = this.primGoFront;
+    primTable['goBackByLayers:']    = this.primGoBack;
 
-    this.primTable['changeGraphicEffect:by:'] = this.primChangeEffect;
-    this.primTable['setGraphicEffect:to:']    = this.primSetEffect;
-    this.primTable['filterReset']             = this.primClearEffects;
+    primTable['changeGraphicEffect:by:'] = this.primChangeEffect;
+    primTable['setGraphicEffect:to:']    = this.primSetEffect;
+    primTable['filterReset']             = this.primClearEffects;
 
-<<<<<<< HEAD
-    this.primTable['say:'] = function(b) { showBubble(b, 'say'); };
-    this.primTable['say:duration:elapsed:from:'] = function(b) { showBubbleAndWait(b, 'say'); };
-    this.primTable['think:'] = function(b) { showBubble(b, 'think'); };
-    this.primTable['think:duration:elapsed:from:'] = function(b) { showBubbleAndWait(b, 'think'); };
-=======
     //primTable['say:'] = function(b) { showBubble(b, 'say'); };
     //primTable['say:duration:elapsed:from:'] = function(b) { showBubbleAndWait(b, 'say'); };
     //primTable['think:'] = function(b) { showBubble(b, 'think'); };
@@ -61,7 +53,6 @@ var LooksPrims = function()
     primTable['think:'] = this.showBubble.bind(this, 'think');
     primTable['think:duration:elapsed:from:'] = this.showBubbleAndWait.bind(this, 'think');
 
->>>>>>> e70444d1da6225bc976db6500d1db96d4ee1876c
 };
 
 LooksPrims.prototype.primShow = function(b) {

@@ -13,6 +13,7 @@ exports.serveScratchFolder = function(req, res)
 	{
 		// Convert % notation to the #.
 		url = url.replace(/%23/g, '#');
+		url = decodeURI(url);
 		// Get the file info and return it to the client
 		fs.readFile("scratch-player/" + url, function (err, data) {
 			if(err)

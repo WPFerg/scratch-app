@@ -15,30 +15,28 @@
 
 'use strict';
 
-var VarListPrims = function()
-{
-    // Create empty primitive table object
-    this.primTable = {};
+var VarListPrims = function() {}
 
+VarListPrims.prototype.addPrimsTo = function(primTable) {
     // Variable primitives
-    this.primTable['readVariable']        = this.primReadVar;
-    this.primTable['setVar:to:']          = this.primSetVar;
-    this.primTable['changeVar:by:']       = this.primChangeVar;
-    this.primTable['hideVariable:']       = this.primHideVar;
-    this.primTable['showVariable:']       = this.primShowVar;
+    primTable['readVariable']        = this.primReadVar;
+    primTable['setVar:to:']          = this.primSetVar;
+    primTable['changeVar:by:']       = this.primChangeVar;
+    primTable['hideVariable:']       = this.primHideVar;
+    primTable['showVariable:']       = this.primShowVar;
 
     // List primitives
-    this.primTable['contentsOfList:']      = this.primReadList;
-    this.primTable['append:toList:']      = this.primListAppend;
-    this.primTable['deleteLine:ofList:']  = this.primListDeleteLine;
-    this.primTable['insert:at:ofList:']   = this.primListInsertAt;
-    this.primTable['setLine:ofList:to:']  = this.primListSetLine;
-    this.primTable['lineCountOfList:']    = this.primListLength;
-    this.primTable['getLine:ofList:']     = this.primListGetLine;
-    this.primTable['list:contains:']      = this.primListContains;
-    this.primTable['hideList:']       = this.primHideList;
-    this.primTable['showList:']       = this.primShowList;
-}
+    primTable['contentsOfList:']      = this.primReadList;
+    primTable['append:toList:']      = this.primListAppend;
+    primTable['deleteLine:ofList:']  = this.primListDeleteLine;
+    primTable['insert:at:ofList:']   = this.primListInsertAt;
+    primTable['setLine:ofList:to:']  = this.primListSetLine;
+    primTable['lineCountOfList:']    = this.primListLength;
+    primTable['getLine:ofList:']     = this.primListGetLine;
+    primTable['list:contains:']      = this.primListContains;
+    primTable['hideList:']       = this.primHideList;
+    primTable['showList:']       = this.primShowList;
+};
 
 // Variable primitive implementations
 
