@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html manifest='/manifest/<%= projectId %>'>
 <head>
     <meta charset=utf-8>
     <title>Scratch HTML5</title>
@@ -7,13 +7,14 @@
     <!-- iPad p+roperties: set width, disable pinch zoom -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="user-scalable=no, width=540">
+    <meta name="viewport" content="user-scalable=yes, width=480">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link rel="stylesheet" href="player.css">
     <link rel="stylesheet" href="index.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script> var projectId = <%= projectId %>;</script>
     <script>
         // projectID is passed in via the node server.
         
@@ -26,16 +27,21 @@
 
             var appCache = window.applicationCache;
             
+            // Bind events for the app cache status updates. 
             appCache.onprogress = function(e) {
                 $(".downloading-text").text("Downloading: " + e.loaded + "/" + e.total);
             }
 
             appCache.oncached = function(e) {
                 $(".downloading-text").text("Downloaded!");
+                $(".downloading-text").fadeOut();
+                $(".player-container").fadeIn();
             }
 
             appCache.onnoupdate = function(e) {
-                $(".downloading-text").text("Scratch HTML5 player");
+                $(".downloading-text").text("No updates available.");
+                $(".downloading-text").fadeOut();
+                $(".player-container").fadeIn();
             }
 
             appCache.onupdateready = function(e) {
@@ -48,7 +54,13 @@
             }
 
             appCache.onerror = function(e) {
-                $(".downloading-text").css({display: "none"});
+                $(".player-loading").css({display: "none"});
+                $(".player-container").css({display: "block"});
+            }
+
+            appCache.onobsolete = function(e) {
+                $(".player-loading").css({display: "none"});
+                $(".player-container").css({display: "block"});
             }
 
             // Request to update the appcache
@@ -66,6 +78,7 @@
     </script>
 </head>
     <body>
+    <div class="player-loading"><div class="downloading-text"></div></div>
     <div id="player-container">
         <div id="player-header">
             <div id="player-header-preload"></div>
@@ -84,8 +97,6 @@
             </div>
         </div>
     </div>
-
-    <p class="downloading-text">Scratch HTML5 player</p>
 
     <script type="text/JavaScript" src="Scratch.js"></script>
     <script type="text/javascript">
