@@ -41,8 +41,7 @@ app.use('/manifest', function(req, res) {
 		});
 	} else {
 		// Project ID isn't a number, show an error.
-		res.writeHead(400);
-		res.setHeader("Content-Type", "text/plain");
+		res.writeHead(400, {"Content-Type": "text/plain"});
 		res.end("FAILURE: Project ID is invalid.");
 	}
 
