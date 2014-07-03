@@ -9,7 +9,7 @@
     <link rel="icon" sizes="196x196" href="http://cdn2.scratch.mit.edu/get_image/project/<%= projectId %>_196x196.png">
     <link rel="icon" sizes="128x128" href="http://cdn2.scratch.mit.edu/get_image/project/<%= projectId %>_128x128.png">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="user-scalable=yes, width=540, height=360">
+    <!--<meta name="viewport" content="user-scalable=yes, width=540, height=360">-->
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link rel="stylesheet" href="player.css">
@@ -21,7 +21,7 @@
 
 </head>
 
-    <body style="width: 100%; height: 100%; background-color: #DDDDDD;" onresize = AdjustPlayerDimensions();>
+    <body style="width: 100%; height: 100%; background-color: #000000;" onresize = AdjustPlayerDimensions();>
 
         <div class="player-loading"><div class="downloading-text"></div></div>
 
@@ -39,7 +39,7 @@
                 <div id="preloader">
                     <div id="preloader-progress"><div id="preloader-progress-bar"></div></div>
                     <div id="preloader-caption">Loading project&hellip;</div>
-                    <div id="preloader"-details></div>
+                    <div id="preloader-details"></div>
                 </div>
             </div>
         </div>
@@ -53,17 +53,17 @@
             {
 
                 // Get the dimensions of the window
-                var height = $(window).height();
-                var width = $(window).width();
+                var height = window.innerHeight;
+                var width = window.innerWidth;
                 //console.log(width + "x" + height);
                 $("canvas").height(height);7
                 $("canvas").width(height * 1.33);
 
                 console.log('PPI: ' + document.getElementById('ppitest').offsetWidth);
-                console.log(window.outerWidth + 'x' + window.outerHeight);
-                console.log(window.innerWidth + 'x' + window.innerHeight);
-                console.log($("body").width() + 'x' + $("body").height());
-                console.log(screen.width + 'x' + screen.height)
+                console.log('Outer: ' + window.outerWidth + 'x' + window.outerHeight);
+                console.log('Inner: ' + window.innerWidth + 'x' + window.innerHeight);
+                console.log('Body: ' + $("body").width() + 'x' + $("body").height());
+                console.log('Screen: ' + screen.width + 'x' + screen.height)
 
                 // Set default player width and height
                 var PlayerWidth = 640;
@@ -116,6 +116,11 @@
 
             // Set dimensions of player
             AdjustPlayerDimensions();
+
+            var supportsOrientationChange = "onorientationchange" in window,
+                orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+
+            window.addEventListener(orientationEvent, AdjustPlayerDimensions(), false);
 
         </script>
 
