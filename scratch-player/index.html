@@ -16,65 +16,9 @@
     <link rel="stylesheet" href="index.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<<<<<<< HEAD
-    <script> var projectId = <%= projectId %>;</script>
-    <script>
-        // projectID is passed in via the node server.
-        
-        // Check to see if the project id exists
-        if(projectId === "")
-        {
-            alert("No project ID.");
-        } else {
-            // If so, set the HTML manifest to the manifest file.
 
-            var appCache = window.applicationCache;
-            
-            // Bind events for the app cache status updates. 
-            appCache.onprogress = function(e) {
-                $(".downloading-text").text("Downloading: " + e.loaded + "/" + e.total);
-            }
-
-            appCache.oncached = function(e) {
-                $(".downloading-text").text("Downloaded!");
-                $(".downloading-text").fadeOut();
-                $(".player-container").fadeIn();
-            }
-
-            appCache.onnoupdate = function(e) {
-                $(".downloading-text").text("No updates available.");
-                $(".downloading-text").fadeOut();
-                $(".player-container").fadeIn();
-            }
-
-            appCache.onupdateready = function(e) {
-                console.log("Updating AppCache");
-                appCache.swapCache();
-            }
-
-            appCache.onchecking = function(e) {
-                $(".downloading-text").text("Checking for updates...");
-            }
-
-            appCache.onerror = function(e) {
-                $(".player-loading").css({display: "none"});
-                $(".player-container").css({display: "block"});
-            }
-
-            appCache.onobsolete = function(e) {
-                $(".player-loading").css({display: "none"});
-                $(".player-container").css({display: "block"});
-            }
-
-            // Request to update the appcache
-            console.log($("html").attr("manifest"));
-            //appCache.update();                                COMMENTED FOR RUNNING WITH NO MANIFEST
-
-        }
-    </script>
-=======
     <script> var projectId = <%= projectId %>; </script>
->>>>>>> 5380cd104a21b9abd3b25255b98d872007afdc24
+
 </head>
 
     <body style="width: 100%; height: 100%; background-color: #DDDDDD;" onresize = AdjustPlayerDimensions();>
