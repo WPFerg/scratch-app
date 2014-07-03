@@ -229,6 +229,11 @@ function Scratch(project_id)
         $('#down').bind('touchstart touchmove', function(e) { runtime.keysDown[40] = true; runtime.startKeyHats(40); });
         $('#down').bind('touchend', function(e) { delete runtime.keysDown[40]; });
 
+        // Set project details from the API to set the title to the title of the project. If the project hasn't been published, fail silently.
+        $.get("/projectdetails/"+project_id+"/?format=json", function(projectData) {
+            $("title").text(projectData.title);
+        }).fail(function(){});
+
     },
     function(err)
     {
