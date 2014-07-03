@@ -66,7 +66,7 @@ var IO = function()
 };
 
 // Load in a project, initialize it then start running it
-IO.prototype.loadProject = function(project_id)
+IO.prototype.loadProject = function(project_id, successCallback, failureCallback)
 {
     // Create more intuative var name
     var self = this;
@@ -77,6 +77,9 @@ IO.prototype.loadProject = function(project_id)
         // Save get request data to var[data]
         self.data = data;
 
+        // Call the success Callback to indicate the project is correct
+        successCallback();
+
         // Initialize project
         self.makeObjects();
         self.loadThreads();
@@ -84,6 +87,9 @@ IO.prototype.loadProject = function(project_id)
 
         // Try to run the project
         runtime.loadStart();
+    }).fail(function(error) {
+        // If there's a problem, report back to the caller
+        failureCallback(error);
     });
 };
 
