@@ -22,30 +22,35 @@ app.use('/projectdetails/', proxy(url.parse('http://scratch.mit.edu/api/v1/proje
 app.use('/asset/', proxy(url.parse('http://cdn.scratch.mit.edu/internalapi/asset/')));
 app.use('/scratch-player/', scratch.serveScratchFolder);
 app.use(express.static('.'));
-// app.use('/manifest', function(req, res) {
+app.use('/manifest', function(req, res) {
 
+<<<<<<< HEAD
 // 	// Remove the leading /
 // 	var projectId = req.url.substring(1);
+=======
+
+	// Remove the leading /
+	var projectId = req.url.substring(1);
+>>>>>>> 5380cd104a21b9abd3b25255b98d872007afdc24
 	
 
-// 	// Ensure the project id is a number so it's the correct format.
+	// Ensure the project id is a number so it's the correct format.
 
-// 	if(parseInt(projectId).toString().length == 8)
-// 	{
-// 		// Return the response as plain text cache manifest
-// 		res.setHeader("Content-Type", "text/cache-manifest");
-// 		// Project ID is a number, create the manifest.
-// 		manifest.createManifest(projectId, function(manifest) {
-// 			res.end(manifest);
-// 		});
-// 	} else {
-// 		// Project ID isn't a number, show an error.
-// 		res.writeHead(400);
-// 		res.setHeader("Content-Type", "text/plain");
-// 		res.end("FAILURE: Project ID is invalid.");
-// 	}
+	if(parseInt(projectId).toString().length == 8)
+	{
+		// Return the response as plain text cache manifest
+		res.setHeader("Content-Type", "text/cache-manifest");
+		// Project ID is a number, create the manifest.
+		manifest.createManifest(projectId, function(manifest) {
+			res.end(manifest);
+		});
+	} else {
+		// Project ID isn't a number, show an error.
+		res.writeHead(400, {"Content-Type": "text/plain"});
+		res.end("FAILURE: Project ID is invalid.");
+	}
 
-// });
+});
 
 // Set the port. process.env.PORT is so Heroku works. If it doesn't exist, set it to 3000.
 var port = process.env.PORT || 3000;
