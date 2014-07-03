@@ -20,13 +20,10 @@ exports.listen = function()
 
         appCache.oncached = function(e) {
             $("#preloader-caption").text("Downloaded!");
-            $("#preloader-caption").slideUp();
         }
 
         appCache.onnoupdate = function(e) {
             // Do nothing.
-
-            $("#preloader-caption").remove();
         }
 
         appCache.onupdateready = function(e) {
@@ -41,12 +38,10 @@ exports.listen = function()
 
         appCache.onerror = function(e) {
             $("#preloader-caption").text("Error checking or downloading updates.");
-            $("#preloader-caption").slideUp();
         }
 
         appCache.onobsolete = function(e) {
-            $(".player-loading").css({display: "none"});
-            $(".player-container").css({display: "block"});
+            // Nothing
         }
 
         return;
