@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="index.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script> var projectId = <%= projectId %>;</script>
+    <script> var projectId = <%= projectId %>; </script>
     <script>
         // projectID is passed in via the node server.
         
@@ -49,6 +49,7 @@
             appCache.onupdateready = function(e) {
                 console.log("Updating AppCache");
                 appCache.swapCache();
+                appCache.oncached(e);
             }
 
             appCache.onchecking = function(e) {

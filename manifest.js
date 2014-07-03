@@ -20,7 +20,8 @@ exports.createManifest = function(projectId, callbackFunction)
 
 		// If there's no more data, we can generate the manifest.
 		response.on('end', function() {
-			generateManifest(projectId, str, callbackFunction);
+			// Use exports. to ensure generateManifest is actually called. Without exports. it isn't.
+			exports.generateManifest(projectId, str, callbackFunction);
 		});
 
 		// If there's an error, call the callback function with an error parameter
@@ -31,14 +32,20 @@ exports.createManifest = function(projectId, callbackFunction)
 	http.request(requestOpts, responseCallback).end();
 }
 
-generateManifest = function(projectId, manifestData, callbackFunction)
+exports.generateManifest = function(projectId, manifestData, callbackFunction)
 {
 	// Parse manifestData into JSON
 	try
 	{
-		manifestData = JSON.parse(manifestData);
+		// If the manifest's String, make it JSON
+		if(typeof(manifestData) === "string")
+		{
+			manifestData = JSON.parse(manifestData);
+		}
 	} catch (err) {
+		// If the JSON parse fails...
 		callbackFunction("Not a valid scratch file.");
+		return;
 	}
 
 	var manifest;
@@ -79,7 +86,12 @@ addFilesInFolder = function(folderUrl)
 	var scratchPlayerFiles = "";
 
 	// Read the directory. If there's an error instantly return
-	var files = fs.readdirSync(folderUrl);
+	try
+	{
+		var files = fs.readdirSync(folderUrl);
+	} catch (err) {
+		return "";
+	}
 
 	// For every file in the folder, check to see if it's a folder. If so, add those files. Otherwise,
 	// Just add it straight away.
