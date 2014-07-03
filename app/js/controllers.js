@@ -42,9 +42,16 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   	// 	console.log(projectId);
   	// }
 
-    $scope.projectId = $routeParams.projectId
+    $scope.projectId = $routeParams.projectId;
+
+    // Project status -- defaults for loading.
+    $scope.loading = true;
+    $scope.projectExists = false;
+
   	// Get the project
-  	$scope.project = ProjectDetails.get({"projectId": $scope.projectId});
+  	$scope.project = ProjectDetails.get({"projectId": $scope.projectId},
+          function() { $scope.loading = false; $scope.projectExists = true; },  // Called on success, meaning project is published
+          function() { $scope.loading = false; }); // Called on fail, which means the project isn't published.
 
   	// Get the detailed information about the project.
 
@@ -52,13 +59,8 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   	Projects.get({"projectId": $scope.projectId}, function(data) {
   		// Callback function after getting the projects.
   		// Assign all the information to the scope
-
-  		// May seem weird but that's how I got it to work
-  		$scope.projectInDepth.children = data.children;
-  		$scope.projectInDepth.sounds = data.sounds;
-  		$scope.projectInDepth.costumes = data.costumes;
-  		$scope.projectInDepth.assetLength = data.children.length + data.sounds.length + data.costumes.length;
-  	});
+      $scope.projectExists = true;  
+    });
 
   	// Quick download stats variables
   	$scope.assetsDownloaded = 0;

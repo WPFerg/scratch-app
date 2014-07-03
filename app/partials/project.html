@@ -38,6 +38,10 @@
 
 	<!-- If not defined, then project doesn't exist. -->
 	<div ng-hide="project.title">
-		<h1>That project doesn't exist, or hasn't been shared.</h1>
+		
+    <p ng-show="loading">Loading the project...</p>
+    <!-- If it's not published then see if the project exists and display a relevant message. -->
+    <p ng-show="!loading && !projectExists">This project hasn't been published. This project also doesn't exist. </p>
+    <p ng-show="!loading && projectExists">This project hasn't been published. However, the project exists. Click <a href="/scratch-player/{{projectId}}">here</a> to play it.</p>
 	</div>
 </div>

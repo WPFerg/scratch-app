@@ -8,7 +8,15 @@ exports.serveScratchFolder = function(req, res)
 	// Response to the client. 200 is a success.
 	var responseCode = 200;
 
-	// If the url requests a folder, return that.
+	// Ensure the URL has a value, and it isn't getting /
+	if(url === "")
+	{
+		res.writeHead(404, {"Content-Type": "text/plain"});
+		res.end("Not found");
+		return;
+	}
+
+	// If the url requests a folder/file, return that.
 	if(url.indexOf(".") !== -1 || url.indexOf("/") !== -1)
 	{
 		// Convert % notation to the #.
