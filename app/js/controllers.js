@@ -2,6 +2,7 @@
 /* Controllers */
 
 angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource'])
+
   .controller('IndexCtrl', ['$scope', function($scope) {
   	$scope.checkForScratchLink = function()
   	{
@@ -24,6 +25,7 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
 		  }
   	}
   }])
+
   .controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', function($scope, Projects, ProjectDetails, $routeParams) {
   	
   	// Entering a project URL navigates the project back to Index. Therefore this is commented out.
@@ -78,4 +80,5 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   	{
   		$scope.isDownloading = true;
   	}
+
   }]);

@@ -2,16 +2,33 @@
    all CSS selectors would be descendants of #wrapper so that the player
    is embeddable.
 */
-#player-container {
+#player-container
+{
+    /*position: relative;*/
     position: relative;
-    width: 482px;
-    padding: 48px;
-    margin: 0 auto;
+    left: 0px;
+    top: 0px;
+    min-width: 480;
+    min-height: 360;
+
+    /*
+        -- SCOTT LOGIC [14:51 02_07_2014] --
+
+        Removed width declaration as a dynamic one now exists in the HTML. Removed
+        padding so player fills the screen.
+
+        width: 482px;
+        padding: 48px;
+    */
+
+    margin: auto;
     font-family: sans-serif;
+
     /* Before, we accomplished this with e.preventDefault
      * on the context div.  But, we'd like to use those click events
      * for some things like reporter sliders.
      */
+
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -21,9 +38,20 @@
 }
 
 /*  Control bar above the stage */
-#player-header {
-    width: 480px;
-    height: 38px;
+#player-header
+{
+
+    /*
+        -- SCOTT LOGIC [14:51 02_07_2014] --
+
+        Removed width and height declaration as a dynamic one now exists in the HTML.
+
+        width: 480px;
+        height: 38px;
+    */
+
+    min-width: 480px;
+    min-height: 38px;
     position: relative;
     background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e6e6));
     background: -webkit-linear-gradient(#fff, #e6e6e6);
@@ -91,8 +119,8 @@ button#trigger-stop:hover {
     position: relative;
     border: 1px solid #d1d1d1;
     border-top: 0;
-    width: 480px;
-    height: 360px;
+    min-width: 480px;
+    min-height: 360px;
 }
 
 /* The Stage */
@@ -107,12 +135,21 @@ button#trigger-stop:hover {
 }
 
 /* Pane over the Stage with the green flag on startup */
-#overlay {
+#overlay
+{
     position: absolute;
     top: 0;
     left: 0;
-    width: 480px;
-    height: 360px;
+
+    /*
+        -- SCOTT LOGIC [14:51 02_07_2014] --
+
+        Removed width and height declaration as a dynamic one now exists in the HTML.
+
+        width: 480px;
+        height: 360px;
+    */
+
     z-index: 10000;
     background: url(img/playerStartFlag.png) rgba(0, 0, 0, .26) center center no-repeat;
 }
@@ -125,8 +162,16 @@ button#trigger-stop:hover {
     left: 50%;
     margin-left: -156px;
     margin-top: -61px;
-    width: 309px;
-    height: 119px;
+    
+    /*
+        -- SCOTT LOGIC [14:51 02_07_2014] --
+
+        Removed width and height declaration as a dynamic one now exists in the HTML.
+
+        width: 309px;
+        height: 119px;
+    */
+
     border: 1px solid rgb(208, 209, 210);
     background: #fff;
     border-radius: 12px;

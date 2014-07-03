@@ -26,6 +26,13 @@ var Sprite = require('./Sprite'),
 
 var Stage = function(data)
 {
+
+    // Set default width and height of player
+    this.PlayerWidth = $("#container").width();
+    this.PlayerHeight = $("#container").height();
+    //this.PlayerWidth = document.getElementById('player-container').attr('width');
+    //this.PlayerHeight = document.getElementById('player-container').attr('height');
+
     // Place the background layer in the very back.
     // The pen layer is right above the stage background,
     // and all sprites are above that.
@@ -36,8 +43,8 @@ var Stage = function(data)
 
     // Create a canvas and specify width and height.
     this.lineCanvas = document.createElement('canvas');
-    this.lineCanvas.width = 480;
-    this.lineCanvas.height = 360;
+    this.lineCanvas.width = this.PlayerWidth;
+    this.lineCanvas.height = this.PlayerHeight;
 
     // Get a context of the line canvas, set it as stage and call Sprite.
     this.lineCache = this.lineCanvas.getContext('2d');
@@ -80,7 +87,7 @@ Stage.prototype.isLoaded = function()
 // Clear the pen strokes by rendering a rectangle
 Stage.prototype.clearPenStrokes = function()
 {
-    this.lineCache.clearRect(0, 0, 480, 360);
+    this.lineCache.clearRect(0, 0, this.PlayerWidth, this.PlayerHeight);
 };
 
 // Add a stroke to the canvas.

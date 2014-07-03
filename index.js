@@ -24,7 +24,6 @@ app.use('/scratch-player/', scratch.serveScratchFolder);
 app.use(express.static('.'));
 // app.use('/manifest', function(req, res) {
 
-
 // 	// Remove the leading /
 // 	var projectId = req.url.substring(1);
 	
