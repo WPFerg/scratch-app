@@ -108,7 +108,11 @@ addFilesInFolder = function(folderUrl)
 			scratchPlayerFiles += addFilesInFolder(folderUrl + file + "/");
 		} else {
 			// Add to the manifest, replace hashes with escape char so it's a file and not a page with a hash.
-			file = file.replace(/#/g, "\%23");
+			file = file.replace(/#/g, "%23");
+			file = file.replace(/\(/g, "%28");
+			file = file.replace(/\)/g, "%29");
+			// This breaks but I'm keeping it here fore future reference.
+			//file = encodeURIComponent(file);
 			scratchPlayerFiles += ("\n/" + folderUrl + file);
 		}
 	}

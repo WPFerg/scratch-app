@@ -194,6 +194,11 @@ IO.prototype.makeObjects = function()
             }
         } else {
             newSprite = new Reporter(obj);
+            // If ther's a lable on the object, set that as the sprite's label
+            if(obj.label)
+            {
+                newSprite.label = obj.label;
+            }
             runtime.reporters.push(newSprite);
         }
 

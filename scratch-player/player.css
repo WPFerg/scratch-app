@@ -159,18 +159,17 @@ button#trigger-stop:hover {
     position: absolute;
     z-index: 10001;
     top: 50%;
-    left: 50%;
-    margin-left: -156px;
+    left: 25%;
     margin-top: -61px;
     
     /*
         -- SCOTT LOGIC [14:51 02_07_2014] --
 
         Removed width and height declaration as a dynamic one now exists in the HTML.
-
-        width: 309px;
-        height: 119px;
     */
+    width: 50%;
+    height: 120px;
+    
 
     border: 1px solid rgb(208, 209, 210);
     background: #fff;

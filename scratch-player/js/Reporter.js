@@ -50,8 +50,12 @@ Reporter.prototype.determineReporterLabel = function()
     // If thetarget is stage command is getVar then return the param, as getVar is a generic cmd.
     // If the target is stage and command isn't getVar, return the command
     // Otherwise, return the target and the params.
+
+    // If the label's already defined, just return that.
+    if(this.label) { return this.label; }
+
     if (this.target === 'Stage' && this.cmd === "getVar:") return this.param;
-    if (this.target === 'Stage' && this.param === null) return this.cmd;
+    if (this.param === null) return this.cmd;
     return this.target + ': ' + this.param;
 }
 
@@ -311,7 +315,9 @@ List.prototype.update = function()
     // Set the contents to be the listsprite target with the list name listName
     // -?- (assuming this is what findList does) -?-
     //this.contents = findList(runtime.spriteNamed(this.target), this.listName);
-    this.contents = VarListPrims.findList(runtime.spriteNamed(this.target),this.listName);
+
+    /*** ------------------------------------------------------------------------------------ if giving grief, replace with VLP.findList() */
+    this.contents = VarListPrims.VarListPrims(runtime.spriteNamed(this.target),this.listName);
 
     // Set the CSS to visible as appropriate. If it's not visible then return.
     this.el.css('display', this.visible ? 'inline-block' : 'none');

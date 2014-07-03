@@ -15,6 +15,7 @@
 
 'use strict';
 
+
 var VarListPrims = function() {}
 
 VarListPrims.prototype.addPrimsTo = function(primTable) {
@@ -116,12 +117,12 @@ VarListPrims.prototype.primReadList = function(b) {
 };
 
 VarListPrims.prototype.primListAppend = function(b) {
-    var list = VarListPrims(interp.targetSprite(), interp.arg(b, 1));
+    var list = VarListPrims.VarListPrims(interp.targetSprite(), interp.arg(b, 1));
     if (list) list.push(interp.arg(b, 0));
 };
 
 VarListPrims.prototype.primListDeleteLine = function(b) {
-    var list = VarListPrims(interp.targetSprite(), interp.arg(b, 1));
+    var list = VarListPrims.VarListPrims(interp.targetSprite(), interp.arg(b, 1));
     if (!list) return;
     var line = interp.arg(b, 0);
     if (line == 'all' || list.length == 0) {
@@ -197,7 +198,7 @@ VarListPrims.prototype.primListContains = function(b) {
 VarListPrims.prototype.primHideList = function(b) {
     var targetList = interp.arg(b, 0), targetSprite = interp.targetSprite().objName;
     for (var r = 0; r < runtime.reporters.length; r++) {
-        if (runtime.reporters[r] instanceof List && runtime.reporters[r].listName == targetList && (runtime.reporters[r].target == targetSprite || runtime.reporters[r].target == 'Stage')) {
+        if (typeof(runtime.reporters[r]) === "List" && runtime.reporters[r].listName == targetList && (runtime.reporters[r].target == targetSprite || runtime.reporters[r].target == 'Stage')) {
             runtime.reporters[r].visible = false;
             return;
         }
