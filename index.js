@@ -24,14 +24,9 @@ app.use('/scratch-player/', scratch.serveScratchFolder);
 app.use(express.static('.'));
 app.use('/manifest', function(req, res) {
 
-<<<<<<< HEAD
-// 	// Remove the leading /
-// 	var projectId = req.url.substring(1);
-=======
-
 	// Remove the leading /
 	var projectId = req.url.substring(1);
->>>>>>> 5380cd104a21b9abd3b25255b98d872007afdc24
+
 	
 
 	// Ensure the project id is a number so it's the correct format.
