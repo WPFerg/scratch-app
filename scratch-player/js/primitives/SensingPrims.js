@@ -117,7 +117,7 @@ var stageColorHitTest = function(target, color) {
     var stageContext = stageCanvas.getContext('2d');
 
     $.each(runtime.sprites, function(i, sprite) {
-        if (sprite != target)
+        if (typeof(sprite) === "Sprite" && sprite != target)
             sprite.stamp(stageContext, 100);
     });
 
