@@ -118,7 +118,9 @@ var Sprite = function(data) {
 };
 
 // Attaches a Sprite (<img>) to a Scratch scene
-Sprite.prototype.attach = function(scene) {
+Sprite.prototype.attach = function(scene)
+{
+
     // Create textures and materials for each of the costumes.
     for (var c in this.costumes) {
         this.textures[c] = document.createElement('img');
@@ -132,6 +134,7 @@ Sprite.prototype.attach = function(scene) {
 
             $(sprite.textures[c]).css('display', sprite.currentCostumeIndex == c ? 'inline' : 'none');
             $(sprite.textures[c]).css('position', 'absolute').css('left', '0px').css('top', '0px');
+            
             $(sprite.textures[c]).bind('dragstart', function(evt) { evt.preventDefault(); })
                 .bind('selectstart', function(evt) { evt.preventDefault(); })
                 .bind('touchend', function(evt) { sprite.onClick(evt); $(this).addClass('touched'); })
@@ -142,7 +145,19 @@ Sprite.prototype.attach = function(scene) {
                         $(this).removeClass('touched');
                     }
                 });
+
+            // Add sprite texture to the scene
             scene.append($(sprite.textures[c]));
+
+            // Scale width to fit the scene
+            var originalwidth = $(sprite.textures[c]).width();
+            var scalar = window.WidthScalar();
+            $(sprite.textures[c]).width(originalwidth * scalar);
+
+            // Link width to sprite
+            sprite.SpriteWidth = originalwidth * scalar;
+
+
         })
         .attr('src', io.asset_base + this.costumes[c].baseLayerMD5 + io.asset_suffix);
     }

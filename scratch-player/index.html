@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest='/manifest/<%= projectId %>' style="width: 100%; height: 100%;">
+<html style="width: 100%; height: 100%;"> <!-- manifest='/manifest/<%= projectId %>' -->
 <head>
     <meta charset=utf-8>
     <title>Scratch HTML5</title>
@@ -21,7 +21,7 @@
 
 </head>
 
-    <body style="width: 100%; height: 100%; background-color: #000000;" onresize = AdjustPlayerDimensions();>
+    <body style="width: 100%; height: 100%; background-color: #000000;">
 
         <div class="player-loading"><div class="downloading-text"></div></div>
 
@@ -46,84 +46,7 @@
 
         <div id="ppitest" style="width:1in;visible:hidden;padding:0px"></div>
 
-        <script type="text/JavaScript">
-
-            // Function to calculate dimensions
-            function AdjustPlayerDimensions()
-            {
-
-                // Get the dimensions of the window
-                var height = window.innerHeight;
-                var width = window.innerWidth;
-                //console.log(width + "x" + height);
-                $("canvas").height(height);7
-                $("canvas").width(height * 1.33);
-
-                console.log('PPI: ' + document.getElementById('ppitest').offsetWidth);
-                console.log('Outer: ' + window.outerWidth + 'x' + window.outerHeight);
-                console.log('Inner: ' + window.innerWidth + 'x' + window.innerHeight);
-                console.log('Body: ' + $("body").width() + 'x' + $("body").height());
-                console.log('Screen: ' + screen.width + 'x' + screen.height)
-
-                // Set default player width and height
-                var PlayerWidth = 640;
-                var PlayerHeight = 480 + 38;
-                var AspectRatio = 640/480;
-
-                // Make sure the width/height ratios are acceptable
-                if (width / height > AspectRatio)
-                {
-                    PlayerHeight = height-4;
-                    PlayerWidth = PlayerHeight * AspectRatio -4;
-                } else {
-                    PlayerWidth = width-4;
-                    PlayerHeight = PlayerWidth / AspectRatio -4;
-                }
-
-                // Calculate size variables for components
-                var HeaderWidth = PlayerWidth;
-                var HeaderHeight = 38;
-                var StageWidth = PlayerWidth;
-                var StageHeight = PlayerHeight - HeaderHeight;
-
-                //$('body').height(window.outerHeight);
-                //$('body').paddingTop(window.outerHeight - PlayerHeight)
-                var CurrentHeight = $('html').height();
-                document.getElementsByTagName("body")[0].style.paddingTop = ((CurrentHeight - PlayerHeight) / 2).toString() + 'px';
-                $('body').height(CurrentHeight - (CurrentHeight - PlayerHeight))
-
-                // Set document element sizes
-                //$('player-container').top(window.outerHeight - PlayerHeight);
-                $("#player-container").width(PlayerWidth);
-                $("#player-container").height(PlayerHeight);
-                $("#player-header").width(HeaderWidth);
-                $("#player-header").height(HeaderHeight);
-                $("#player-content").width(StageWidth);
-                $("#player-content").height(StageHeight);
-                    
-                $("#container").width(StageWidth);
-                $("#container").height(StageHeight);
-                $("#overlay").width(StageWidth);
-                $("#overlay").height(StageHeight);
-
-                //$("#player-container").attr('margin', 'auto');
-
-                // Set document element properties
-                //PContainer.attr('width', PlayerWidth+2);
-                //PHeader.attr('width', PlayerWidth+2);
-
-            }
-
-            // Set dimensions of player
-            AdjustPlayerDimensions();
-
-            var supportsOrientationChange = "onorientationchange" in window,
-                orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
-
-            window.addEventListener(orientationEvent, AdjustPlayerDimensions(), false);
-
-        </script>
-
+        <!-- <script type="text/JavaScript" src="js/Scaling.js"></script> -->
         <script type="text/JavaScript" src="Scratch.js"></script>
         <script type="text/javascript">
           (function() {

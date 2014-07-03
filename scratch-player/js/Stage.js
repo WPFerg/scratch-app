@@ -27,12 +27,6 @@ var Sprite = require('./Sprite'),
 var Stage = function(data)
 {
 
-    // Set default width and height of player
-    this.PlayerWidth = $("#container").width();
-    this.PlayerHeight = $("#container").height();
-    //this.PlayerWidth = document.getElementById('player-container').attr('width');
-    //this.PlayerHeight = document.getElementById('player-container').attr('height');
-
     // Place the background layer in the very back.
     // The pen layer is right above the stage background,
     // and all sprites are above that.
@@ -43,8 +37,8 @@ var Stage = function(data)
 
     // Create a canvas and specify width and height.
     this.lineCanvas = document.createElement('canvas');
-    this.lineCanvas.width = this.PlayerWidth;
-    this.lineCanvas.height = this.PlayerHeight;
+    this.lineCanvas.width = $("#container").width();
+    this.lineCanvas.height = $("#container").height();
 
     // Get a context of the line canvas, set it as stage and call Sprite.
     this.lineCache = this.lineCanvas.getContext('2d');

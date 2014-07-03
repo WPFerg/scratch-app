@@ -8,8 +8,8 @@ exports.listen = function()
     {
         alert("No project ID.");
     } else {
+        
         // If so, set the HTML manifest to the manifest file.
-
         var appCache = window.applicationCache;
         
         // Bind events for the app cache status updates. 
