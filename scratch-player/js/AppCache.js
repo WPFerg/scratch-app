@@ -14,18 +14,19 @@ exports.listen = function()
         
         // Bind events for the app cache status updates. 
         appCache.onprogress = function(e) {
-            $(".downloading-text").text("Downloading: " + e.loaded + "/" + e.total);
+            $("#preloader-caption").text("Downloading: " + e.loaded + "/" + e.total);
+            $("#preloader-progress-bar").width(e.loaded * 100 / e.total + "%");
         }
 
         appCache.oncached = function(e) {
-            $(".downloading-text").text("Downloaded!");
-            $(".downloading-text").slideUp();
+            $("#preloader-caption").text("Downloaded!");
+            $("#preloader-caption").slideUp();
         }
 
         appCache.onnoupdate = function(e) {
             // Do nothing.
 
-            $(".downloading-text").remove();
+            $("#preloader-caption").remove();
         }
 
         appCache.onupdateready = function(e) {
@@ -35,12 +36,12 @@ exports.listen = function()
         }
 
         appCache.onchecking = function(e) {
-            $(".downloading-text").text("Checking for updates...");
+            $("#preloader-caption").text("Checking for updates...");
         }
 
         appCache.onerror = function(e) {
-            $(".downloading-text").text("Error checking or downloading updates.");
-            $(".downloading-text").slideUp();
+            $("#preloader-caption").text("Error checking or downloading updates.");
+            $("#preloader-caption").slideUp();
         }
 
         appCache.onobsolete = function(e) {
