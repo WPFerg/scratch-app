@@ -330,7 +330,7 @@ Sprite.prototype.updateTransform = function()
     var drawX = this.scratchX + ($("#container").width() / 2) - rotationCenterX;
     var drawY = -this.scratchY + ($("#container").height() / 2) - rotationCenterY;
 
-    console.log(drawX + ', ' + drawY + ' | ' + rotationCenterX + ', ' + rotationCenterY + ' | ' + this.scratchX + ', ' + -this.scratchY);
+    //console.log(drawX + ', ' + drawY + ' | ' + rotationCenterX + ', ' + rotationCenterY + ' | ' + this.scratchX + ', ' + -this.scratchY);
 
     var scaleXprepend = '';
     if (this.isFlipped) {

@@ -90,16 +90,31 @@ button#toggle-fullscreen {
     top: 0;
     left: 0;
 }
-button#trigger-green-flag {
+#trigger-green-flag
+{
     background-image: url(img/greenFlagOff.png);
+    background-repeat:
+    no-repeat;
+    background-size: 100%;
+    position: absolute;
+    min-width: 40px;
+    min-height: 40px;
+    z-index: 1000;
 }
-button#trigger-green-flag:hover {
+#trigger-green-flag:hover {
     background-image: url(img/greenFlagOn.png);
 }
-button#trigger-stop {
+#trigger-stop {
     background-image: url(img/stopOff.png);
+    background-repeat:
+    no-repeat;
+    background-size: 100%;
+    position: absolute;
+    min-width: 40px;
+    min-height: 40px;
+    z-index: 1000;
 }
-button#trigger-stop:hover {
+#trigger-stop:hover {
     background-image: url(img/stopOn.png);
 }
 
@@ -117,8 +132,8 @@ button#trigger-stop:hover {
 /* Wrapper for the Stage */
 #player-content {
     position: relative;
-    border: 1px solid #d1d1d1;
-    border-top: 0;
+    /*border: 1px solid #d1d1d1;
+    border-top: 0;*/
     /*min-width: 480px;
     min-height: 360px;*/
 }

@@ -43,11 +43,11 @@ window.IsLandscape = function()
     var height = screen.height;
 
     // Make sure not buggy version of android
-    if (uagent == "android 10")
-    {
-        height = screen.width;
-        width = screen.height;
-    }
+    // if (uagent == "android 10")
+    // {
+    //     height = screen.width;
+    //     width = screen.height;
+    // }
 
     // Return checked result
     return (width > height);
@@ -155,6 +155,79 @@ function PushAsjustmentToAllSprites()
 
 };
 
+// Position buttons correctly based on orientation
+function PositionButtons()
+{
+
+    // Declare variables
+    var GButton = $('#trigger-green-flag');
+    var SButton = $('#trigger-stop');
+
+    var GCalcLeft = 0;
+    var SCalcLeft = 0;
+    var GCalcTop = 0;
+    var SCalcTop = 0;
+
+    // Calculate position of buttons on screen 
+    if (window.IsLandscape())
+    {
+
+        // Size buttons appropriately
+        GButton.width(window.innerWidth / 100 * 6);
+
+        // Set default positions
+        GCalcLeft = window.innerWidth - GButton.width() - 10;
+        SCalcLeft = window.innerWidth - GButton.width() - 10;
+        GCalcTop = 10;
+        SCalcTop = GCalcTop + GButton.height() + 10;
+
+        // Create temp hold for suggested value
+        var ProposedLeft = window.innerWidth - parseInt($("#player-container").css('marginRight')) + 10;
+
+        // Determine if there is enough space to apply suggestion
+        if (ProposedLeft + GButton.width() < window.innerWidth)
+        {
+            GCalcLeft = ProposedLeft;
+            SCalcLeft = ProposedLeft;
+        }
+        
+    } else {
+
+        // Size buttons appropriately
+        GButton.width(window.innerHeight / 100 * 6);
+
+        // Set default positions
+        SCalcLeft = window.innerWidth - GButton.width() - 10;
+        GCalcLeft = SCalcLeft - GButton.width() - 10;
+        GCalcTop = 10;
+        SCalcTop = GCalcTop;
+
+        // Create temp hold for suggested value
+        var ProposedTop = parseInt($('body').css('paddingTop')) - GButton.width() - 10;
+        console.log($('body').css('paddingTop'));
+
+        // Set top values to just above player
+        if (ProposedTop > 0)
+        {
+            GCalcTop = ProposedTop;
+            SCalcTop = ProposedTop;
+        }
+
+    }
+
+    // Sync up button dimensions
+    GButton.height(GButton.width());
+    SButton.width(GButton.width());
+    SButton.height(GButton.width());
+
+    // Apply positions to elements
+    GButton.css('left', GCalcLeft.toString() + 'px');
+    GButton.css('top', GCalcTop.toString() + 'px');
+    SButton.css('left', SCalcLeft.toString() + 'px');
+    SButton.css('top', SCalcTop.toString() + 'px');
+
+};
+
 // Function to calculate dimensions
 function AdjustPlayerDimensions()
 {
@@ -197,7 +270,7 @@ function AdjustPlayerDimensions()
     //$('body').paddingTop(window.outerHeight - PlayerHeight)
     var CurrentHeight = $('html').height();
     document.getElementsByTagName("body")[0].style.paddingTop = ((CurrentHeight - PlayerHeight) / 2).toString() + 'px';
-    $('body').height(CurrentHeight - (CurrentHeight - PlayerHeight))
+    $('body').height(CurrentHeight - (CurrentHeight - PlayerHeight));
 
     // Set document element sizes
     $("canvas").height(PlayerHeight);
@@ -215,6 +288,9 @@ function AdjustPlayerDimensions()
 
     // Process sprite scaling update
     PushAsjustmentToAllSprites();
+
+    // Position buttons on form
+    PositionButtons();
 
     // Mark setup as complete
     window.SettingUp = false;
