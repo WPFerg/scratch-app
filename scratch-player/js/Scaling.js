@@ -7,21 +7,69 @@ var Sprite = require('./Sprite'),
 
 
 // Create empty global variables
-window.OldWidthScalar = 1;
+window.OldScalar = 1;
+window.SettingUp = true;
 
-window.WidthScalar = function()
+// Method to calculate the amount for which values need to be scaled by
+window.Scalar = function()
 {
 
     // Calculate result
-    var result = $("#container").width() / 480;
+    var result = 1;
+    if (window.SettingUp !== true) { result = $("#container").width() / 480; } 
 
     // Return calculated value
     return result;
 
 };
 
+// Method to calculate an equivalent scaled value
+window.ScaleEquiv = function(InValue)
+{
+
+    // Return calculated answer
+    return InValue * window.Scalar();
+
+};
+
+// Method to check if landscape
+window.IsLandscape = function()
+{
+    // Set default result
+    var result = true;
+
+    // Get screen height and width
+    var width = screen.width;
+    var height = screen.height;
+
+    // Make sure not buggy version of android
+    if (uagent == "android 10")
+    {
+        height = screen.width;
+        width = screen.height;
+    }
+
+    // Return checked result
+    return (width > height);
+};
+
+// Method to check if portrait
+window.IsPortrait = function()
+{
+    return (window.IsLandscape == false);
+}
+
+// Method for adjusting all sprites for the screen
 function PushAsjustmentToAllSprites()
 {
+
+    // Quick function to calculate new scaled value
+    function CalcNewScaleValue(InValue)
+    {
+        var newwidth = InValue / window.OldScalar;
+        var result = newwidth * window.Scalar();
+        return result;
+    }
 
     // Exit if runtime is not assigned
     if (typeof runtime == 'undefined')
@@ -31,42 +79,78 @@ function PushAsjustmentToAllSprites()
 
     } else {
 
-        // Iterate for every SpriteObject performing PassedFunction
-        for (var i = runtime.sprites.length-1; i >= 0; i--)
+        // Manage runtime stage
+        if (typeof runtime.stage !== 'undefined')
         {
-            // Create object shortcut
-            var SpriteObject = runtime.sprites[i];
+            // Update bounds
+            $(runtime.stage.textures[0]).width(CalcNewScaleValue($(runtime.stage.textures[0]).width()));
+            $(runtime.stage.textures[0]).height(CalcNewScaleValue($(runtime.stage.textures[0]).height()));
+            // runtime.stage.textures[0].updateTransform();
 
-            // Make sure object is a sprite through constructor comparison
-            if (typeof(SpriteObject) == 'object' && SpriteObject.constructor == Sprite)
+            // Debug line
+            //console.log($(runtime.stage.textures[0]).width() + 'x' + $(runtime.stage.textures[0]).height());
+        }
+
+        // Iterate for every sprite loading in any sprites which have failed to load [start loading after 50ms]
+        for (var obj = 0; obj < runtime.sprites.length; obj++)
+        {
+            if (typeof(runtime.sprites[obj]) == 'object' && runtime.sprites[obj].constructor == Sprite)
             {
-
-                // Get the sprite original bounds
-                var OriginalLeft = SpriteObject.scratchX;
-                var OriginalTop = SpriteObject.scratchY;
-
-                // Check to make sure width is assigned
-                if (typeof SpriteObject.SpriteWidth !== 'undefined')
+                if (runtime.sprites[obj].isLoaded())
                 {
 
-                    // Calculate new width
-                    var newwidth = SpriteObject.SpriteWidth / window.OldWidthScalar;
-                    SpriteObject.SpriteWidth = newwidth * window.WidthScalar();
+                    // Create shortcut
+                    var SpriteObject = runtime.sprites[obj];
+
+                    // Get the sprite original bounds
+                    var OriginalLeft = SpriteObject.scratchX;
+                    var OriginalTop = SpriteObject.scratchY;
+
+                    // Check to make sure width is assigned
+                    if (typeof SpriteObject.SpriteWidth !== 'undefined')
+                    {
+
+                        // Calculate new width and height
+                        SpriteObject.SpriteWidth = CalcNewScaleValue(SpriteObject.SpriteWidth);
+                        SpriteObject.SpriteHeight = CalcNewScaleValue(SpriteObject.SpriteWidth);
+
+                        // Debug line
+                        //console.log('Calculated: ' + OriginalWidth + ' > ' + SpriteObject.SpriteWidth);
+
+                        for (var Item in runtime.sprites[obj].costumes)
+                        {
+                            // Create shortcut variable
+                            var IMGTag = runtime.sprites[obj].textures[Item];
+                            var bounds = IMGTag.getBoundingClientRect();
+
+                            //console.log(bounds.top + ' ' + bounds.left);
+
+                            var origtop = bounds.top;
+                            var origleft = bounds.left;
+
+                            // Calculate new scale values
+                            bounds.top = CalcNewScaleValue(bounds.top);
+                            bounds.left = CalcNewScaleValue(bounds.left);
+
+                            var newtop = bounds.top;
+                            var newleft = bounds.left;
+
+                            // Call sprite update method
+                            SpriteObject.updateTransform();
+
+                            // Set IMGTag bounds
+                            $(IMGTag).width(SpriteObject.SpriteWidth);
+                            $(IMGTag).height(SpriteObject.SpriteHeight);
+                        }
+
+                    }
 
                 }
-
-                //var OriginalWidth = 
-
-                // // Apply to each item within the sprite stack
-                // $.each(SpriteObject.stacks, function(index, stack)
-                // {
-                //     PassedFunction(stack, SpriteObject);
-                // });
             }
         };
 
         // Message that sprites have been updated
-        console.log('Finished updating sprites.');
+        //console.log('Finished updating sprites.');
     }
 
 };
@@ -76,14 +160,11 @@ function AdjustPlayerDimensions()
 {
 
     // Set old values for width and height scalars
-    window.OldWidthScalar = $("#container").width() / 480;
+    window.OldScalar = $("#container").width() / 480;
 
     // Get the dimensions of the window
     var width = window.innerWidth;
     var height = window.innerHeight;
-
-    $("canvas").height(height);7
-    $("canvas").width(height * 1.33);
 
     // console.log('PPI: ' + document.getElementById('ppitest').offsetWidth);
     // console.log('Outer: ' + window.outerWidth + 'x' + window.outerHeight);
@@ -108,7 +189,7 @@ function AdjustPlayerDimensions()
 
     // Calculate size variables for components
     var HeaderWidth = PlayerWidth;
-    var HeaderHeight = 38;
+    var HeaderHeight = 0; //38;
     var StageWidth = PlayerWidth;
     var StageHeight = PlayerHeight - HeaderHeight;
 
@@ -119,6 +200,8 @@ function AdjustPlayerDimensions()
     $('body').height(CurrentHeight - (CurrentHeight - PlayerHeight))
 
     // Set document element sizes
+    $("canvas").height(PlayerHeight);
+    $("canvas").width(PlayerWidth);
     $("#player-container").width(PlayerWidth);
     $("#player-container").height(PlayerHeight);
     $("#player-header").width(HeaderWidth);
@@ -132,6 +215,9 @@ function AdjustPlayerDimensions()
 
     // Process sprite scaling update
     PushAsjustmentToAllSprites();
+
+    // Mark setup as complete
+    window.SettingUp = false;
 
 };
 

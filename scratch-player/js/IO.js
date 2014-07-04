@@ -206,7 +206,7 @@ IO.prototype.makeObjects = function()
         return newSprite;
     }
 
-    // Create the sprites and watchers
+    // Create the sprites andruntime.sprites[obj] watchers
     function createObj(obj, sprite)
     {
         // Declare working newsprite var

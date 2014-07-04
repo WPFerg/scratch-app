@@ -8,8 +8,8 @@
     position: relative;
     left: 0px;
     top: 0px;
-    min-width: 480;
-    min-height: 360;
+   /* min-width: 480;
+    min-height: 360;*/
 
     /*
         -- SCOTT LOGIC [14:51 02_07_2014] --
@@ -50,8 +50,8 @@
         height: 38px;
     */
 
-    min-width: 480px;
-    min-height: 38px;
+    /*min-width: 480px;
+    min-height: 38px;*/
     position: relative;
     background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e6e6));
     background: -webkit-linear-gradient(#fff, #e6e6e6);
@@ -119,8 +119,8 @@ button#trigger-stop:hover {
     position: relative;
     border: 1px solid #d1d1d1;
     border-top: 0;
-    min-width: 480px;
-    min-height: 360px;
+    /*min-width: 480px;
+    min-height: 360px;*/
 }
 
 /* The Stage */

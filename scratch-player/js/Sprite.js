@@ -122,7 +122,8 @@ Sprite.prototype.attach = function(scene)
 {
 
     // Create textures and materials for each of the costumes.
-    for (var c in this.costumes) {
+    for (var c in this.costumes)
+    {
         this.textures[c] = document.createElement('img');
         $(this.textures[c])
         .load([this, c], function(evo) {
@@ -149,15 +150,15 @@ Sprite.prototype.attach = function(scene)
             // Add sprite texture to the scene
             scene.append($(sprite.textures[c]));
 
-            // Scale width to fit the scene
-            var originalwidth = $(sprite.textures[c]).width();
-            var scalar = window.WidthScalar();
-            $(sprite.textures[c]).width(originalwidth * scalar);
+            // Scale width and height to fit the scene
+            //console.log(window.WidthScalar() + ' * (' + $(sprite.textures[c]).width() + 'x' + $(sprite.textures[c]).height() + ')');
+            $(sprite.textures[c]).width($(sprite.textures[c]).width() * window.Scalar());
+            //$(sprite.textures[c]).height($(sprite.textures[c]).height() * window.Scalar());
 
             // Link width to sprite
-            sprite.SpriteWidth = originalwidth * scalar;
-
-
+            sprite.SpriteWidth = $(sprite.textures[c]).width();
+            sprite.SpriteHeight = $(sprite.textures[c]).height();
+            
         })
         .attr('src', io.asset_base + this.costumes[c].baseLayerMD5 + io.asset_suffix);
     }
@@ -307,18 +308,29 @@ Sprite.prototype.updateVisible = function() {
     if (this.askInputOn) this.askInput.css('display', this.visible ? 'inline-block' : 'none');
 };
 
-Sprite.prototype.updateTransform = function() {
+Sprite.prototype.updateTransform = function()
+{
+
+    // -- SCOTT LOGIC [9:59 04_07_2014] --
+    // 
+    // Modify this function to position sprite correctly around page.
+    // 
+    // 
+    // 
+
     var texture = this.textures[this.currentCostumeIndex];
     var resolution = this.costumes[this.currentCostumeIndex].bitmapResolution || 1;
 
     var drawWidth = texture.width * this.scale / resolution;
     var drawHeight = texture.height * this.scale / resolution;
 
-    var rotationCenterX = this.costumes[this.currentCostumeIndex].rotationCenterX;
-    var rotationCenterY = this.costumes[this.currentCostumeIndex].rotationCenterY;
+    var rotationCenterX = window.ScaleEquiv(this.costumes[this.currentCostumeIndex].rotationCenterX);
+    var rotationCenterY = window.ScaleEquiv(this.costumes[this.currentCostumeIndex].rotationCenterY);
 
-    var drawX = this.scratchX + (480 / 2) - rotationCenterX;
-    var drawY = -this.scratchY + (360 / 2) - rotationCenterY;
+    var drawX = this.scratchX + ($("#container").width() / 2) - rotationCenterX;
+    var drawY = -this.scratchY + ($("#container").height() / 2) - rotationCenterY;
+
+    console.log(drawX + ', ' + drawY + ' | ' + rotationCenterX + ', ' + rotationCenterY + ' | ' + this.scratchX + ', ' + -this.scratchY);
 
     var scaleXprepend = '';
     if (this.isFlipped) {
