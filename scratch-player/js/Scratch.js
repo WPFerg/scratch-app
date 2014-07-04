@@ -30,7 +30,8 @@ var Interpreter = require('./Interpreter'),
     IO = require('./IO'),
     $ = require('jquery'),
     appcache = require('./AppCache'),
-    Scaling = require('./Scaling');
+    Scaling = require('./Scaling'),
+    cookie = require('cookie-cutter');
 
 var iosAudioActive = false;
 
@@ -229,6 +230,18 @@ function Scratch(project_id)
         $('#down').bind('touchstart touchmove', function(e) { runtime.keysDown[40] = true; runtime.startKeyHats(40); });
         $('#down').bind('touchend', function(e) { delete runtime.keysDown[40]; });
 
+        // Set project details from the API to set the title to the title of the project. If the project hasn't been published, fail silently.
+        $.get("/projectdetails/"+project_id+"/?format=json", function(projectData) {
+            $("title").text(projectData.title);
+        }).fail(function(){});
+
+        // Check to see if a cookie of downloaded projects exists
+        if(typeof(cookie.get("installedApps")) === "undefined")
+        {
+            // If it doesn't, create it
+            // When the AppCache gets the data, it adds to this pre-existing cookie.
+            cookie.set("installedApps", "", {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
+        }
     },
     function(err)
     {
@@ -237,5 +250,12 @@ function Scratch(project_id)
         $("body").append("<h1>" + err.statusText + "</h1>");
     });
 };
+
+exports.showInstallMessage = function() {
+    console.log("Showing install message...");
+    $(".install-message").fadeIn();
+
+    setTimeout(function() { $(".install-message").fadeOut(); }, 10000)
+}
 
 module.exports = Scratch;

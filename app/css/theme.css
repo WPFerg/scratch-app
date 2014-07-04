@@ -8,19 +8,6 @@
 .container
 {
 
-	/*display: flex;
-	display: -webkit-flex;
-
-	flex-direction: column;
-	-webkit-flex-direction: column;
-
-	flex-align: center;
-	-webkit-flex-align: center;
-	-webkit-aling-items: center;
-
-	justify-content: center;
-	-webkit-justify-content: center;*/
-
 	min-height: 90%;
 
 }
@@ -29,20 +16,6 @@
 {
 	text-align: center;
 }
-/*Login page*/
-/*html
-{
-	display: table;
-	min-width: 100%;
-	min-height: 100%;
-}
-
-body
-{
-	display: table-cell;
-	vertical-align: middle;
-	padding: 5%;
-}*/
 
 /* ------------------------------ Navbar ------------------------------ */
 .navbar-inverse
@@ -62,9 +35,6 @@ body
 	width: 100%;
 	color: white;
 	display: table-cell;
-	/*white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;*/
 	max-height: 50px;
 }
 
@@ -182,6 +152,11 @@ body
 	margin: 10px 0px;
 }
 
+.login-field i
+{
+	color: black;
+}
+
 .login-field.btn
 {
 	background-color: #0c6f9a;
@@ -199,12 +174,17 @@ body
 
 .login-form-container
 {
-	padding: 0px 10px;
+	color: white;
 }
 
 .page-has-navbar
 {
 	margin-top: 50px;
+}
+
+.installed-app-list
+{
+	color: white;
 }
 
 /*  ------------------------------ For App Details Page ------------------------------ */

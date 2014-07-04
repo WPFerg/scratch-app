@@ -3,7 +3,7 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('scratch', [
-  'ngRoute', 'ngResource',
+  'ngRoute', 'ngResource', 'ngCookies',
   'scratch.filters',
   'scratch.services',
   'scratch.directives',

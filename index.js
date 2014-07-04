@@ -21,7 +21,7 @@ app.use('/projects/', proxy(url.parse('http://projects.scratch.mit.edu/internala
 app.use('/projectdetails/', proxy(url.parse('http://scratch.mit.edu/api/v1/project/')));
 app.use('/asset/', proxy(url.parse('http://cdn.scratch.mit.edu/internalapi/asset/')));
 app.use('/scratch-player/', scratch.serveScratchFolder);
-app.use(express.static('.'));
+app.use(express.static('./app'));
 app.use('/manifest', function(req, res) {
 
 	// Remove the leading /

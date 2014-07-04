@@ -14,32 +14,18 @@
 				<img src="media/scratch_large_logo.png" class="login-title"></img>
 			</div>
 
-			<!-- Incorrect login message -->
-			<!--div class="alert alert-danger">
-				<b>Oh dear.</b> Your username and password wasn't correct.
-			</div-->
-
 			<!-- Login details and submission button -->
 			<div class="row login-form-container">
 
-
+				<div class="installed-app-list" ng-show="installedApps">
+					Your installed apps:
+					<a class="col-xs-12 btn btn-primary login-field" ng-repeat="app in installedApps" href="/scratch-player/{{app}}">{{app}}</a>
+				</div>
 					<!-- Login details and submission button -->
 					<div class="login-form-container">
+						Add a new app:
 						<div class="row">
 							<form action="{{ '#/project/' + projectId }}">
-
-								<!-- Username input box and glyph 
-								<div class="col-xs-12 left-inner-addon login-field">
-									<i class="glyphicon glyphicon-user"> </i>
-									<input type="text" class="form-control" placeholder="Username" />
-								</div> -->
-
-								<!-- Password input box and glyph
-								<div class="col-xs-12 left-inner-addon login-field">
-									<i class="glyphicon glyphicon-lock"> </i>
-									<input type="text" class="form-control" placeholder="Password" />
-								</div> -->
-
 								<!-- Username input box and glyph  -->
 								<div class="col-xs-12 left-inner-addon login-field">
 									<i class="glyphicon glyphicon-user"> </i>
@@ -51,23 +37,14 @@
 									<input type="submit" value="Go!" class="col-xs-12 btn btn-primary login-field" />
 								</div>
 
-								<!--<div class="col-xs-12 login-field">
-									<input type="submit" value="Login" class="btn btn-primary login-field form-control" onClick="window.location='downloaded_app.html';" />
-								</div>-->
-
 							</form>
 						</div>
 					</div>
 
-					<!-- Depreciated input items -->
-					<!-- <input type="text" placeholder="Username" class="col-xs-12 login-field form-control"  /> -->
-					<!-- <input type="password" placeholder="Password" class="col-xs-12 login-field form-control" /> -->
-					<!-- <input type="submit" value="Login" class="col-xs-12 btn btn-primary login-field form-control" onClick="window.location='downloaded_app.html';" /> -->
-
 			</div>
 
 			<div class="login-details-notice">
-				<strong>Version Number & Copyright</strong>
+				<strong>Version Number &amp; Copyright</strong>
 			</div>
 
 		</div>
