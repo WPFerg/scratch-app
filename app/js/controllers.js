@@ -1,9 +1,9 @@
 'use strict';
 /* Controllers */
 
-angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource'])
+angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource', 'ngCookies'])
 
-  .controller('IndexCtrl', ['$scope', function($scope) {
+  .controller('IndexCtrl', ['$scope', '$cookies', function($scope, $cookies) {
   	$scope.checkForScratchLink = function()
   	{
 		// Check to see if the user's entered the Scratch website instead of a plain Project ID. If they have, parse it to get the project ID.
@@ -24,6 +24,12 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
         }
 		  }
   	}
+
+    // Get the list of installed apps, stored as a cookie CSV. Do type check to see if it exists first
+    if(typeof($cookies.installedApps) !== "undefined")
+    {
+      $scope.installedApps = $cookies.installedApps.split(",");
+    }
   }])
 
   .controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', function($scope, Projects, ProjectDetails, $routeParams) {

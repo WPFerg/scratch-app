@@ -30,7 +30,8 @@ var Interpreter = require('./Interpreter'),
     IO = require('./IO'),
     $ = require('jquery'),
     appcache = require('./AppCache'),
-    Scaling = require('./Scaling');
+    Scaling = require('./Scaling'),
+    cookie = require('cookie-cutter');
 
 var iosAudioActive = false;
 
@@ -234,6 +235,13 @@ function Scratch(project_id)
             $("title").text(projectData.title);
         }).fail(function(){});
 
+        // Check to see if a cookie of downloaded projects exists
+        if(typeof(cookie.get("installedApps")) === "undefined")
+        {
+            // If it doesn't, create it
+            // When the AppCache gets the data, it adds to this pre-existing cookie.
+            cookie.set("installedApps", "", {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
+        }
     },
     function(err)
     {
