@@ -179,7 +179,7 @@ function PositionButtons()
         GCalcLeft = window.innerWidth - GButton.width() - 10;
         SCalcLeft = window.innerWidth - GButton.width() - 10;
         GCalcTop = 10;
-        SCalcTop = GCalcTop + GButton.height() + 10;
+        SCalcTop = GCalcTop + GButton.width() + 10;
 
         // Create temp hold for suggested value
         var ProposedLeft = window.innerWidth - parseInt($("#player-container").css('marginRight')) + 10;
