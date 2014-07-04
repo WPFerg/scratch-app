@@ -251,4 +251,11 @@ function Scratch(project_id)
     });
 };
 
+exports.showInstallMessage = function() {
+    console.log("Showing install message...");
+    $(".install-message").fadeIn();
+
+    setTimeout(function() { $(".install-message").fadeOut(); }, 10000)
+}
+
 module.exports = Scratch;

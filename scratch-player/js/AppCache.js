@@ -1,6 +1,7 @@
 // projectID is passed in via the node server.
 var $ = require('jquery');
 var cookie = require('cookie-cutter');
+var scratch = require("./Scratch");
 
 exports.listen = function()
 {
@@ -36,6 +37,7 @@ exports.listen = function()
                 if(appList === "")
                 {
                     cookie.set("installedApps", projectId, {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
+                    showInfoMessage();
                 } else {
                     // The cookie is a CSV list of project IDs. Parse this to see if the project already exists in the installed app.
                     var apps = appList.split(","),
@@ -46,6 +48,7 @@ exports.listen = function()
                     {
                         var app = apps[appIndex];
                         // See if this app is the current one
+                        // Convert into ints so they're the both the correct types
                         if(app === projectId)
                         {
                             appIsInstalled = true;
@@ -56,10 +59,10 @@ exports.listen = function()
                     if(!appIsInstalled)
                     {
                         cookie.set("installedApps", appList + "," + projectId, {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
+                        showInfoMessage();
                     }
                 }
 
-                console.log(cookie.get("installedApps"));
             }
         }
 
@@ -78,7 +81,7 @@ exports.listen = function()
         }
 
         appCache.onerror = function(e) {
-            $("#preloader-caption").text("Error checking or downloading updates.");
+            showInfoMessage("Error checking or downloading updates.");
         }
 
         appCache.onobsolete = function(e) {
@@ -87,4 +90,15 @@ exports.listen = function()
 
         return;
     }
+}
+
+showInfoMessage = function(text) {
+    // Check if text exists, and replace if necessary.
+    if(text !== "" || typeof(text) !== "undefined")
+    {
+        $(".install-message").text(text);
+    }
+    $(".install-message").fadeIn();
+
+    setTimeout(function() { $(".install-message").fadeOut(); }, 10000)
 }

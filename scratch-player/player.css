@@ -519,3 +519,16 @@ button#trigger-stop:hover {
 }
 
 
+.install-message
+{
+    background-color: white;
+    background-color: rgba(255,255,255,0.8);
+    color: black;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 1000;
+    max-width: 20%;
+    padding: 1%;
+    display: none;
+}
