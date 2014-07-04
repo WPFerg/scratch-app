@@ -15,9 +15,7 @@
 
   		<div class="row app-details-row">
   			<h4 class="col-xs-8">Shared {{project.datetime_shared | dateTimeToReadable}}</h4>
-        <form ng-attr-action="{{'/scratch-player/' + projectId}}" method="POST">
-  			  <input type="submit" class="col-xs-4 btn btn-primary download-play-btn" value="Download &amp; Play!" />
-        </form>
+  			  <a class="col-xs-4 btn btn-primary download-play-btn" href="{{'/scratch-player/' + projectId}}"> Download &amp; Play! </a>
   		</div>
 
 			<div class="app-details-row">

@@ -13,10 +13,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-var Point = function(x, y) {
-    this.x = x;
-    this.y = y;
-};
+
 
 var Rectangle = function(x, y, width, height) {
     this.x = x;
@@ -34,3 +31,8 @@ Rectangle.prototype.intersects = function(other) {
 };
 
 module.exports = Rectangle;
+
+module.exports.Point = function(x, y) {
+    this.x = x;
+    this.y = y;
+};

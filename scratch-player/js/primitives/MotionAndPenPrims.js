@@ -15,6 +15,8 @@
 
 'use strict';
 
+var rect = require("../util/Rectangle");
+
 var MotionAndPenPrims = function() {};
 
 MotionAndPenPrims.prototype.addPrimsTo = function(primTable) {
@@ -265,11 +267,11 @@ var stroke = function(s, oldX, oldY, newX, newY) {
 var mouseOrSpritePosition = function(arg) {
     if (arg == '_mouse_') {
         var w = runtime.stage;
-        return new Point(runtime.mousePos[0], runtime.mousePos[1]);
+        return new rect.Point(runtime.mousePos[0], runtime.mousePos[1]);
     } else {
         var s = runtime.spriteNamed(arg);
         if (s == null) return null;
-        return new Point(s.scratchX, s.scratchY);
+        return new rect.Point(s.scratchX, s.scratchY);
     }
     return null;
 };
