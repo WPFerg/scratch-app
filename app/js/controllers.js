@@ -28,7 +28,7 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
     // Get the list of installed apps, stored as a cookie CSV. Do type check to see if it exists first
     if(typeof($cookies.installedApps) !== "undefined")
     {
-      $scope.installedApps = $cookies.installedApps.split(",");
+      $scope.installedProjects = $cookies.installedApps;
     }
   }])
 
@@ -88,5 +88,46 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   	{
   		$scope.isDownloading = true;
   	}
+
+  }])
+  .controller("InstalledProjectsCtrl", ['$scope', 'ProjectDetails', '$cookies', '$window', function($scope, ProjectDetails, $cookies, $window)
+  {
+
+    // Get the list of installed apps, stored as a cookie CSV. Do type check to see if it exists first
+    if(typeof($cookies.installedApps) !== "undefined")
+    {
+      $scope.installedProjects = $cookies.installedApps.split(",");
+      $scope.projectList = [];
+
+      // If there's projects downloaded, get all project info from the id
+      for(var projectId in $scope.installedProjects)
+      {
+        // get the project id
+        var project = $scope.installedProjects[projectId];
+
+        // And get the project details from the API and add the project details to the list.
+        var projectDetails = ProjectDetails.get({"projectId": project}, function() {}, function (response) {
+          // Callback function after projectDetails GET has failed
+          //  populate the projectDetails var with generic data and its project id
+          console.log(response);
+          projectDetails = {"title" : "Unpublished Scratch Project", "id": project};
+        });
+
+        // Give the projects a generic title so that unshared ones don't show up with nothing
+        projectDetails.title = "Unknown Scratch Project";
+        
+        // Add the id to project details so the page can navigate to the player
+        projectDetails.id = project;
+
+        $scope.projectList.push(projectDetails);
+      }
+    }
+
+
+    // Function to move to the player's project.
+    $scope.playProject = function(project)
+    {
+      $window.location = "/scratch-player/" + project.id;
+    }
 
   }]);

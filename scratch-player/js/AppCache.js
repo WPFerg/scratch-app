@@ -34,10 +34,12 @@ exports.listen = function()
                 var appList = cookie.get("installedApps");
 
                 // If the app list is empty, the app cann be added to the installed apps since none are installed.
+                // When it's cached, reload the page so the player works.
                 if(appList === "")
                 {
                     cookie.set("installedApps", projectId, {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
                     showInfoMessage();
+                    window.reload();
                 } else {
                     // The cookie is a CSV list of project IDs. Parse this to see if the project already exists in the installed app.
                     var apps = appList.split(","),
@@ -60,6 +62,7 @@ exports.listen = function()
                     {
                         cookie.set("installedApps", appList + "," + projectId, {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
                         showInfoMessage();
+                        window.reload();
                     }
                 }
 

@@ -16,14 +16,9 @@
 
 			<!-- Login details and submission button -->
 			<div class="row login-form-container">
-
-				<div class="installed-app-list" ng-show="installedApps">
-					Your installed apps:
-					<a class="col-xs-12 btn btn-primary login-field" ng-repeat="app in installedApps" href="/scratch-player/{{app}}">{{app}}</a>
-				</div>
 					<!-- Login details and submission button -->
 					<div class="login-form-container">
-						Add a new app:
+						Add a new project:
 						<div class="row">
 							<form action="{{ '#/project/' + projectId }}">
 								<!-- Username input box and glyph  -->
@@ -41,6 +36,9 @@
 						</div>
 					</div>
 
+				<div class="installed-app-list" ng-show="installedProjects">
+					<a class="col-xs-12 btn btn-primary login-field" href="#/installed/">Installed Projects</a>
+				</div>
 			</div>
 
 			<div class="login-details-notice">

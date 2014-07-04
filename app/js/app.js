@@ -12,5 +12,6 @@ angular.module('scratch', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/project/:projectId', {templateUrl: 'partials/project.html', controller: 'ProjectCtrl'});
   $routeProvider.when('/index', {templateUrl: 'partials/index.html', controller: 'IndexCtrl'});
+  $routeProvider.when('/installed', {templateUrl: 'partials/installed.html', controller: 'InstalledProjectsCtrl'});
   $routeProvider.otherwise({redirectTo: '/index'});
 }]);

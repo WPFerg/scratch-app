@@ -1,0 +1,43 @@
+CACHE MANIFEST
+
+# Version 1 @ 04/07/2014 14:37
+
+CACHE:
+/offline.html
+/index.html
+/empty.txt
+/partials/index.html
+/partials/installed.html
+/partials/project.html
+/media/scratch_large_logo.png
+/fonts/glyphicons-halflings-regular.ttf
+/fonts/glyphicons-halflings-regular.eot
+/fonts/glyphicons-halflings-regular.svg
+/fonts/glyphicons-halflings-regular.woff
+/css/bootstrap.min.css
+/css/bootstrap-theme.min.css
+/css/theme.css
+/css/app.css
+/js/app.js
+/js/bootstrap.js
+/js/bootstrap.min.js
+/js/controllers.js
+/js/directives.js
+/js/filters.js
+/js/services.js
+/bower_components/angular/angular.js
+/bower_components/angular-cookies/angular-cookies.js
+/bower_components/angular-resource/angular-resource.js
+/bower_components/angular-route/angular-route.js
+/bower_components/html5-boilerplate/css/normalize.css
+/bower_components/html5-boilerplate/css/main.css
+/bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js
+https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js
+
+NETWORK:
+*
+
+FALLBACK:
+/ /offline.html
+/projects/ empty.txt
+/projectdetails/ empty.txt
