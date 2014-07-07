@@ -66,6 +66,7 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   		// Callback function after getting the projects.
   		// Assign all the information to the scope
       $scope.projectExists = true;  
+      $scope.projectInDepth = data;
     });
 
   	// Quick download stats variables
@@ -106,12 +107,19 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
         var project = $scope.installedProjects[projectId];
 
         // And get the project details from the API and add the project details to the list.
-        var projectDetails = ProjectDetails.get({"projectId": project}, function() {}, function (response) {
+        // This should be cached by the manifest.
+        var projectDetails = ProjectDetails.get({"projectId": project}, function() {
+          // On success, add the project ID to the project details element
+          // It should already be added from the API, but this just verifies it is.
+          projectDetails.id = project;
+        }, function (response) {
           // Callback function after projectDetails GET has failed
           //  populate the projectDetails var with generic data and its project id
           console.log(response);
           projectDetails = {"title" : "Unpublished Scratch Project", "id": project};
         });
+
+        // This is usually executed before the part above, since above is a callback.
 
         // Give the projects a generic title so that unshared ones don't show up with nothing
         projectDetails.title = "Unknown Scratch Project";
