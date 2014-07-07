@@ -83,8 +83,12 @@ function PushAsjustmentToAllSprites()
         if (typeof runtime.stage !== 'undefined')
         {
             // Update bounds
-            $(runtime.stage.textures[0]).width(CalcNewScaleValue($(runtime.stage.textures[0]).width()));
-            $(runtime.stage.textures[0]).height(CalcNewScaleValue($(runtime.stage.textures[0]).height()));
+            for(var texId in runtime.stage.textures)
+            {
+                var texture = runtime.stage.textures[texId];
+                $(texture).width(CalcNewScaleValue($(texture).width()));
+                //$(texture).height(CalcNewScaleValue($(texture).height()));
+            }
             // runtime.stage.textures[0].updateTransform();
 
             // Debug line
