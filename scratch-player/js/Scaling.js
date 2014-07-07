@@ -42,8 +42,6 @@ window.IsLandscape = function()
     var width = screen.width;
     var height = screen.height;
 
-    console.log(width + ',' + height);
-
     // Make sure not buggy version of android
     // if (uagent == "android 10")
     // {
