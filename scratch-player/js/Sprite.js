@@ -350,7 +350,7 @@ Sprite.prototype.updateTransform = function()
         'translatex(' + drawX + 'px) ' +
         'translatey(' + drawY + 'px) ' +
         'rotate(' + this.rotation + 'deg) ' +
-        'scaleX(' + scaleXprepend + this.scale + ') scaleY(' +  this.scale / resolution + ')'
+        'scaleX(' + scaleXprepend + (this.scale / resolution) + ') scaleY(' +  (this.scale / resolution) + ')'
     );
     $(this.mesh).css(
         '-webkit-transform',
@@ -503,7 +503,8 @@ Sprite.prototype.getSize = function() {
 
 Sprite.prototype.setSize = function(percent) {
     var newScale = percent / 100.0;
-    newScale = Math.max(0.05, Math.min(newScale, 100));
+    // 1.52 is the maximum multiplier for some reason...
+    newScale = Math.max(0.05, Math.min(newScale, 1.52));
     this.scale = newScale;
     this.updateTransform();
 };

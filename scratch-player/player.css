@@ -165,7 +165,7 @@ button#toggle-fullscreen {
         height: 360px;
     */
 
-    z-index: 10000;
+    z-index: 100000000;
     background: url(img/playerStartFlag.png) rgba(0, 0, 0, .26) center center no-repeat;
 }
 
