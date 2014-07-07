@@ -114,6 +114,26 @@ Resolver.prototype.resolve = function () {
     });
 };
 
+Resolver.prototype.isNotCacheable = function () {
+    // Bypass cache for local dependencies
+    if (this._source &&
+        /^(?:file:[\/\\]{2})?\.?\.?[\/\\]/.test(this._source)
+    ) {
+        return true;
+    }
+
+    // We don't want to cache moving targets like branches
+    if (this._pkgMeta &&
+        this._pkgMeta._resolution &&
+        this._pkgMeta._resolution.type === 'branch')
+    {
+        return true;
+    }
+
+    return false;
+};
+
+
 // -----------------
 
 // Abstract functions that must be implemented by concrete resolvers
@@ -201,26 +221,36 @@ Resolver.prototype._applyPkgMeta = function (meta) {
     }
 
     // Otherwise remove them from the temp dir
-    return removeIgnores(this._tempDir, meta.ignore)
+    return removeIgnores(this._tempDir, meta)
     .then(function () {
         return meta;
     });
 };
 
 Resolver.prototype._savePkgMeta = function (meta) {
+    var that = this;
     var contents;
 
     // Store original source & target
     meta._source = this._source;
     meta._target = this._target;
 
+    ['main', 'ignore'].forEach(function (attr) {
+        if (meta[attr]) return;
+
+        that._logger.log(
+            'warn', 'invalid-meta',
+            (meta.name || 'component') + ' is missing "' + attr + '" entry in bower.json'
+        );
+    });
+
     // Stringify contents
     contents = JSON.stringify(meta, null, 2);
 
     return Q.nfcall(fs.writeFile, path.join(this._tempDir, '.bower.json'), contents)
     .then(function () {
-        return this._pkgMeta = meta;
-    }.bind(this));
+        return that._pkgMeta = meta;
+    });
 };
 
 module.exports = Resolver;

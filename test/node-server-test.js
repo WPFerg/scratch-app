@@ -39,8 +39,8 @@ var http = require('http');
 
 			// If there's no more data, check to see if the response is correct, and signify the test's done.
 			response.on('end', function() {
-				expect(str.indexOf("<html manifest='/manifest/1234'>")).not.toBe(-1);
-				expect(str.indexOf("var projectId = 1234;")).not.toBe(-1);
+				expect(str.indexOf("manifest='/manifest/1234'")).not.toBe(-1);
+				expect(str.indexOf("var projectId = \"1234\";")).not.toBe(-1);
 				done();
 			});
 
