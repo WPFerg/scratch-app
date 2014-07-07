@@ -55,7 +55,12 @@ exports.generateManifest = function(projectId, manifestData, callbackFunction)
 	var manifestFiles = [];
 
 	// Create the manifest with an initial, constant, set of data
-	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\nNETWORK:\n*\nCACHE:";
+	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\n#"
+
+	// Add a random number to make the manifest regenerate per refresh (for testing)
+	//manifest += "4";
+
+	manifest += "\nNETWORK:\n*\nCACHE:";
 
 	// Add the project details url (that has all the code/instructions)
 	manifest += "\n/projects/" + projectId + "/get/";

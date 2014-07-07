@@ -46,21 +46,26 @@ function Scratch(project_id)
     //io = new IO();
     global.io = new IO();
 
+    // Load AppCache to show the state of download
+    appcache.listen();
+
+    // Called on success of loading the project -- bind relevant events and create objects required to launch.
+    runtime.init();
+
+    // Load the interpreter and primitives
+    //interp = new Interpreter();
+    global.interp = new Interpreter();
+    interp.initPrims();
+
+    // Set project details from the API to set the title to the title of the project. If the project hasn't been published, fail silently.
+    $.get("/projectdetails/" + project_id + "/?format=json", function(projectData) {
+        $("title").text(projectData.title);
+    }).fail(function(){});
+
     // Load the requested project and go!
     io.loadProject(project_id, function()
     {
-
-        // Load AppCache to show the state of download
-        appcache.listen();
-
-        // Called on success of loading the project -- bind relevant events and create objects required to launch.
-        runtime.init();
-
-        // Load the interpreter and primitives
-        //interp = new Interpreter();
-        global.interp = new Interpreter();
-        interp.initPrims();
-
+        // Project exists, so
         // Bind keydown events that are fired when executing the project
         $(window).keydown(function(e)
         {
@@ -230,11 +235,6 @@ function Scratch(project_id)
         $('#down').bind('touchstart touchmove', function(e) { runtime.keysDown[40] = true; runtime.startKeyHats(40); });
         $('#down').bind('touchend', function(e) { delete runtime.keysDown[40]; });
 
-        // Set project details from the API to set the title to the title of the project. If the project hasn't been published, fail silently.
-        $.get("/projectdetails/"+project_id+"/?format=json", function(projectData) {
-            $("title").text(projectData.title);
-        }).fail(function(){});
-
         // Check to see if a cookie of downloaded projects exists
         if(typeof(cookie.get("installedApps")) === "undefined")
         {
@@ -253,9 +253,6 @@ function Scratch(project_id)
 
 exports.showInstallMessage = function() {
     console.log("Showing install message...");
-    $(".install-message").fadeIn();
-
-    setTimeout(function() { $(".install-message").fadeOut(); }, 10000)
 }
 
 module.exports = Scratch;
