@@ -179,7 +179,7 @@ function PositionButtons()
         GCalcLeft = window.innerWidth - GButton.width() - 10;
         SCalcLeft = window.innerWidth - GButton.width() - 10;
         GCalcTop = 10;
-        SCalcTop = GCalcTop + GButton.height() + 10;
+        SCalcTop = GCalcTop + GButton.width() + 10;
 
         // Create temp hold for suggested value
         var ProposedLeft = window.innerWidth - parseInt($("#player-container").css('marginRight')) + 10;
@@ -239,6 +239,7 @@ function AdjustPlayerDimensions()
     var width = window.innerWidth;
     var height = window.innerHeight;
 
+    // Debug code
     // console.log('PPI: ' + document.getElementById('ppitest').offsetWidth);
     // console.log('Outer: ' + window.outerWidth + 'x' + window.outerHeight);
     // console.log('Inner: ' + window.innerWidth + 'x' + window.innerHeight);
@@ -266,8 +267,7 @@ function AdjustPlayerDimensions()
     var StageWidth = PlayerWidth;
     var StageHeight = PlayerHeight - HeaderHeight;
 
-    //$('body').height(window.outerHeight);
-    //$('body').paddingTop(window.outerHeight - PlayerHeight)
+    // Re-pad the body to vertically align the player
     var CurrentHeight = $('html').height();
     document.getElementsByTagName("body")[0].style.paddingTop = ((CurrentHeight - PlayerHeight) / 2).toString() + 'px';
     $('body').height(CurrentHeight - (CurrentHeight - PlayerHeight));
@@ -303,9 +303,9 @@ window.onresize = AdjustPlayerDimensions;
 // Set dimensions of player
 AdjustPlayerDimensions();
 
-// Create orientation event
-var supportsOrientationChange = "onorientationchange" in window,
-    orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+// Create orientation event variables
+var supportsOrientationChange = "onorientationchange" in window;
+var orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
 
 // Add event and link to event method
 window.addEventListener(orientationEvent, AdjustPlayerDimensions, false);

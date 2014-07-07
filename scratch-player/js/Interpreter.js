@@ -185,7 +185,7 @@ Interpreter.prototype.stepThreads = function()
 // 
 Interpreter.prototype.stepActiveThread = function()
 {
-    // Run the active thread until it yields. -- SCRATCH
+    // Break if no active thread currently exists
     if (typeof(this.activeThread) == 'undefined')
     {
         return;
@@ -261,7 +261,7 @@ Interpreter.prototype.stepActiveThread = function()
 };
 
 // Start/Stop given thread
-Interpreter.prototype.toggleThread = function(b, targetObj)
+Interpreter.prototype.toggleThread = function(ThreadToToggle, targetObj)
 {
     // Initialise
     var newThreads = [],
@@ -271,7 +271,7 @@ Interpreter.prototype.toggleThread = function(b, targetObj)
     for (var i = 0; i < this.threads.length; i++)
     {
         // If target thread dont include in new threads
-        if (this.threads[i].stack[0] == b)
+        if (this.threads[i].stack[0] == ThreadToToggle)
         {
             wasRunning = true;
         } else {
@@ -284,29 +284,29 @@ Interpreter.prototype.toggleThread = function(b, targetObj)
     // If wasnt running start thread
     if (!wasRunning)
     {
-        this.startThread(b, targetObj);
+        this.startThread(ThreadToToggle, targetObj);
     }
 }
 
-// Start a given thread
-Interpreter.prototype.startThread = function(b, targetObj)
+// Start a given thread and make this thread active
+Interpreter.prototype.startThread = function(ThreadToStart, targetObj)
 {
-    this.activeThread = new Thread(b, targetObj);
+    this.activeThread = new Thread(ThreadToStart, targetObj);
     this.threads.push(this.activeThread);
 };
 
 // Restarts a given thread
-Interpreter.prototype.restartThread = function(b, targetObj)
+Interpreter.prototype.restartThread = function(ThreadToRestart, targetObj)
 {
-    // used by broadcast; stop any thread running on b, then start a new thread on b
-    var newThread = new Thread(b, targetObj);
+    // used by broadcast; stop any thread running on ThreadToRestart, then start a new thread on ThreadToRestart
+    var newThread = new Thread(ThreadToRestart, targetObj);
     var wasRunning = false;
 
     // Search for currently running instance of thread
     for (var i = 0; i < this.threads.length; i++)
     {
         // Find and reset to newThread instance
-        if (this.threads[i].stack[0] == b)
+        if (this.threads[i].stack[0] == ThreadToRestart)
         {
             this.threads[i] = newThread;
             wasRunning = true;
