@@ -42,6 +42,8 @@ window.IsLandscape = function()
     var width = screen.width;
     var height = screen.height;
 
+    console.log(width + ',' + height);
+
     // Make sure not buggy version of android
     // if (uagent == "android 10")
     // {
@@ -297,11 +299,11 @@ function AdjustPlayerDimensions()
 
 };
 
-// Link resize event
-window.onresize = AdjustPlayerDimensions;
-
 // Set dimensions of player
 AdjustPlayerDimensions();
+
+// Link resize event
+window.onresize = AdjustPlayerDimensions;
 
 // Create orientation event variables
 var supportsOrientationChange = "onorientationchange" in window;
