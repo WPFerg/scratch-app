@@ -297,11 +297,11 @@ function AdjustPlayerDimensions()
 
 };
 
-// Link resize event
-window.onresize = AdjustPlayerDimensions;
-
 // Set dimensions of player
 AdjustPlayerDimensions();
+
+// Link resize event
+window.onresize = AdjustPlayerDimensions;
 
 // Create orientation event variables
 var supportsOrientationChange = "onorientationchange" in window;
