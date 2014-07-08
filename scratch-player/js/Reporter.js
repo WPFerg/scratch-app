@@ -131,36 +131,43 @@ Reporter.prototype.update = function()
     var target = runtime.spriteNamed(this.target);
 
     // Find the relevant command, and append the relevant value based off of that. 
-    switch (this.cmd)
-    {
-        case 'answer':
-            newValue = target.askAnswer;
-            break;
-        case 'getVar:':
-            newValue = target.variables[this.param];
-            break;
-        case 'xpos':
-            newValue = target.scratchX;
-            break;
-        case 'ypos':
-            newValue = target.scratchY;
-            break;
-        case 'heading':
-            newValue = target.direction;
-            break;
-        case 'scale':
-            newValue = target.getSize();
-            break;
-        case 'sceneName':
-            // Return the costume name of that costume
-            newValue = runtime.stage.costumes[runtime.stage.currentCostumeIndex].costumeName;
-            break;
-        case 'costumeIndex':
-            newValue = target.currentCostumeIndex + 1;
-            break;
-        case 'timer':
-            newValue = '' + Math.round(interp.primitiveTable.timer() * 10) / 10;
-            break;
+    // Type check to ensure target exists.
+    if(!!target)
+    { 
+        switch (this.cmd)
+        {
+            case 'answer':
+                newValue = target.askAnswer;
+                break;
+            case 'getVar:':
+                newValue = target.variables[this.param];
+                break;
+            case 'xpos':
+                newValue = target.scratchX;
+                break;
+            case 'ypos':
+                newValue = target.scratchY;
+                break;
+            case 'heading':
+                newValue = target.direction;
+                break;
+            case 'scale':
+                newValue = target.getSize();
+                break;
+            case 'sceneName':
+                // Return the costume name of that costume
+                newValue = runtime.stage.costumes[runtime.stage.currentCostumeIndex].costumeName;
+                break;
+            case 'costumeIndex':
+                newValue = target.currentCostumeIndex + 1;
+                break;
+            case 'timer':
+                newValue = '' + Math.round(interp.primitiveTable.timer() * 10) / 10;
+                break;
+        }
+    } else {
+        // Got the target as a debug message
+        console.log("Target doesn't exist: " + this.target);
     }
 
     // If the new value is a number and is large enough, round it.
