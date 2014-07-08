@@ -248,8 +248,8 @@ Sprite.prototype.onClick = function(evt) {
     // TODO - needs work!!
 
     // We don't need boxOffset anymore.
-    var mouseX = runtime.mousePos[0] + 240;
-    var mouseY = 180 - runtime.mousePos[1];
+    var mouseX = runtime.mousePos[0] + window.scaledHalfWidth;
+    var mouseY = window.scaledHalfHeight - runtime.mousePos[1];
 
     if (this.mesh.src.indexOf('.svg') == -1) {
         // HACK - if the image SRC doesn't indicate it's an SVG,
@@ -258,15 +258,15 @@ Sprite.prototype.onClick = function(evt) {
         // we are forced not to do this for now by Chrome/Webkit SOP:
         // http://code.google.com/p/chromium/issues/detail?id=68568
         var canv = document.createElement('canvas');
-        canv.width = 480;
-        canv.height = 360;
+        canv.width = window.scaledWidth;
+        canv.height = window.scaledHeight;
         var ctx = canv.getContext('2d');
         var drawWidth = this.textures[this.currentCostumeIndex].width;
         var drawHeight = this.textures[this.currentCostumeIndex].height;
         var scale = this.scale / (this.costumes[this.currentCostumeIndex].bitmapResolution || 1);
         var rotationCenterX = this.costumes[this.currentCostumeIndex].rotationCenterX;
         var rotationCenterY = this.costumes[this.currentCostumeIndex].rotationCenterY;
-        ctx.translate(240 + this.scratchX, 180 - this.scratchY);
+        ctx.translate(window.scaledHalfWidth + this.scratchX, window.scaledHalfHeight - this.scratchY);
         ctx.rotate(this.rotation * Math.PI / 180.0);
         ctx.scale(scale, scale);
         ctx.translate(-rotationCenterX, -rotationCenterY);
@@ -327,16 +327,12 @@ Sprite.prototype.updateTransform = function()
     var rotationCenterX = window.ScaleEquiv(this.costumes[this.currentCostumeIndex].rotationCenterX);
     var rotationCenterY = window.ScaleEquiv(this.costumes[this.currentCostumeIndex].rotationCenterY);
 
-    var drawX = this.scratchX + ($("#container").width() / 2) - rotationCenterX;
-    var drawY = -this.scratchY + ($("#container").height() / 2) - rotationCenterY;
-
-    //console.log(drawX + ', ' + drawY + ' | ' + rotationCenterX + ', ' + rotationCenterY + ' | ' + this.scratchX + ', ' + -this.scratchY);
+    var drawX = window.ScaleEquiv(this.scratchX) + window.scaledHalfWidth - rotationCenterX;
+    var drawY = -window.ScaleEquiv(this.scratchY) + window.scaledHalfHeight - rotationCenterY;
 
     var scaleXprepend = '';
-    if (this.isFlipped) {
-        scaleXprepend = '-'; // For a leftRight flip, we add a minus
-        // sign to the X scale.
-    }
+    // For a leftRight flip, we add a minus - sign to the X scale.
+    if (this.isFlipped) { scaleXprepend = '-'; }
 
     $(this.mesh).css(
         'transform',
@@ -350,7 +346,7 @@ Sprite.prototype.updateTransform = function()
         'translatex(' + drawX + 'px) ' +
         'translatey(' + drawY + 'px) ' +
         'rotate(' + this.rotation + 'deg) ' +
-        'scaleX(' + scaleXprepend + (this.scale / resolution) + ') scaleY(' +  (this.scale / resolution) + ')'
+        'scaleX(' + scaleXprepend + this.scale + ') scaleY(' +  (this.scale / resolution) + ')'
     );
     $(this.mesh).css(
         '-webkit-transform',
@@ -391,8 +387,8 @@ Sprite.prototype.getTalkBubbleXY = function() {
     var drawHeight = texture.height * this.scale;
     var rotationCenterX = this.costumes[this.currentCostumeIndex].rotationCenterX;
     var rotationCenterY = this.costumes[this.currentCostumeIndex].rotationCenterY;
-    var drawX = this.scratchX + (480 / 2) - rotationCenterX;
-    var drawY = -this.scratchY + (360 / 2) - rotationCenterY;
+    var drawX = this.scratchX + (window.scaledWidth / 2) - rotationCenterX;
+    var drawY = -this.scratchY + (window.scaledHeight / 2) - rotationCenterY;
     return [drawX + drawWidth, drawY - drawHeight / 2];
 };
 
@@ -511,24 +507,24 @@ Sprite.prototype.setSize = function(percent) {
 
 // Move functions
 Sprite.prototype.keepOnStage = function() {
-    var x = this.scratchX + 240;
-    var y = 180 - this.scratchY;
+    var x = this.scratchX + window.scaledHalfWidth;
+    var y = window.scaledHalfHeight - this.scratchY;
     var myBox = this.getRect();
     var inset = -Math.min(18, Math.min(myBox.width, myBox.height) / 2);
-    var edgeBox = new Rectangle(inset, inset, 480 - (2 * inset), 360 - (2 * inset));
+    var edgeBox = new Rectangle(inset, inset, window.scaledWidth - (2 * inset), window.scaledHeight - (2 * inset));
     if (myBox.intersects(edgeBox)) return; // sprite is sufficiently on stage
     if (myBox.right < edgeBox.left) x += edgeBox.left - myBox.right;
     if (myBox.left > edgeBox.right) x -= myBox.left - edgeBox.right;
     if (myBox.bottom < edgeBox.top) y += edgeBox.top - myBox.bottom;
     if (myBox.top > edgeBox.bottom) y -= myBox.top - edgeBox.bottom;
-    this.scratchX = x - 240;
-    this.scratchY = 180 - y;
+    this.scratchX = x - window.scaledHalfWidth;
+    this.scratchY = window.scaledHalfHeight - y;
 };
 
 Sprite.prototype.getRect = function() {
     var cImg = this.textures[this.currentCostumeIndex];
-    var x = this.scratchX + 240 - (cImg.width/2.0);
-    var y = 180 - this.scratchY - (cImg.height/2.0);
+    var x = this.scratchX + window.scaledHalfWidth - (cImg.width/2.0);
+    var y = window.scaledHalfHeight - this.scratchY - (cImg.height/2.0);
     var myBox = new Rectangle(x, y, cImg.width, cImg.height);
     return myBox;
 };
@@ -566,8 +562,8 @@ Sprite.prototype.updateCachedPenColor = function() {
 Sprite.prototype.stamp = function(canvas, opacity) {
     var drawWidth = this.textures[this.currentCostumeIndex].width * this.scale;
     var drawHeight = this.textures[this.currentCostumeIndex].height * this.scale;
-    var drawX = this.scratchX + (480 / 2);
-    var drawY = -this.scratchY + (360 / 2);
+    var drawX = this.scratchX + (window.scaledWidth / 2);
+    var drawY = -this.scratchY + (window.scaledHeight / 2);
     canvas.globalAlpha = opacity / 100.0;
     canvas.save();
     canvas.translate(drawX, drawY);

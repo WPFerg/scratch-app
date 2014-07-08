@@ -16,7 +16,7 @@ window.Scalar = function()
 
     // Calculate result
     var result = 1;
-    if (window.SettingUp !== true) { result = $("#container").width() / 480; } 
+    if (window.SettingUp !== true) { result = $("#player-container").width() / 480; } 
 
     // Return calculated value
     return result;
@@ -107,8 +107,8 @@ function PushAsjustmentToAllSprites()
                     var SpriteObject = runtime.sprites[obj];
 
                     // Get the sprite original bounds
-                    var OriginalLeft = SpriteObject.scratchX;
-                    var OriginalTop = SpriteObject.scratchY;
+                    //var OriginalLeft = SpriteObject.scratchX;
+                    //var OriginalTop = SpriteObject.scratchY;
 
                     // Check to make sure width is assigned
                     if (typeof SpriteObject.SpriteWidth !== 'undefined')
@@ -125,19 +125,6 @@ function PushAsjustmentToAllSprites()
                         {
                             // Create shortcut variable
                             var IMGTag = runtime.sprites[obj].textures[Item];
-                            var bounds = IMGTag.getBoundingClientRect();
-
-                            //console.log(bounds.top + ' ' + bounds.left);
-
-                            var origtop = bounds.top;
-                            var origleft = bounds.left;
-
-                            // Calculate new scale values
-                            bounds.top = CalcNewScaleValue(bounds.top);
-                            bounds.left = CalcNewScaleValue(bounds.left);
-
-                            var newtop = bounds.top;
-                            var newleft = bounds.left;
 
                             // Call sprite update method
                             SpriteObject.updateTransform();
@@ -237,7 +224,7 @@ function AdjustPlayerDimensions()
 {
 
     // Set old values for width and height scalars
-    window.OldScalar = $("#container").width() / 480;
+    window.OldScalar = $("#player-container").width() / 480;
 
     // Get the dimensions of the window
     var width = window.innerWidth;
@@ -265,12 +252,6 @@ function AdjustPlayerDimensions()
         PlayerHeight = PlayerWidth / AspectRatio -4;
     }
 
-    // Calculate size variables for components
-    var HeaderWidth = PlayerWidth;
-    var HeaderHeight = 0; //38;
-    var StageWidth = PlayerWidth;
-    var StageHeight = PlayerHeight - HeaderHeight;
-
     // Re-pad the body to vertically align the player
     var CurrentHeight = $('html').height();
     document.getElementsByTagName("body")[0].style.paddingTop = ((CurrentHeight - PlayerHeight) / 2).toString() + 'px';
@@ -281,14 +262,12 @@ function AdjustPlayerDimensions()
     $("canvas").width(PlayerWidth);
     $("#player-container").width(PlayerWidth);
     $("#player-container").height(PlayerHeight);
-    $("#player-header").width(HeaderWidth);
-    $("#player-header").height(HeaderHeight);
-    $("#player-content").width(StageWidth);
-    $("#player-content").height(StageHeight);
-    $("#container").width(StageWidth);
-    $("#container").height(StageHeight);
-    $("#overlay").width(StageWidth);
-    $("#overlay").height(StageHeight);
+    $("#player-content").width(PlayerWidth);
+    $("#player-content").height(PlayerHeight);
+    $("#container").width(PlayerWidth);
+    $("#container").height(PlayerHeight);
+    $("#overlay").width(PlayerWidth);
+    $("#overlay").height(PlayerHeight);
 
     // Process sprite scaling update
     PushAsjustmentToAllSprites();
@@ -298,6 +277,11 @@ function AdjustPlayerDimensions()
 
     // Mark setup as complete
     window.SettingUp = false;
+
+    window.scaledWidth = $('#player-container').width();
+    window.scaledHalfWidth = $('#player-container').width() / 2;
+    window.scaledHeight = $('#player-container').height();
+    window.scaledHalfHeight = $('#player-container').height() / 2;
 
 };
 
