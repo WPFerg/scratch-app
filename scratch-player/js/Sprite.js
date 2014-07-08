@@ -291,6 +291,7 @@ Sprite.prototype.onClick = function(evt) {
         var idata = ctx.getImageData(mouseX, mouseY, 1, 1).data;
         var alpha = idata[3];
 
+        alpha = 1;
     } else {
         var alpha = 1;
     }
