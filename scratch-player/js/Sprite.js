@@ -285,7 +285,8 @@ Sprite.prototype.onClick = function(evt) {
         ctx.translate(-rotationCenterX, -rotationCenterY);
         ctx.drawImage(this.mesh, 0, 0);
 
-        
+        // $('container').append(ctx);
+        // ctx.css('left', '0px');
 
         var idata = ctx.getImageData(mouseX, mouseY, 1, 1).data;
         var alpha = idata[3];
