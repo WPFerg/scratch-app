@@ -251,29 +251,45 @@ Sprite.prototype.onClick = function(evt) {
     var mouseX = runtime.mousePos[0] + window.scaledHalfWidth;
     var mouseY = window.scaledHalfHeight - runtime.mousePos[1];
 
-    if (this.mesh.src.indexOf('.svg') == -1) {
+    if (this.mesh.src.indexOf('.svg') == -1)
+    {
+
         // HACK - if the image SRC doesn't indicate it's an SVG,
         // then we'll try to detect if the point we clicked is transparent
         // by rendering the sprite on a canvas.  With an SVG,
         // we are forced not to do this for now by Chrome/Webkit SOP:
         // http://code.google.com/p/chromium/issues/detail?id=68568
+
+        // Create working canvas
         var canv = document.createElement('canvas');
         canv.width = window.scaledWidth;
         canv.height = window.scaledHeight;
+
         var ctx = canv.getContext('2d');
+
+        // Width and height are already adjusting correctly
         var drawWidth = this.textures[this.currentCostumeIndex].width;
         var drawHeight = this.textures[this.currentCostumeIndex].height;
+
         var scale = this.scale / (this.costumes[this.currentCostumeIndex].bitmapResolution || 1);
-        var rotationCenterX = this.costumes[this.currentCostumeIndex].rotationCenterX;
-        var rotationCenterY = this.costumes[this.currentCostumeIndex].rotationCenterY;
-        ctx.translate(window.scaledHalfWidth + this.scratchX, window.scaledHalfHeight - this.scratchY);
+
+        // Introduce scaleequiv to take into account canvas size for rotation (x,y)
+        var rotationCenterX = window.ScaleEquiv(this.costumes[this.currentCostumeIndex].rotationCenterX);
+        var rotationCenterY = window.ScaleEquiv(this.costumes[this.currentCostumeIndex].rotationCenterY);
+
+        // Introduce scaleEquiv to take into account canvas size when positioning
+        ctx.translate(window.scaledHalfWidth + window.ScaleEquiv(this.scratchX), window.scaledHalfHeight - window.ScaleEquiv(this.scratchY));
+
         ctx.rotate(this.rotation * Math.PI / 180.0);
         ctx.scale(scale, scale);
         ctx.translate(-rotationCenterX, -rotationCenterY);
         ctx.drawImage(this.mesh, 0, 0);
 
+        
+
         var idata = ctx.getImageData(mouseX, mouseY, 1, 1).data;
         var alpha = idata[3];
+
     } else {
         var alpha = 1;
     }

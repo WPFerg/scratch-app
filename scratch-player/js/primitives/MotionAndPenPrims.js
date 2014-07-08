@@ -289,12 +289,12 @@ var turnAwayFromEdge = function(s) {
     // turn away from the nearest edge if it's close enough; otherwise do nothing
     // Note: comparisions are in the stage coordinates, with origin (0, 0)
     // use bounding rect of the sprite to account for costume rotation and scale
-    var r = s.getRect();
+    var r = window.ScaleRectEquiv(s.getRect());
     // measure distance to edges
     var d1 = Math.max(0, r.left);
     var d2 = Math.max(0, r.top);
-    var d3 = Math.max(0, 480 - r.right);
-    var d4 = Math.max(0, 360 - r.bottom);
+    var d3 = Math.max(0, window.scaledWidth - r.right);
+    var d4 = Math.max(0, window.scaledHeight - r.bottom);
     // find the nearest edge
     var e = 0, minDist = 100000;
     if (d1 < minDist) { minDist = d1; e = 1; }
@@ -315,15 +315,16 @@ var turnAwayFromEdge = function(s) {
     return true;
 };
 
-var ensureOnStageOnBounce = function(s) {
-    var r = s.getRect();
-    if (r.left < 0) moveSpriteTo(s, s.scratchX - r.left, s.scratchY);
-    if (r.top < 0) moveSpriteTo(s, s.scratchX, s.scratchY + r.top);
-    if (r.right > 480) {
-        moveSpriteTo(s, s.scratchX - (r.right - 480), s.scratchY);
+var ensureOnStageOnBounce = function(s)
+{
+    var r = window.ScaleRectEquiv(s.getRect());
+    if (r.left < 0) moveSpriteTo(s, window.ScaleEquiv(s.scratchX) - r.left, window.ScaleEquiv(s.scratchY));
+    if (r.top < 0) moveSpriteTo(s, window.ScaleEquiv(s.scratchX), window.ScaleEquiv(s.scratchY) + r.top);
+    if (r.right > window.scaledWidth) {
+        moveSpriteTo(s, window.ScaleEquiv(s.scratchX) - (r.right - window.scaledWidth), window.ScaleEquiv(s.scratchY));
     }
-    if (r.bottom > 360) {
-        moveSpriteTo(s, s.scratchX, s.scratchY + (r.bottom - 360));
+    if (r.bottom > window.scaledHeight) {
+        moveSpriteTo(s, window.ScaleEquiv(s.scratchX), window.ScaleEquiv(s.scratchY) + (r.bottom - window.scaledHeight));
     }
 };
 

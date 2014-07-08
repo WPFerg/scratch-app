@@ -32,6 +32,21 @@ window.ScaleEquiv = function(InValue)
 
 };
 
+// Method to calculate an equivalent scaled rectangle
+window.ScaleRectEquiv = function(InRect)
+{
+
+    // Calculate each position of the rectangle
+    InRect.left = window.ScaleEquiv(InRect.left);
+    InRect.left = window.ScaleEquiv(InRect.right);
+    InRect.left = window.ScaleEquiv(InRect.top);
+    InRect.left = window.ScaleEquiv(InRect.bottom);
+
+    // Return calculated difference
+    return InRect;
+
+}
+
 // Method to check if landscape
 window.IsLandscape = function()
 {
@@ -106,9 +121,11 @@ function PushAsjustmentToAllSprites()
                     // Create shortcut
                     var SpriteObject = runtime.sprites[obj];
 
-                    // Get the sprite original bounds
-                    //var OriginalLeft = SpriteObject.scratchX;
-                    //var OriginalTop = SpriteObject.scratchY;
+                    // // Get the sprite original bounds
+                    // var OriginalLeft = SpriteObject.scratchX;
+                    // var OriginalTop = SpriteObject.scratchY;
+                    // SpriteObject.scratchX = CalcNewScaleValue(OriginalLeft); 
+                    // SpriteObject.scratchY = CalcNewScaleValue(OriginalTop); 
 
                     // Check to make sure width is assigned
                     if (typeof SpriteObject.SpriteWidth !== 'undefined')
@@ -262,8 +279,6 @@ function AdjustPlayerDimensions()
     $("canvas").width(PlayerWidth);
     $("#player-container").width(PlayerWidth);
     $("#player-container").height(PlayerHeight);
-    $("#player-content").width(PlayerWidth);
-    $("#player-content").height(PlayerHeight);
     $("#container").width(PlayerWidth);
     $("#container").height(PlayerHeight);
     $("#overlay").width(PlayerWidth);

@@ -99,7 +99,7 @@ button#toggle-fullscreen {
     position: absolute;
     min-width: 40px;
     min-height: 40px;
-    z-index: 1000;
+    z-index: 10002;
 }
 #trigger-green-flag:hover {
     background-image: url(img/greenFlagOn.png);
@@ -112,7 +112,7 @@ button#toggle-fullscreen {
     position: absolute;
     min-width: 40px;
     min-height: 40px;
-    z-index: 1000;
+    z-index: 10002;
 }
 #trigger-stop:hover {
     background-image: url(img/stopOn.png);
@@ -127,15 +127,6 @@ button#toggle-fullscreen {
     text-align: center;
     color: rgba(0, 0, 0, .4);
     font: 9px sans-serif;
-}
-
-/* Wrapper for the Stage */
-#player-content {
-    position: relative;
-    /*border: 1px solid #d1d1d1;
-    border-top: 0;*/
-    /*min-width: 480px;
-    min-height: 360px;*/
 }
 
 /* The Stage */
@@ -165,7 +156,7 @@ button#toggle-fullscreen {
         height: 360px;
     */
 
-    z-index: 100000000;
+    z-index: 10000;
     background: url(img/playerStartFlag.png) rgba(0, 0, 0, .26) center center no-repeat;
 }
 
@@ -542,7 +533,7 @@ button#toggle-fullscreen {
     position: absolute;
     top: 5px;
     right: 5px;
-    z-index: 1000;
+    z-index: 10003;
     max-width: 20%;
     padding: 1%;
     display: none;
