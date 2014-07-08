@@ -131,7 +131,7 @@ Interpreter.prototype.stepThreads = function()
 
     // Initialisation
     var startTime;
-    startTime = this.currentMSecs = this.timer.time();
+    startTime = this.currentMSecs = this.timer.time().getTime();
     this.doRedraw = false;
 
     // Exit if no threads exist
