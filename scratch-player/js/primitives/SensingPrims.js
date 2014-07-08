@@ -16,7 +16,8 @@
 'use strict';
 
 var Timer = require('../util/Timer'),
-    LooksPrims = require('./LooksPrims');
+    LooksPrims = require('./LooksPrims'),
+    Rectangle = require('../util/Rectangle');
 
 var SensingPrims = function() {};
 
@@ -210,7 +211,7 @@ SensingPrims.prototype.primKeyPressed = function(b) {
 
 SensingPrims.prototype.primDistanceTo = function(b) {
     var s = interp.targetSprite();
-    var p = mouseOrSpritePosition(interp.arg(b, 0));
+    var p = SensingPrims.prototype.mouseOrSpritePosition(interp.arg(b, 0));
     if (s == null || p == null) return 0;
     var dx = p.x - s.scratchX;
     var dy = p.y - s.scratchY;
@@ -259,11 +260,11 @@ SensingPrims.prototype.primTimestamp = function(b) {
 SensingPrims.prototype.mouseOrSpritePosition = function(arg) {
     if (arg == "_mouse_") {
         var w = runtime.stage;
-        return new Point(runtime.mousePos[0], runtime.mousePos[1]);
+        return new Rectangle.Point(runtime.mousePos[0], runtime.mousePos[1]);
     } else {
         var s = runtime.spriteNamed(arg);
         if (s == null) return null;
-        return new Point(s.scratchX, s.scratchY);
+        return new Rectangle.Point(s.scratchX, s.scratchY);
     }
     return null;
 };
