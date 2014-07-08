@@ -62,7 +62,7 @@ exports.listen = function()
                     {
                         cookie.set("installedApps", appList + "," + projectId, {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
                         showInfoMessage();
-                        window.reload();
+                        location.reload();
                     }
                 }
 

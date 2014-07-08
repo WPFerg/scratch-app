@@ -98,9 +98,11 @@ Reporter.prototype.attach = function(scene)
     }
 
     // Add some positioning CSS to the reporter element.
-    this.el.css('left', this.x);
-    this.el.css('top', this.y);
-    this.el.css('z-index', this.z);
+    // Quick check to see if this.x y and z are defined first
+    // Use typeof here since !!0 = false.
+        this.el.css('left', this.x);
+        this.el.css('top', this.y);
+        this.el.css('z-index', this.z);
 
     // And some colour CSS.
     var cR = (this.color >> 16);

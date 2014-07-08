@@ -213,7 +213,8 @@ IO.prototype.makeObjects = function()
         var newSprite;
 
         // Check object field exists
-        if (obj.objName)
+        // Object name can be empty so check for that.
+        if (obj.objName || obj.objName === "")
         { 
             // Create sprite with duplicate reference
             newSprite = createSprite(obj);
