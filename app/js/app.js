@@ -13,5 +13,6 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/project/:projectId', {templateUrl: 'partials/project.html', controller: 'ProjectCtrl'});
   $routeProvider.when('/index', {templateUrl: 'partials/index.html', controller: 'IndexCtrl'});
   $routeProvider.when('/user/:userId', {templateUrl: 'partials/user.html', controller: 'UserCtrl'});
+  $routeProvider.when('/dashboard/:userId', {templateUrl: 'partials/dashboard.html', controller: 'DashboardCtrl'});
   $routeProvider.otherwise({redirectTo: '/index'});
 }]);
