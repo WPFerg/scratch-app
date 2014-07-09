@@ -67,60 +67,60 @@ function Scratch(project_id)
     {
         // Project exists, so
         // Bind keydown events that are fired when executing the project
-        // $(window).keydown(function(e)
-        // {
-        //     runtime.keysDown[e.which] = true;
-        //     runtime.startKeyHats(e.which);
-        // });
+        $(window).keydown(function(e)
+        {
+            runtime.keysDown[e.which] = true;
+            runtime.startKeyHats(e.which);
+        });
 
-        // // Remove the keydown events when they're fired.
-        // $(window).keyup(function(e)
-        // {
-        //     delete runtime.keysDown[e.which];
-        // });
+        // Remove the keydown events when they're fired.
+        $(window).keyup(function(e)
+        {
+            delete runtime.keysDown[e.which];
+        });
 
-        // // Initialise some jQuery DOM objects.
-        // var address = $('#address-hint');
-        // var project = $('#project-id');
+        // Initialise some jQuery DOM objects.
+        var address = $('#address-hint');
+        var project = $('#project-id');
 
-        // // Update the project ID field
-        // project.val(project_id);
+        // Update the project ID field
+        project.val(project_id);
 
-        // // Validate project ID field
-        // project.keyup(function()
-        // {
-        //     // Initialize n for ue later
-        //     var n = this.value;
+        // Validate project ID field
+        project.keyup(function()
+        {
+            // Initialize n for ue later
+            var n = this.value;
 
-        //     // Allow URL pasting
-        //     var e = /projects\/(\d+)/.exec(n);
+            // Allow URL pasting
+            var e = /projects\/(\d+)/.exec(n);
 
-        //     // Check if URL was returned (null if invalid?)
-        //     if (e)
-        //     {
-        //         n = this.value = e[1];
-        //     }
+            // Check if URL was returned (null if invalid?)
+            if (e)
+            {
+                n = this.value = e[1];
+            }
 
-        //     // Eventually, this will xhr to /projects/{{this.value}}/ and
-        //     // change color based on whether the response is 404 or 200.
-        //     $('#project-id, #address-hint').toggleClass('error', isNaN(n));
-        // });
+            // Eventually, this will xhr to /projects/{{this.value}}/ and
+            // change color based on whether the response is 404 or 200.
+            $('#project-id, #address-hint').toggleClass('error', isNaN(n));
+        });
 
-        // // Focus the actual input when the user clicks on the URL hint
-        // // When the address hint (ie. placeholder for the text box) is clicked, then select the text box underneath.
-        // address.click(function()
-        // {
-        //     project.select();
-        // });
+        // Focus the actual input when the user clicks on the URL hint
+        // When the address hint (ie. placeholder for the text box) is clicked, then select the text box underneath.
+        address.click(function()
+        {
+            project.select();
+        });
 
-        // // Define the width as the width of the placeholder address,
-        // // And set the CSS of the text box according to that width.
-        // var width = address.outerWidth();
-        // project.css(
-        // {
-        //     paddingLeft: width,
-        //     marginLeft: -width
-        // });
+        // Define the width as the width of the placeholder address,
+        // And set the CSS of the text box according to that width.
+        var width = address.outerWidth();
+        project.css(
+        {
+            paddingLeft: width,
+            marginLeft: -width
+        });
 
         // Go project button behavior
         $('#go-project').click(function()
@@ -240,9 +240,9 @@ function Scratch(project_id)
     },
     function(err)
     {
-        // // Called if there's a problem loading the project
-        // $("#player-container").css("display", "none");
-        // $("body").append("<h1>" + err.statusText + "</h1>");
+        // Called if there's a problem loading the project
+        $("#player-container").css("display", "none");
+        $("body").append("<h1>" + err.statusText + "</h1>");
     });
 };
 
