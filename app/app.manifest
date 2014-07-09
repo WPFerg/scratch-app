@@ -19,8 +19,8 @@ CACHE:
 /css/theme.css
 /css/app.css
 /js/app.js
-/js/bootstrap.js
-/js/bootstrap.min.js
+#/js/bootstrap.js
+#/js/bootstrap.min.js
 /js/controllers.js
 /js/directives.js
 /js/filters.js

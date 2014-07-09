@@ -18,14 +18,21 @@
 			<div class="row login-form-container">
 					<!-- Login details and submission button -->
 					<div class="login-form-container">
-						Add a new project:
+						<!-- Add a new project: -->
 						<div class="row">
-							<form action="{{ '#/project/' + projectId }}">
+							<form action="{{ '#/user/' + userId }}">
+
 								<!-- Username input box and glyph  -->
-								<div class="col-xs-12 left-inner-addon login-field">
+								<!-- <div class="col-xs-12 left-inner-addon login-field">
 									<i class="glyphicon glyphicon-user"> </i>
+									<input type="text" ng-model="userId" placeholder="Username" class="form-control" required />
+								</div> -->
+
+								<!-- Password input box and glyph  -->
+								<!-- <div class="col-xs-12 left-inner-addon login-field">
+									<i class="glyphicon glyphicon-lock"> </i>
 									<input type="text" ng-model="projectId" placeholder="Project ID" class="form-control" ng-change="checkForScratchLink()" required />
-								</div>
+								</div> -->
 
 								
 								<div class="col-xs-12 login-field">
@@ -36,9 +43,10 @@
 						</div>
 					</div>
 
-				<div class="installed-app-list" ng-show="installedProjects">
+				<!-- <div class="installed-app-list" ng-show="installedProjects">
 					<a class="col-xs-12 btn btn-primary login-field" href="#/installed/">Installed Projects</a>
-				</div>
+				</div> -->
+
 			</div>
 
 			<div class="login-details-notice">

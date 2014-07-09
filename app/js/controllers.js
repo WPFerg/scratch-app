@@ -1,9 +1,54 @@
 'use strict';
 /* Controllers */
 
-angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource', 'ngCookies'])
+var ControllerModule = angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource', 'ngCookies'])
 
-  .controller('IndexCtrl', ['$scope', '$cookies', function($scope, $cookies) {
+  ControllerModule.controller('UserAppsCtrl', ['$scope', function($scope)
+  {
+
+    // Set default values
+    $scope.userProjectList = [];
+
+    // Get user projects
+    $scope.getUserProjects = function($scope)
+    {
+
+      // Create test case 1
+      var Object1 = {};
+      Object1.id = '24467118';
+      Object1.name = 'Test_04';
+      Object1.date = '08/07/2014';
+      
+      // Create test case 2
+      var Object2 = {};
+      Object2.id = '24361624';
+      Object2.name = 'Test_03';
+      Object2.date = '07/07/2014';
+
+      // Append constructed objects
+      $scope.userProjectList.push(Object1);
+      $scope.userProjectList.push(Object2);
+
+    };
+
+    // Method to get project number
+    $scope.userProjectCount = function()
+    {  
+      return $scope.userProjectList.length;
+    };
+
+    // Method to determine if projects exist
+    $scope.userProjectsExist = function()
+    {
+      return ($scope.userProjectCount() > 0);
+    };
+
+    // Call project retrieval method
+    $scope.getUserProjects($scope);
+
+  }]);
+
+  ControllerModule.controller('IndexCtrl', ['$scope', '$cookies', function($scope, $cookies) {
   	$scope.checkForScratchLink = function()
   	{
 		// Check to see if the user's entered the Scratch website instead of a plain Project ID. If they have, parse it to get the project ID.
@@ -30,9 +75,9 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
     {
       $scope.installedProjects = $cookies.installedApps;
     }
-  }])
+  }]);
 
-  .controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', function($scope, Projects, ProjectDetails, $routeParams) {
+  ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', function($scope, Projects, ProjectDetails, $routeParams) {
   	
   	// Entering a project URL navigates the project back to Index. Therefore this is commented out.
   	// Left here for future reference.
@@ -90,8 +135,9 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   		$scope.isDownloading = true;
   	}
 
-  }])
-  .controller("InstalledProjectsCtrl", ['$scope', 'ProjectDetails', '$cookies', '$window', function($scope, ProjectDetails, $cookies, $window)
+  }]);
+
+  ControllerModule.controller("InstalledProjectsCtrl", ['$scope', 'ProjectDetails', '$cookies', '$window', function($scope, ProjectDetails, $cookies, $window)
   {
 
     // Get the list of installed apps, stored as a cookie CSV. Do type check to see if it exists first
