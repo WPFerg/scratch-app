@@ -91,51 +91,30 @@ angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResou
   	}
 
   }])
-  .controller("InstalledProjectsCtrl", ['$scope', 'ProjectDetails', '$cookies', '$window', function($scope, ProjectDetails, $cookies, $window)
+  .controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams' ,'$window', function($scope, UserDetails, $routeParams, $window)
   {
 
     // Get the list of installed apps, stored as a cookie CSV. Do type check to see if it exists first
-    if(typeof($cookies.installedApps) !== "undefined")
+    if(typeof($routeParams.userId) !== "undefined")
     {
-      $scope.installedProjects = $cookies.installedApps.split(",");
-      $scope.projectList = [];
-
-      // If there's projects downloaded, get all project info from the id
-      for(var projectId in $scope.installedProjects)
-      {
-        // get the project id
-        var project = $scope.installedProjects[projectId];
-
-        // And get the project details from the API and add the project details to the list.
-        // This should be cached by the manifest.
-        var projectDetails = ProjectDetails.get({"projectId": project}, function() {
-          // On success, add the project ID to the project details element
-          // It should already be added from the API, but this just verifies it is.
-          projectDetails.id = project;
-        }, function (response) {
-          // Callback function after projectDetails GET has failed
-          //  populate the projectDetails var with generic data and its project id
-          console.log(response);
-          projectDetails = {"title" : "Unpublished Scratch Project", "id": project};
-        });
-
-        // This is usually executed before the part above, since above is a callback.
-
-        // Give the projects a generic title so that unshared ones don't show up with nothing
-        projectDetails.title = "Unknown Scratch Project";
-        
-        // Add the id to project details so the page can navigate to the player
-        projectDetails.id = project;
-
-        $scope.projectList.push(projectDetails);
-      }
+      $scope.userId = $routeParams.userId;
+      // And get the User's Projects from the API and add the project to the list.
+      // This should be cached by the manifest.
+      var userDetails = UserDetails.get({"userId": $routeParams.userId}, function(response) {
+        // On success, add the projects associate with the user to the list
+        $scope.projectList = response.projects;
+      }, function (response) {
+        // Callback function after projectDetails GET has failed
+        //  Set the projectList to contain an error JSON object.
+        $scope.error = response.data;
+      });
     }
 
 
     // Function to move to the player's project.
     $scope.playProject = function(project)
     {
-      $window.location = "/scratch-player/" + project.id;
+      $window.location = "/scratch-player/" + project.projectId;
     }
 
   }]);

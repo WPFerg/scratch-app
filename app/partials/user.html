@@ -1,20 +1,20 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="title-text navbar-back" onclick="history.back();">&lt;</div>
     <div class="navbar-brand title-text">
-      Installed Projects
+      {{userId}}'s Projects
     </div>
 </div>
 
 <div class="container page-has-navbar">
 
-	<div ng-show="installedProjects">
+	<div ng-show="!error && projectList">
 		
 		<div class="app-list">
 
 
 			<div class="app-badge" ng-repeat="project in projectList" ng-click="playProject(project);">
 				<div class="app-badge-image">
-					<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{project.id}}_192x192.png">
+					<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{project.projectId}}_192x192.png">
 				</div>
 	        	<div class="app-badge-description">
 	            	<h4>{{project.title}}</h4> 
@@ -25,8 +25,12 @@
 		</div>
 
 	</div>
-	<div ng-hide="installedProjects">
-		You do not seem to have any projects downloaded.
+	<div ng-show="!error && projectList == []" class="alert alert-info">
+		You do not seem to have any projects shared. Please go to the Scratch website and share your project.
 	</div>
+	<div ng-show="error" class="alert alert-danger">
+		That user account doesn't exist. Please go back and try again.
+	</div>
+
 
 </div>
