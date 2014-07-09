@@ -62,8 +62,10 @@ function Scratch(project_id)
         $("title").text(projectData.title);
     }).fail(function(){});
 
-    // TEST
-    // Project exists, so
+    // Load the requested project and go!
+    io.loadProject(project_id, function()
+    {
+        // Project exists, so
         // Bind keydown events that are fired when executing the project
         $(window).keydown(function(e)
         {
@@ -120,110 +122,110 @@ function Scratch(project_id)
             marginLeft: -width
         });
 
-        // Go project button behavior
-        $('#go-project').click(function()
-        {
-            // Add the "#<ProjectID>" to the end of the window location, and refresh.
-            window.location = '#' + parseInt($('#project-id').val());
-            window.location.reload(true);
-        });
+        // // Go project button behavior
+        // $('#go-project').click(function()
+        // {
+        //     // Add the "#<ProjectID>" to the end of the window location, and refresh.
+        //     window.location = '#' + parseInt($('#project-id').val());
+        //     window.location.reload(true);
+        // });
 
-        // Green flag behavior
-        $('#trigger-green-flag, #overlay').click(function()
-        {
-            // If the project hasn't been loaded, don't run.
-            if (!runtime.projectLoaded) return;
+        // // Green flag behavior
+        // $('#trigger-green-flag, #overlay').click(function()
+        // {
+        //     // If the project hasn't been loaded, don't run.
+        //     if (!runtime.projectLoaded) return;
 
-            // Otherwise, hide the green flag and start the project.
-            $('#overlay').css('display', 'none');
-            runtime.greenFlag()
-        });
+        //     // Otherwise, hide the green flag and start the project.
+        //     $('#overlay').css('display', 'none');
+        //     runtime.greenFlag()
+        // });
 
-        // Stop button behavior
-        $('#trigger-stop').click(function()
-        {
-            runtime.stopAll();
-        });
+        // // Stop button behavior
+        // $('#trigger-stop').click(function()
+        // {
+        //     runtime.stopAll();
+        // });
 
-        // Canvas container mouse events -- modify the mouseDown variable as appropriate.
-        $('#container').mousedown(function(e)
-        {
-            runtime.mouseDown = true;
-            //e.preventDefault();
-        });
+        // // Canvas container mouse events -- modify the mouseDown variable as appropriate.
+        // $('#container').mousedown(function(e)
+        // {
+        //     runtime.mouseDown = true;
+        //     //e.preventDefault();
+        // });
 
-        // Release mouse down flag on mouse up
-        $('#container').mouseup(function(e)
-        {
-            runtime.mouseDown = false;
-            //e.preventDefault();
-        });
+        // // Release mouse down flag on mouse up
+        // $('#container').mouseup(function(e)
+        // {
+        //     runtime.mouseDown = false;
+        //     //e.preventDefault();
+        // });
 
-        // When the mouse is moved, change the mosue position
-        $('#container').mousemove(function(e)
-        {
-            // Initialize calc variable
-            var bb = this.getBoundingClientRect();
+        // // When the mouse is moved, change the mosue position
+        // $('#container').mousemove(function(e)
+        // {
+        //     // Initialize calc variable
+        //     var bb = this.getBoundingClientRect();
 
-            // Find the absolute X,Y
-            var absX = e.clientX - bb.left;
-            var absY = e.clientY - bb.top;
-            // -240, -y+180 (assuming) is to put in range -240..240, -180...180.
+        //     // Find the absolute X,Y
+        //     var absX = e.clientX - bb.left;
+        //     var absY = e.clientY - bb.top;
+        //     // -240, -y+180 (assuming) is to put in range -240..240, -180...180.
 
-            // Set mouse pos as absolute x and y
-            runtime.mousePos = [absX-240, -absY+180];
-        });
+        //     // Set mouse pos as absolute x and y
+        //     runtime.mousePos = [absX-240, -absY+180];
+        // });
 
-        // Touch events - EXPERIMENTAL
-        $(window).bind('touchstart', function(e)
-        {
-            // On iOS, we need to activate the Web Audio API
-            // with an empty sound play on the first touch event.
+        // // Touch events - EXPERIMENTAL
+        // $(window).bind('touchstart', function(e)
+        // {
+        //     // On iOS, we need to activate the Web Audio API
+        //     // with an empty sound play on the first touch event.
 
-            // If the audio isn't active, create a buffer and a source in order to activate it, and assign as appropriate.
-            if (!iosAudioActive)
-            {
-                // Initialize variables
-                var ibuffer = runtime.audioContext.createBuffer(1, 1, 22050);
-                var isource = runtime.audioContext.createBufferSource();
-                isource.buffer = ibuffer;
+        //     // If the audio isn't active, create a buffer and a source in order to activate it, and assign as appropriate.
+        //     if (!iosAudioActive)
+        //     {
+        //         // Initialize variables
+        //         var ibuffer = runtime.audioContext.createBuffer(1, 1, 22050);
+        //         var isource = runtime.audioContext.createBufferSource();
+        //         isource.buffer = ibuffer;
 
-                // Connect the audio to the audioContext
-                isource.connect(runtime.audioContext.destination);
-                isource.noteOn(0);
-                iosAudioActive = true;
-            }
-        });
+        //         // Connect the audio to the audioContext
+        //         isource.connect(runtime.audioContext.destination);
+        //         isource.noteOn(0);
+        //         iosAudioActive = true;
+        //     }
+        // });
 
-        // Assign mouseDown as appropriate for touch events. Same functions as above.
-        $('#container').bind('touchstart', function(e)
-        {
-            runtime.mouseDown = true;
-            // Stop iOS scrolling.
-            e.preventDefault();
-        });
+        // // Assign mouseDown as appropriate for touch events. Same functions as above.
+        // $('#container').bind('touchstart', function(e)
+        // {
+        //     runtime.mouseDown = true;
+        //     // Stop iOS scrolling.
+        //     e.preventDefault();
+        // });
 
-        // Set mouse down flag on touch ending
-        $('#container').bind('touchend', function(e)
-        {
-            runtime.mouseDown = true;
-            e.preventDefault();
-        });
+        // // Set mouse down flag on touch ending
+        // $('#container').bind('touchend', function(e)
+        // {
+        //     runtime.mouseDown = true;
+        //     e.preventDefault();
+        // });
 
-        // Same as mouse move
-        $('#container').bind('touchmove', function(e)
-        {
-            // Initialize calc variable
-            var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-            var bb = this.getBoundingClientRect();
+        // // Same as mouse move
+        // $('#container').bind('touchmove', function(e)
+        // {
+        //     // Initialize calc variable
+        //     var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+        //     var bb = this.getBoundingClientRect();
 
-            // Find the absolute X,Y
-            var absX = touch.clientX - bb.left;
-            var absY = touch.clientY - bb.top;
+        //     // Find the absolute X,Y
+        //     var absX = touch.clientX - bb.left;
+        //     var absY = touch.clientY - bb.top;
 
-            // Set mouse pos as absolute x and y
-            runtime.mousePos = [absX-240, -absY+180];
-        });
+        //     // Set mouse pos as absolute x and y
+        //     runtime.mousePos = [absX-240, -absY+180];
+        // });
 
         // Border touch events - EXPERIMENTAL
         // Fire specific keyDown events on certain actions (aka do some shit on arrow key presses)
@@ -235,21 +237,6 @@ function Scratch(project_id)
         $('#right').bind('touchend', function(e) { delete runtime.keysDown[39]; });
         $('#down').bind('touchstart touchmove', function(e) { runtime.keysDown[40] = true; runtime.startKeyHats(40); });
         $('#down').bind('touchend', function(e) { delete runtime.keysDown[40]; });
-
-        // Check to see if a cookie of downloaded projects exists
-        if(typeof(cookie.get("installedApps")) === "undefined")
-        {
-            // If it doesn't, create it
-            // When the AppCache gets the data, it adds to this pre-existing cookie.
-            cookie.set("installedApps", "", {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
-        }
-
-
-
-    // Load the requested project and go!
-    io.loadProject(project_id, function()
-    {
-
     },
     function(err)
     {
