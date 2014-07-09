@@ -59,30 +59,32 @@ describe('Scratch Controllers', function(){
     // Nothing to test.
   });
 
-  describe("InstalledProjectsCtrl", function() 
+  describe("UserCtrl", function() 
   {
-    var $httpBackend, cookies, scope, ctrl;
-    beforeEach(inject(function($rootScope, $controller, _$cookies_, _$httpBackend_) {
+    var $httpBackend, scope, ctrl;
+    beforeEach(inject(function($rootScope, $controller, _$httpBackend_, $routeParams) {
       $httpBackend = _$httpBackend_;
-      cookies = _$cookies_;
-      cookies.installedApps = "1234,5678";
 
-      $httpBackend.expectGET("/projectdetails/1234/?format=json ").respond({title: "Mr Scratch", id: "1234"});
-      $httpBackend.expectGET("/projectdetails/5678/?format=json ").respond({title: "Mrs Scratch", id: "5678"});
+      $httpBackend.expectGET("/user/AlanSugar").respond({"success": 200, "projects": [{"title": "You're Fired (out of a cannon)",
+                                                                                          "projectId": "1234"},
+                                                                                        {"title": "Amstrad: The Game", 
+                                                                                          "projectId": "5678"}]});
+      $routeParams.userId = "AlanSugar";
 
       scope = $rootScope.$new();
-      ctrl = $controller("InstalledProjectsCtrl", {$scope: scope, $cookies: cookies});
+      ctrl = $controller("UserCtrl", {$scope: scope});
     }));
 
-    it("should get the project details of every installed app", function()
+    it("should get the list of projects for a user", function()
     {
+      expect(scope.projectList).toBeUndefined();
       $httpBackend.flush();
 
       // Only need to check titles and ids, $promises are irrelevant
-      expect(scope.projectList[0].title).toEqual("Mr Scratch");
-      expect(scope.projectList[0].id).toEqual("1234");
-      expect(scope.projectList[1].title).toEqual("Mrs Scratch");
-      expect(scope.projectList[1].id).toEqual("5678");
+      expect(scope.projectList[0].title).toEqual("You're Fired (out of a cannon)");
+      expect(scope.projectList[0].projectId).toEqual("1234");
+      expect(scope.projectList[1].title).toEqual("Amstrad: The Game");
+      expect(scope.projectList[1].projectId).toEqual("5678");
     });
   });
 });
