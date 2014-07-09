@@ -47,7 +47,7 @@ function Scratch(project_id)
     // global.io = new IO();
 
     // // Load AppCache to show the state of download
-    // appcache.listen();
+    appcache.listen();
 
     // // Called on success of loading the project -- bind relevant events and create objects required to launch.
     // runtime.init();
