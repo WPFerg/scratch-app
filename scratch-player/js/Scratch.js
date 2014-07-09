@@ -201,12 +201,15 @@ function Scratch(project_id)
         $('#container').bind('touchstart', function(e)
         {
             runtime.mouseDown = true;
+            // Stop iOS scrolling.
+            e.preventDefault();
         });
 
         // Set mouse down flag on touch ending
         $('#container').bind('touchend', function(e)
         {
             runtime.mouseDown = true;
+            e.preventDefault();
         });
 
         // Same as mouse move
