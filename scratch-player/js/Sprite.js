@@ -124,6 +124,7 @@ Sprite.prototype.attach = function(scene)
     // Create textures and materials for each of the costumes.
     for (var c in this.costumes)
     {
+        //this.textures[c] = document.createElementNS('http://www.w3.org/2000/svg','image');
         this.textures[c] = document.createElement('img');
         $(this.textures[c])
         .load([this, c], function(evo) {
@@ -149,6 +150,7 @@ Sprite.prototype.attach = function(scene)
 
             // Add sprite texture to the scene
             scene.append($(sprite.textures[c]));
+            //scene.appendChild(sprite.textures[c]);
 
             // Scale width and height to fit the scene
             //console.log(window.WidthScalar() + ' * (' + $(sprite.textures[c]).width() + 'x' + $(sprite.textures[c]).height() + ')');
@@ -268,30 +270,49 @@ Sprite.prototype.onClick = function(evt) {
         var ctx = canv.getContext('2d');
 
         // Width and height are already adjusting correctly
-        var drawWidth = this.textures[this.currentCostumeIndex].width;
-        var drawHeight = this.textures[this.currentCostumeIndex].height;
+        var drawWidth = window.ScaleEquiv(this.textures[this.currentCostumeIndex].width);
+        var drawHeight = window.ScaleEquiv(this.textures[this.currentCostumeIndex].height);
 
         var scale = this.scale / (this.costumes[this.currentCostumeIndex].bitmapResolution || 1);
 
         // Introduce scaleequiv to take into account canvas size for rotation (x,y)
         var rotationCenterX = window.ScaleEquiv(this.costumes[this.currentCostumeIndex].rotationCenterX);
         var rotationCenterY = window.ScaleEquiv(this.costumes[this.currentCostumeIndex].rotationCenterY);
+        rotationCenterX = window.ScaleEquiv(rotationCenterX);
+        rotationCenterY = window.ScaleEquiv(rotationCenterY);
+
+        // Multiplying by the scale seems to work - why? - I have no idea
+        scale = window.ScaleEquiv(scale);
 
         // Introduce scaleEquiv to take into account canvas size when positioning
-        ctx.translate(window.scaledHalfWidth + window.ScaleEquiv(this.scratchX), window.scaledHalfHeight - window.ScaleEquiv(this.scratchY));
+        ctx.translate(window.scaledHalfWidth + window.ScaleEquiv(this.scratchX),
+                      window.scaledHalfHeight - window.ScaleEquiv(this.scratchY));
 
+        // Finish translations
         ctx.rotate(this.rotation * Math.PI / 180.0);
         ctx.scale(scale, scale);
         ctx.translate(-rotationCenterX, -rotationCenterY);
         ctx.drawImage(this.mesh, 0, 0);
 
-        // $('container').append(ctx);
-        // ctx.css('left', '0px');
+        // Append canvas for debugging
+        //$('#container').append(canv);
+        //$(canv).css('left', '0px');
+
+        // Print a shitload of debug information
+        // console.log('z-index = ' + $(this.mesh).css('z-index'));
+        // console.log('dislay = ' + $(this.mesh).css('dislay'));
+        // console.log('position = ' + $(this.mesh).css('position'));
+        // console.log('left = ' + $(this.mesh).css('left'));
+        // console.log('top = ' + $(this.mesh).css('top'));
+        // console.log('width = ' + $(this.mesh).css('width'));
+        // console.log('-webkit-transform = ' + $(this.mesh).css('-webkit-transform'));
+        // console.log('-webkit-transform-origin = ' + $(this.mesh).css('-webkit-transform-origin'));
 
         var idata = ctx.getImageData(mouseX, mouseY, 1, 1).data;
         var alpha = idata[3];
 
         alpha = 1;
+        
     } else {
         var alpha = 1;
     }
