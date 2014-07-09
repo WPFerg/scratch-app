@@ -67,165 +67,165 @@ function Scratch(project_id)
     {
         // Project exists, so
         // Bind keydown events that are fired when executing the project
-        $(window).keydown(function(e)
-        {
-            runtime.keysDown[e.which] = true;
-            runtime.startKeyHats(e.which);
-        });
-
-        // Remove the keydown events when they're fired.
-        $(window).keyup(function(e)
-        {
-            delete runtime.keysDown[e.which];
-        });
-
-        // Initialise some jQuery DOM objects.
-        var address = $('#address-hint');
-        var project = $('#project-id');
-
-        // Update the project ID field
-        project.val(project_id);
-
-        // Validate project ID field
-        project.keyup(function()
-        {
-            // Initialize n for ue later
-            var n = this.value;
-
-            // Allow URL pasting
-            var e = /projects\/(\d+)/.exec(n);
-
-            // Check if URL was returned (null if invalid?)
-            if (e)
-            {
-                n = this.value = e[1];
-            }
-
-            // Eventually, this will xhr to /projects/{{this.value}}/ and
-            // change color based on whether the response is 404 or 200.
-            $('#project-id, #address-hint').toggleClass('error', isNaN(n));
-        });
-
-        // Focus the actual input when the user clicks on the URL hint
-        // When the address hint (ie. placeholder for the text box) is clicked, then select the text box underneath.
-        address.click(function()
-        {
-            project.select();
-        });
-
-        // Define the width as the width of the placeholder address,
-        // And set the CSS of the text box according to that width.
-        var width = address.outerWidth();
-        project.css(
-        {
-            paddingLeft: width,
-            marginLeft: -width
-        });
-
-        // // Go project button behavior
-        // $('#go-project').click(function()
+        // $(window).keydown(function(e)
         // {
-        //     // Add the "#<ProjectID>" to the end of the window location, and refresh.
-        //     window.location = '#' + parseInt($('#project-id').val());
-        //     window.location.reload(true);
+        //     runtime.keysDown[e.which] = true;
+        //     runtime.startKeyHats(e.which);
         // });
 
-        // // Green flag behavior
-        // $('#trigger-green-flag, #overlay').click(function()
+        // // Remove the keydown events when they're fired.
+        // $(window).keyup(function(e)
         // {
-        //     // If the project hasn't been loaded, don't run.
-        //     if (!runtime.projectLoaded) return;
-
-        //     // Otherwise, hide the green flag and start the project.
-        //     $('#overlay').css('display', 'none');
-        //     runtime.greenFlag()
+        //     delete runtime.keysDown[e.which];
         // });
 
-        // // Stop button behavior
-        // $('#trigger-stop').click(function()
+        // // Initialise some jQuery DOM objects.
+        // var address = $('#address-hint');
+        // var project = $('#project-id');
+
+        // // Update the project ID field
+        // project.val(project_id);
+
+        // // Validate project ID field
+        // project.keyup(function()
         // {
-        //     runtime.stopAll();
-        // });
+        //     // Initialize n for ue later
+        //     var n = this.value;
 
-        // // Canvas container mouse events -- modify the mouseDown variable as appropriate.
-        // $('#container').mousedown(function(e)
-        // {
-        //     runtime.mouseDown = true;
-        //     //e.preventDefault();
-        // });
+        //     // Allow URL pasting
+        //     var e = /projects\/(\d+)/.exec(n);
 
-        // // Release mouse down flag on mouse up
-        // $('#container').mouseup(function(e)
-        // {
-        //     runtime.mouseDown = false;
-        //     //e.preventDefault();
-        // });
-
-        // // When the mouse is moved, change the mosue position
-        // $('#container').mousemove(function(e)
-        // {
-        //     // Initialize calc variable
-        //     var bb = this.getBoundingClientRect();
-
-        //     // Find the absolute X,Y
-        //     var absX = e.clientX - bb.left;
-        //     var absY = e.clientY - bb.top;
-        //     // -240, -y+180 (assuming) is to put in range -240..240, -180...180.
-
-        //     // Set mouse pos as absolute x and y
-        //     runtime.mousePos = [absX-240, -absY+180];
-        // });
-
-        // // Touch events - EXPERIMENTAL
-        // $(window).bind('touchstart', function(e)
-        // {
-        //     // On iOS, we need to activate the Web Audio API
-        //     // with an empty sound play on the first touch event.
-
-        //     // If the audio isn't active, create a buffer and a source in order to activate it, and assign as appropriate.
-        //     if (!iosAudioActive)
+        //     // Check if URL was returned (null if invalid?)
+        //     if (e)
         //     {
-        //         // Initialize variables
-        //         var ibuffer = runtime.audioContext.createBuffer(1, 1, 22050);
-        //         var isource = runtime.audioContext.createBufferSource();
-        //         isource.buffer = ibuffer;
-
-        //         // Connect the audio to the audioContext
-        //         isource.connect(runtime.audioContext.destination);
-        //         isource.noteOn(0);
-        //         iosAudioActive = true;
+        //         n = this.value = e[1];
         //     }
+
+        //     // Eventually, this will xhr to /projects/{{this.value}}/ and
+        //     // change color based on whether the response is 404 or 200.
+        //     $('#project-id, #address-hint').toggleClass('error', isNaN(n));
         // });
 
-        // // Assign mouseDown as appropriate for touch events. Same functions as above.
-        // $('#container').bind('touchstart', function(e)
+        // // Focus the actual input when the user clicks on the URL hint
+        // // When the address hint (ie. placeholder for the text box) is clicked, then select the text box underneath.
+        // address.click(function()
         // {
-        //     runtime.mouseDown = true;
-        //     // Stop iOS scrolling.
-        //     e.preventDefault();
+        //     project.select();
         // });
 
-        // // Set mouse down flag on touch ending
-        // $('#container').bind('touchend', function(e)
+        // // Define the width as the width of the placeholder address,
+        // // And set the CSS of the text box according to that width.
+        // var width = address.outerWidth();
+        // project.css(
         // {
-        //     runtime.mouseDown = true;
-        //     e.preventDefault();
+        //     paddingLeft: width,
+        //     marginLeft: -width
         // });
 
-        // // Same as mouse move
-        // $('#container').bind('touchmove', function(e)
-        // {
-        //     // Initialize calc variable
-        //     var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
-        //     var bb = this.getBoundingClientRect();
+        // Go project button behavior
+        $('#go-project').click(function()
+        {
+            // Add the "#<ProjectID>" to the end of the window location, and refresh.
+            window.location = '#' + parseInt($('#project-id').val());
+            window.location.reload(true);
+        });
 
-        //     // Find the absolute X,Y
-        //     var absX = touch.clientX - bb.left;
-        //     var absY = touch.clientY - bb.top;
+        // Green flag behavior
+        $('#trigger-green-flag, #overlay').click(function()
+        {
+            // If the project hasn't been loaded, don't run.
+            if (!runtime.projectLoaded) return;
 
-        //     // Set mouse pos as absolute x and y
-        //     runtime.mousePos = [absX-240, -absY+180];
-        // });
+            // Otherwise, hide the green flag and start the project.
+            $('#overlay').css('display', 'none');
+            runtime.greenFlag()
+        });
+
+        // Stop button behavior
+        $('#trigger-stop').click(function()
+        {
+            runtime.stopAll();
+        });
+
+        // Canvas container mouse events -- modify the mouseDown variable as appropriate.
+        $('#container').mousedown(function(e)
+        {
+            runtime.mouseDown = true;
+            //e.preventDefault();
+        });
+
+        // Release mouse down flag on mouse up
+        $('#container').mouseup(function(e)
+        {
+            runtime.mouseDown = false;
+            //e.preventDefault();
+        });
+
+        // When the mouse is moved, change the mosue position
+        $('#container').mousemove(function(e)
+        {
+            // Initialize calc variable
+            var bb = this.getBoundingClientRect();
+
+            // Find the absolute X,Y
+            var absX = e.clientX - bb.left;
+            var absY = e.clientY - bb.top;
+            // -240, -y+180 (assuming) is to put in range -240..240, -180...180.
+
+            // Set mouse pos as absolute x and y
+            runtime.mousePos = [absX-240, -absY+180];
+        });
+
+        // Touch events - EXPERIMENTAL
+        $(window).bind('touchstart', function(e)
+        {
+            // On iOS, we need to activate the Web Audio API
+            // with an empty sound play on the first touch event.
+
+            // If the audio isn't active, create a buffer and a source in order to activate it, and assign as appropriate.
+            if (!iosAudioActive)
+            {
+                // Initialize variables
+                var ibuffer = runtime.audioContext.createBuffer(1, 1, 22050);
+                var isource = runtime.audioContext.createBufferSource();
+                isource.buffer = ibuffer;
+
+                // Connect the audio to the audioContext
+                isource.connect(runtime.audioContext.destination);
+                isource.noteOn(0);
+                iosAudioActive = true;
+            }
+        });
+
+        // Assign mouseDown as appropriate for touch events. Same functions as above.
+        $('#container').bind('touchstart', function(e)
+        {
+            runtime.mouseDown = true;
+            // Stop iOS scrolling.
+            e.preventDefault();
+        });
+
+        // Set mouse down flag on touch ending
+        $('#container').bind('touchend', function(e)
+        {
+            runtime.mouseDown = true;
+            e.preventDefault();
+        });
+
+        // Same as mouse move
+        $('#container').bind('touchmove', function(e)
+        {
+            // Initialize calc variable
+            var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+            var bb = this.getBoundingClientRect();
+
+            // Find the absolute X,Y
+            var absX = touch.clientX - bb.left;
+            var absY = touch.clientY - bb.top;
+
+            // Set mouse pos as absolute x and y
+            runtime.mousePos = [absX-240, -absY+180];
+        });
 
         // Border touch events - EXPERIMENTAL
         // Fire specific keyDown events on certain actions (aka do some shit on arrow key presses)
@@ -240,9 +240,9 @@ function Scratch(project_id)
     },
     function(err)
     {
-        // Called if there's a problem loading the project
-        $("#player-container").css("display", "none");
-        $("body").append("<h1>" + err.statusText + "</h1>");
+        // // Called if there's a problem loading the project
+        // $("#player-container").css("display", "none");
+        // $("body").append("<h1>" + err.statusText + "</h1>");
     });
 };
 
