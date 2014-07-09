@@ -164,17 +164,16 @@ button#toggle-fullscreen {
 #preloader {
     position: absolute;
     z-index: 10001;
-    top: 50%;
-    left: 25%;
-    margin-top: -61px;
+    top: 0%;
+    left: 0%;
     
     /*
         -- SCOTT LOGIC [14:51 02_07_2014] --
 
         Removed width and height declaration as a dynamic one now exists in the HTML.
     */
-    width: 50%;
-    height: 120px;
+    width: 100%;
+    height: 100%;
     
 
     border: 1px solid rgb(208, 209, 210);
@@ -206,6 +205,15 @@ button#toggle-fullscreen {
 #preloader-details {
     margin: 6px 0 0 4px;
     font-size: 12px;
+}
+#preloader-arrow-container
+{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    margin: auto;
+    height: 100px;
+    margin-top: -50px;
 }
 
 /* iPad arrow key frame */

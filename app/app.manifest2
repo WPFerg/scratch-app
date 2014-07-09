@@ -7,7 +7,7 @@ CACHE:
 /index.html
 /empty.txt
 /partials/index.html
-/partials/installed.html
+/partials/user.html
 /partials/project.html
 /media/scratch_large_logo.png
 /fonts/glyphicons-halflings-regular.ttf
@@ -19,8 +19,13 @@ CACHE:
 /css/theme.css
 /css/app.css
 /js/app.js
+<<<<<<< HEAD:app/app.manifest
 #/js/bootstrap.js
 #/js/bootstrap.min.js
+=======
+/css/bootstrap.js
+/css/bootstrap.min.js
+>>>>>>> c4cd0837601ec52921c533dbd41e6ad5fd599e6c:app/app.manifest2
 /js/controllers.js
 /js/directives.js
 /js/filters.js

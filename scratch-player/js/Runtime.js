@@ -107,8 +107,6 @@ Runtime.prototype.loadStart = function()
     }
 
     console.log("Wavs loaded");
-    // Hide the preloader icon
-    $('#preloader').css('display', 'none');
 
     // Set finalization values
     setInterval(this.step, 33);

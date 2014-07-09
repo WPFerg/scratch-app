@@ -22,6 +22,7 @@ exports.listen = function()
 
         appCache.oncached = function(e) {
             $("#preloader-caption").text("Downloaded!");
+            $("#preloader").fadeOut();
 
             // Mark the app as downloaded in the cookie
             // Check to see if it exists, if it doesn't, create.
@@ -70,6 +71,7 @@ exports.listen = function()
         }
 
         appCache.onnoupdate = function(e) {
+            $("#preloader").fadeOut();
             // Do nothing.
         }
 
@@ -77,6 +79,7 @@ exports.listen = function()
             console.log("Updating AppCache");
             appCache.swapCache();
             appCache.oncached(e);
+            $("#preloader").fadeOut();
         }
 
         appCache.onchecking = function(e) {
@@ -85,6 +88,7 @@ exports.listen = function()
 
         appCache.onerror = function(e) {
             showInfoMessage("Error checking or downloading updates.");
+            $("#preloader").fadeOut();
         }
 
         appCache.onobsolete = function(e) {
