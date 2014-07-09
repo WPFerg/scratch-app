@@ -20,6 +20,10 @@ exports.listen = function()
             $("#preloader-progress-bar").width(e.loaded * 100 / e.total + "%");
         }
 
+        appCache.ondownloading = function(e) {
+            $("#preloader-caption").text("Downloading...");
+        }
+
         appCache.oncached = function(e) {
             $("#preloader-caption").text("Downloaded!");
             $("#preloader").fadeOut();
@@ -87,6 +91,8 @@ exports.listen = function()
         }
 
         appCache.onerror = function(e) {
+            $("#preloader-caption").text("Err...");
+            alert(e);
             showInfoMessage("Error checking or downloading updates.");
             $("#preloader").fadeOut();
         }
