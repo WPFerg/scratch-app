@@ -23,35 +23,35 @@ var OffsetBuffer = function(data) {
 
 // Read various datatypes from the ArrayBuffer, seeking the offset.
 OffsetBuffer.prototype.readString = function(length) {
-    if(!this.ab) return null;
+    if(!this.ab) {alert("ERROR"); return null;}
     var str = this.ab2str(this.ab.slice(this.offset, this.offset + length));
     this.offset += length;
     return str;
 };
 
 OffsetBuffer.prototype.readInt = function() {
-    if(!this.ab) return null;
+    if(!this.ab) {alert("ERROR"); return null;}
     var num = this.ab2int(this.ab.slice(this.offset, this.offset + 4));
     this.offset += 4;
     return num;
 };
 
 OffsetBuffer.prototype.readUint = function() {
-    if(!this.ab) return null;
+    if(!this.ab) {alert("ERROR"); return null;}
     var num = this.ab2uint(this.ab.slice(this.offset, this.offset + 4));
     this.offset += 4;
     return num;
 };
 
 OffsetBuffer.prototype.readShort = function() {
-    if(!this.ab) return null;
+    if(!this.ab) {alert("ERROR"); return null;}
     var num = this.ab2short(this.ab.slice(this.offset, this.offset + 2));
     this.offset += 2;
     return num;
 };
 
 OffsetBuffer.prototype.readBytes = function(length) {
-    if(!this.ab) return null;
+    if(!this.ab) {alert("ERROR"); return null;}
     var bytes = this.ab.slice(this.offset, this.offset + length);
     this.offset += length;
     return bytes;
