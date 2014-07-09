@@ -62,10 +62,8 @@ function Scratch(project_id)
         $("title").text(projectData.title);
     }).fail(function(){});
 
-    // Load the requested project and go!
-    io.loadProject(project_id, function()
-    {
-        // Project exists, so
+    // TEST
+    // Project exists, so
         // Bind keydown events that are fired when executing the project
         $(window).keydown(function(e)
         {
@@ -245,6 +243,13 @@ function Scratch(project_id)
             // When the AppCache gets the data, it adds to this pre-existing cookie.
             cookie.set("installedApps", "", {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
         }
+
+
+
+    // Load the requested project and go!
+    io.loadProject(project_id, function()
+    {
+
     },
     function(err)
     {
