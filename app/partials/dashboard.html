@@ -18,7 +18,7 @@
 		<a href="{{ '#/user/' + userID }}"><button type="submit" class="col-xs-6 btn btn-success dashboard-top-buttons">{{userID}}</button></a>
 
 		<!-- Friends list -->
-		<a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="col-xs-6 btn btn-info dashboard-top-buttons" >{{Friend.username}}</button></a>
+		<a ng-repeat="Friend in friendsApps.display" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="col-xs-6 btn btn-info dashboard-top-buttons" >{{Friend.username}}</button></a>
 		<!-- <button type="submit" class="col-xs-6 btn btn-warning dashboard-top-buttons">Friend #2</button>
 		<button type="submit" class="col-xs-6 btn btn-danger dashboard-top-buttons">Friend #3</button>
 		<button type="submit" class="col-xs-6 btn btn-primary dashboard-top-buttons">Friend #4</button> -->

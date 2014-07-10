@@ -27,6 +27,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       // Iterate for each friend limiting the apps to display
       $scope.friendsApps.display[count] = {};
       $scope.friendsApps.display[count].projects = [];
+      $scope.friendsApps.display[count].username = $scope.friendsApps.all[count].username;
       if ($scope.friendsApps.all[count].projects !== null)
       {
         for (var count2 = 0; count2 < Math.min(AppColCount, $scope.friendsApps.all[count].projects.length); count2 ++)
