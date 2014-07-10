@@ -78,10 +78,10 @@ IO.prototype.loadProject = function(project_id, successCallback, failureCallback
         self.data = data;
 
         // Call the success Callback to indicate the project is correct
-        successCallback();
+        //successCallback();
 
         // Initialize project
-        self.makeObjects();
+        //self.makeObjects();
         //self.loadThreads();
         //self.loadNotesDrums();
 
