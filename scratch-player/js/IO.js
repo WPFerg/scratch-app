@@ -81,7 +81,7 @@ IO.prototype.loadProject = function(project_id, successCallback, failureCallback
         successCallback();
 
         // Initialize project
-        //self.makeObjects();
+        self.makeObjects();
         self.loadThreads();
         self.loadNotesDrums();
 
