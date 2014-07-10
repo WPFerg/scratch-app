@@ -58,7 +58,7 @@ function Scratch(project_id)
     interp.initPrims();
 
     // Set project details from the API to set the title to the title of the project. If the project hasn't been published, fail silently.
-    $.get("/projectdetails/" + project_id + "/?format=json", function(projectData) {
+    $.get("http://scratch.mit.edu/api/v1/project/" + project_id + "/?format=json", function(projectData) {
         $("title").text(projectData.title);
     }).fail(function(){});
 

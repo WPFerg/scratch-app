@@ -10,6 +10,7 @@
 
 var scratch = require('../scratch-folder-middleware');
 var manifest = require('../manifest');
+var userDetails = require('../userdetails');
 var http = require('http');
 
  describe("Scratch-Player Middleware", function() {
@@ -39,7 +40,7 @@ var http = require('http');
 
 			// If there's no more data, check to see if the response is correct, and signify the test's done.
 			response.on('end', function() {
-				expect(str.indexOf("manifest='/manifest/1234'")).not.toBe(-1);
+				expect(str.indexOf("/manifest/1234")).not.toBe(-1);
 				expect(str.indexOf("var projectId = \"1234\";")).not.toBe(-1);
 				done();
 			});
@@ -194,5 +195,10 @@ describe("Manifest", function() {
 		expect(manifestData.indexOf("asset/ImACostume3.jpg/get/")).toBe(-1);
 
 	});
+
+});
+
+describe("User Details", function() {
+
 
 });
