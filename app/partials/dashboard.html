@@ -12,18 +12,34 @@
 	<!-- {{userApps.display}} -->
 
 	<!-- Display navigation buttons -->
-	<div>
+	<div style="text-align: center;">
 
 		<!-- User apps button -->
-		<a href="{{ '#/user/' + userID }}"><button type="submit" class="col-xs-6 btn btn-success dashboard-top-buttons">{{userID}}</button></a>
+		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a>
 
 		<!-- Friends list -->
-		<a ng-repeat="Friend in friendsApps.display" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="col-xs-6 btn btn-info dashboard-top-buttons" >{{Friend.username}}</button></a>
+		<a ng-repeat="Friend in friendsApps.display" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a>
 		<!-- <button type="submit" class="col-xs-6 btn btn-warning dashboard-top-buttons">Friend #2</button>
 		<button type="submit" class="col-xs-6 btn btn-danger dashboard-top-buttons">Friend #3</button>
 		<button type="submit" class="col-xs-6 btn btn-primary dashboard-top-buttons">Friend #4</button> -->
 
 	</div>
+
+	<script>
+
+	    // Calculate the height and width which can be used
+	    var WorkHeight = $('body').height();
+	    var WorkWidth = $('body').width() ;
+	    
+	    // Calculate the size for the dashboard buttons
+	    console.log(WorkWidth);
+	    var ButtonWidth = Math.max((WorkWidth / 4) * 0.99, 150);
+	    console.log(ButtonWidth);
+	    
+	    // Apply sizing to navigation top buttons
+	    $('.dashboard-top-buttons').width(ButtonWidth);
+
+	</script>
 
 	<!-- Available apps -->
 	<div class="col-xs-12 dashboard-available-apps">
@@ -74,26 +90,15 @@
 
 	</div>
 
-	<div id="contentcover" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #e5e5e5;" ng-hide="finishedLoading">
+	<div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #e5e5e5;" ng-hide="finishedLoading">
 
+		<!-- Wills loader (may return to this one) -->
 		<!-- <div id="loader" class="spinner" style="width: 100%; height: 100%; text-align: center;"></div> -->
-		<img id="loader" src="media/loading_spinner.gif" style="width: 48px; height: 48px; text-align: center; margin: auto;"> </img>
 
-		<script>
-
-			var WorkHeight = $('#contentcover').height() - 25;
-			WorkHeight = WorkHeight - WorkHeight % 2;
-			
-			var WorkWidth = $('#contentcover').width() - 25;
-			WorkWidth = WorkWidth - WorkWidth % 2;
-			
-			var PaddingTop = WorkHeight / 2;
-			var PaddingLeft = WorkWidth / 2;
-
-			$('#loader').css('margin-top', PaddingTop.toString() + 'px');
-			$('#loader').css('margin-left', PaddingLeft.toString() + 'px');
-
-		</script>
+		<!-- Use div as text message may be added below loader -->
+		<div id="dashboardloader">
+			<img src="media/loading_spinner.gif" style="width: 48px; height: 48px; text-align: center; margin: auto;"></img>
+		</div>
 
 	</div>
 

@@ -6,8 +6,14 @@ var ControllerModule = angular.module('scratch.controllers', ['scratch.directive
 ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window', 'UserDetails', 'UserFollowers', function($scope, $routeParams, $window, UserDetails, UserFollowers)
 {
 
+  // Method to allow updating of loader method
+  function UpdateLoadingMessage(NewMessage)
+  {
+
+  };
+
   // Method to resize all window elements
-  $scope.ResizeWindowElements = function()
+  function ResizeWindowElements()
   {
 
     // Calculate number of apps to fit in an app-block
@@ -40,6 +46,26 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
     }
 
+    // Calculate the height and width which can be used
+    var WorkHeight = $('body').height();
+    var WorkWidth = $('body').width() ;
+    
+    // Calculate the size for the dashboard buttons
+    var ButtonWidth = Math.max(WorkWidth / 4, 150)
+    
+    // Calculate the padding vertically and horizontally making sure it is reasonable
+    var PaddingTop = Math.max((WorkHeight-25) / 2, 250);
+    var PaddingLeft = (WorkWidth-25) / 2;
+
+    // Apply sizing to navigation top buttons
+    //$('.dashboard-top-buttons').width(function(i, w) { return ButtonWidth; });
+
+    // Apply padding to the loading gif
+    $('#dashboardloader').css('margin-top', PaddingTop.toString() + 'px');
+    $('#dashboardloader').css('margin-bottom', PaddingTop.toString() + 'px');
+    $('#dashboardloader').css('margin-left', PaddingLeft.toString() + 'px');
+    $('#dashboardloader').css('margin-right', PaddingLeft.toString() + 'px');
+
     // Reming angular to update
     if (!$scope.$$phase) { $scope.$apply(); }
   
@@ -58,7 +84,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       if (Index == 0)
       {
         $scope.finishedLoading = true;
-        $scope.ResizeWindowElements();
+        ResizeWindowElements();
       } else {
         FindFollowerProjects(Index-1);
       }
@@ -106,7 +132,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     $scope.userApps.all = response.projects;
 
     // Process update
-    $scope.ResizeWindowElements();
+    ResizeWindowElements();
     
   }, function (response) {
 
@@ -137,8 +163,8 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   var orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
 
   // Add event and link to event method
-  $scope.ResizeWindowElements();
-  window.addEventListener(orientationEvent, $scope.ResizeWindowElements, false);
+  ResizeWindowElements();
+  window.addEventListener(orientationEvent, ResizeWindowElements, false);
 
 }]);
 
