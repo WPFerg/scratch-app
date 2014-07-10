@@ -167,72 +167,72 @@ IO.prototype.makeObjects = function()
 {
 
     // Construct returning constructed object
-    function createSprite(obj)
-    {
-        // Create sprite along with sounds
-        var newSprite = new Sprite(obj);
-        newSprite.loadSounds();
+    // function createSprite(obj)
+    // {
+    //     // Create sprite along with sounds
+    //     var newSprite = new Sprite(obj);
+    //     newSprite.loadSounds();
 
-        // Return newly made object
-        return newSprite;
-    };
+    //     // Return newly made object
+    //     return newSprite;
+    // };
 
-    // 
-    function createReporter(obj, sprite)
-    {
-        // Declare variable to work on
-        var newSprite;
+    // // 
+    // function createReporter(obj, sprite)
+    // {
+    //     // Declare variable to work on
+    //     var newSprite;
 
-        // Make sure listName is initialized as an object field
-        if (obj.listName)
-        { 
-            // for local lists, only if in sprite -- SCRATCH
-            if (!(sprite===runtime.stage && !runtime.stage.lists[obj.listName]))
-            {
-                newSprite = new List(obj, sprite.objName);
-                runtime.reporters.push(newSprite);
-            }
-        } else {
-            newSprite = new Reporter(obj);
-            // If ther's a lable on the object, set that as the sprite's label
-            if(obj.label)
-            {
-                newSprite.label = obj.label;
-            }
-            runtime.reporters.push(newSprite);
-        }
+    //     // Make sure listName is initialized as an object field
+    //     if (obj.listName)
+    //     { 
+    //         // for local lists, only if in sprite -- SCRATCH
+    //         if (!(sprite===runtime.stage && !runtime.stage.lists[obj.listName]))
+    //         {
+    //             newSprite = new List(obj, sprite.objName);
+    //             runtime.reporters.push(newSprite);
+    //         }
+    //     } else {
+    //         newSprite = new Reporter(obj);
+    //         // If ther's a lable on the object, set that as the sprite's label
+    //         if(obj.label)
+    //         {
+    //             newSprite.label = obj.label;
+    //         }
+    //         runtime.reporters.push(newSprite);
+    //     }
 
-        // Return newly made object
-        return newSprite;
-    }
+    //     // Return newly made object
+    //     return newSprite;
+    // }
 
-    // Create the sprites andruntime.sprites[obj] watchers
-    function createObj(obj, sprite)
-    {
-        // Declare working newsprite var
-        var newSprite;
+    // // Create the sprites andruntime.sprites[obj] watchers
+    // function createObj(obj, sprite)
+    // {
+    //     // Declare working newsprite var
+    //     var newSprite;
 
-        // Check object field exists
-        // Object name can be empty so check for that.
-        if (obj.objName || obj.objName === "")
-        { 
-            // Create sprite with duplicate reference
-            newSprite = createSprite(obj);
-            sprite = newSprite;
-        } else {
-            // Create sprite returning reporter
-            newSprite = createReporter(obj, sprite);
-        }
+    //     // Check object field exists
+    //     // Object name can be empty so check for that.
+    //     if (obj.objName || obj.objName === "")
+    //     { 
+    //         // Create sprite with duplicate reference
+    //         newSprite = createSprite(obj);
+    //         sprite = newSprite;
+    //     } else {
+    //         // Create sprite returning reporter
+    //         newSprite = createReporter(obj, sprite);
+    //     }
 
-        // Make sure newsprite was made
-        if (newSprite)
-        {
-            // Add newSprite to existing array
-            runtime.sprites.push(newSprite);
-            newSprite.attach(runtime.scene);
-        }
+    //     // Make sure newsprite was made
+    //     if (newSprite)
+    //     {
+    //         // Add newSprite to existing array
+    //         runtime.sprites.push(newSprite);
+    //         newSprite.attach(runtime.scene);
+    //     }
 
-    }
+    // }
 
     // Create runtime stage with scene and sound
     runtime.stage = new Stage(this.data);
@@ -241,27 +241,27 @@ IO.prototype.makeObjects = function()
     runtime.stage.loadSounds();
 
     // Create each child object in 'this.data.children'
-    $.each(this.data.children, function(index, obj)
-    {
-        // create children of stage - sprites, watchers, and stage's lists -- SCRATCH
-        createObj(obj, runtime.stage); 
-    });
+    // $.each(this.data.children, function(index, obj)
+    // {
+    //     // create children of stage - sprites, watchers, and stage's lists -- SCRATCH
+    //     createObj(obj, runtime.stage); 
+    // });
 
-    // For each value within the filtered sub-set
-    $.each(runtime.sprites.filter(function(sprite)
-    {
-        // Only return sprites and no other object
-        return sprite instanceof Sprite
+    // // For each value within the filtered sub-set
+    // $.each(runtime.sprites.filter(function(sprite)
+    // {
+    //     // Only return sprites and no other object
+    //     return sprite instanceof Sprite
 
-    }), function(index, sprite)
-    { 
-        // Create each sprite within the returned sprite list
-        $.each(sprite.lists, function(index, list)
-        {
-            // create local lists -- SCRATCH
-            createObj(list, sprite); 
-        });
-    });
+    // }), function(index, sprite)
+    // { 
+    //     // Create each sprite within the returned sprite list
+    //     $.each(sprite.lists, function(index, list)
+    //     {
+    //         // create local lists -- SCRATCH
+    //         createObj(list, sprite); 
+    //     });
+    // });
 };
 
 //
