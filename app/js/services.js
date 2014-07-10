@@ -28,8 +28,8 @@ angular.module('scratch.services', []).
   {
     // Scrape from the website
     // Running a scraper on NPM.
-    return $resource("/user/projects/:userId",
-      {userId: ""}, {isArray: false} // Defaults -- just a null
+    return $resource("/user/projects/:userId/:page",
+      {userId: "", page: 1}, {isArray: false} // Defaults -- just a null
       );
   }]).
   service('UserFollowers', ['$resource', function($resource)  // Gets the project details of a project

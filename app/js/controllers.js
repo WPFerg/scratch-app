@@ -28,7 +28,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       $scope.friendsApps.display[count] = {};
       $scope.friendsApps.display[count].projects = [];
       $scope.friendsApps.display[count].username = $scope.friendsApps.all[count].username;
-
+      
       // Iterate for each friend limiting the apps to display
       if ($scope.friendsApps.all[count].projects !== null)
       {
@@ -141,11 +141,6 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 ControllerModule.controller('IndexCtrl', ['$scope', '$cookies', function($scope, $cookies) 
 {
 
-  // Get the list of installed apps, stored as a cookie CSV. Do type check to see if it exists first
-  if(typeof($cookies.installedApps) !== "undefined")
-  {
-    $scope.installedProjects = $cookies.installedApps;
-  }
 }]);
 
 ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', function($scope, Projects, ProjectDetails, $routeParams)
@@ -216,11 +211,21 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
   if(typeof($routeParams.userId) !== "undefined")
   {
     $scope.userId = $routeParams.userId;
+    $scope.currentPage = 1;
     // And get the User's Projects from the API and add the project to the list.
     // This should be cached by the manifest.
     var userDetails = UserDetails.get({"userId": $routeParams.userId}, function(response) {
       // On success, add the projects associate with the user to the list
       $scope.projectList = response.projects;
+
+      // If there's more projects than on this page, show a message to allow the user to load more.
+      if(response.projects.length >= 60)
+      {
+        $scope.anotherPage = true;
+      } else {
+        $scope.anotherPage = false;
+      }
+
     }, function (response) {
       // Callback function after projectDetails GET has failed
       //  Set the projectList to contain an error JSON object.
@@ -233,6 +238,32 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
   $scope.playProject = function(project)
   {
     $window.location = "/scratch-player/" + project.projectId;
+  }
+
+  // Load the next page for pagination
+  $scope.loadNextPage = function()
+  {
+    $scope.currentPage++;
+    console.log("Loading page " + $scope.currentPage);
+    UserDetails.get({"userId": $routeParams.userId, "page": $scope.currentPage}, function(response) {
+
+      // On success, add the projects associate with the user to the list
+      $scope.projectList = $scope.projectList.concat(response.projects);
+
+      // If the scope isn't updating the view because a function has been called, tell it to.
+      if(!$scope.$$phase)
+      {
+        $scope.$apply();
+      }
+
+      // If there's more projects than on this page, show a message to allow the user to load more.
+      if(response.projects.length >= 60)
+      {
+        $scope.anotherPage = true;
+      } else {
+        $scope.anotherPage = false;
+      }
+    });
   }
 
 }]);

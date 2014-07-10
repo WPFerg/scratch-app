@@ -7,8 +7,27 @@
 	// Gets a user's projects
 	// TODO: Pagination.
 
-	// Get the username from the GET request
-	var userId = req.url.substring(1);
+	// Get the params from the GET request
+	// Of the format "/username/page"
+	var params = req.url.substring(1).split("/");
+	
+	var userId = params[0], page = params[1];
+
+	// Check to see if the page exists in the GET request
+	if(typeof(page) !== "undefined")
+	{
+		// Ensure it's an integer
+		page = parseInt(page,10);
+
+		// And if it's 0 or -ve, or not a number, set it to 1.
+		if(page < 1 || isNaN(page))
+		{
+			page = 1;
+		}
+	} else {
+		// Just set page to 1 as a default.
+		page = 1;
+	}
 	// Response to the client. 200 is a success.
 	var responseCode = 200;
 
@@ -16,7 +35,7 @@
 	// Create a HTTP GET request with the userId as a parameter
 	var requestOpts = {
 		host: "scratch.mit.edu",
-		path: "/users/" + userId + "/projects/"
+		path: "/users/" + userId + "/projects/?page=" + page 
 	};
 
 	// Create a function that parses the responses from the HTTP request
