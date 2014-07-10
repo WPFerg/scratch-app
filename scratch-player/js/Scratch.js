@@ -65,6 +65,7 @@ function Scratch(project_id)
     // Load the requested project and go!
     io.loadProject(project_id, function()
     {
+
         // Project exists, so
         // Bind keydown events that are fired when executing the project
         $(window).keydown(function(e)
@@ -201,12 +202,15 @@ function Scratch(project_id)
         $('#container').bind('touchstart', function(e)
         {
             runtime.mouseDown = true;
+            // Stop iOS scrolling.
+            e.preventDefault();
         });
 
         // Set mouse down flag on touch ending
         $('#container').bind('touchend', function(e)
         {
             runtime.mouseDown = true;
+            e.preventDefault();
         });
 
         // Same as mouse move
@@ -234,14 +238,6 @@ function Scratch(project_id)
         $('#right').bind('touchend', function(e) { delete runtime.keysDown[39]; });
         $('#down').bind('touchstart touchmove', function(e) { runtime.keysDown[40] = true; runtime.startKeyHats(40); });
         $('#down').bind('touchend', function(e) { delete runtime.keysDown[40]; });
-
-        // Check to see if a cookie of downloaded projects exists
-        if(typeof(cookie.get("installedApps")) === "undefined")
-        {
-            // If it doesn't, create it
-            // When the AppCache gets the data, it adds to this pre-existing cookie.
-            cookie.set("installedApps", "", {expires: new Date("Jan 1, 2050").toUTCString(), path:"/"});
-        }
     },
     function(err)
     {

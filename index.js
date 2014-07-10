@@ -4,6 +4,8 @@ var http = require('http');
 
 var url = require('url');
 var proxy = require('proxy-middleware');
+var morgan = require('morgan');
+
 
 var scratch = require("./scratch-folder-middleware");
 var manifest = require("./manifest");
@@ -19,6 +21,9 @@ var app = express()
 app.engine('html', ejs.renderFile);
 // Set the views for EJS to be in the HTML player folder, since that's the only place EJS needs to know about.
 app.set('views', __dirname + "/scratch-player")
+
+app.use(morgan('dev')); 					// log every request to the console
+
 app.use('/projects/', proxy(url.parse('http://projects.scratch.mit.edu/internalapi/project/')));
 app.use('/projectdetails/', proxy(url.parse('http://scratch.mit.edu/api/v1/project/')));
 app.use('/asset/', proxy(url.parse('http://cdn.scratch.mit.edu/internalapi/asset/')));
@@ -28,8 +33,8 @@ app.use('/user/followers/', userDetails.GetUserFriends);
 app.use(express.static('./app'));
 app.use('/manifest', function(req, res) {
 
-	// Remove the leading /
-	var projectId = req.url.substring(1);
+	// Remove the leading /, and anything after the second /, so /projectid/application.manifest results in projectid
+	var projectId = req.url.substring(1).split("/")[0];
 
 	
 

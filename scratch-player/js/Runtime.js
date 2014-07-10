@@ -57,8 +57,15 @@ Runtime.prototype.init = function()
     // If audio is not defined (still null) try the second case assignment
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-    // Create object field audio context
-    this.audioContext = new AudioContext();
+    // Create object field audio context -- doesn't work on iOS. First check to see if webkitAudioContext is defined.
+    if(typeof(webkitAudioContext) !== "undefined")
+    {
+        // Use a webkit audiocontext
+        this.audioContext = new webkitAudioContext();
+    } else {
+        // Use a standard audio context.
+        this.audioContext = new AudioContext();
+    }
 
     // -?- Dont know -?-
     try

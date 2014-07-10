@@ -99,7 +99,7 @@ button#toggle-fullscreen {
     position: absolute;
     min-width: 40px;
     min-height: 40px;
-    z-index: 10002;
+    z-index: 10001;
 }
 #trigger-green-flag:hover {
     background-image: url(img/greenFlagOn.png);
@@ -112,7 +112,7 @@ button#toggle-fullscreen {
     position: absolute;
     min-width: 40px;
     min-height: 40px;
-    z-index: 10002;
+    z-index: 10001;
 }
 #trigger-stop:hover {
     background-image: url(img/stopOn.png);
@@ -163,7 +163,7 @@ button#toggle-fullscreen {
 /* Preloader */
 #preloader {
     position: absolute;
-    z-index: 10001;
+    z-index: 10002;
     top: 0%;
     left: 0%;
     
@@ -206,7 +206,7 @@ button#toggle-fullscreen {
     margin: 6px 0 0 4px;
     font-size: 12px;
 }
-#preloader-arrow-container
+#preloader-info-container
 {
     position: absolute;
     top: 50%;

@@ -23,30 +23,35 @@ var OffsetBuffer = function(data) {
 
 // Read various datatypes from the ArrayBuffer, seeking the offset.
 OffsetBuffer.prototype.readString = function(length) {
+    if(typeof(this.ab) === "undefined") { return ""; }
     var str = this.ab2str(this.ab.slice(this.offset, this.offset + length));
     this.offset += length;
     return str;
 };
 
 OffsetBuffer.prototype.readInt = function() {
+    if(typeof(this.ab) === "undefined") { return null; }
     var num = this.ab2int(this.ab.slice(this.offset, this.offset + 4));
     this.offset += 4;
     return num;
 };
 
 OffsetBuffer.prototype.readUint = function() {
+    if(typeof(this.ab) === "undefined") { return null; }
     var num = this.ab2uint(this.ab.slice(this.offset, this.offset + 4));
     this.offset += 4;
     return num;
 };
 
 OffsetBuffer.prototype.readShort = function() {
+    if(typeof(this.ab) === "undefined") { return null; }
     var num = this.ab2short(this.ab.slice(this.offset, this.offset + 2));
     this.offset += 2;
     return num;
 };
 
 OffsetBuffer.prototype.readBytes = function(length) {
+    if(typeof(this.ab) === "undefined") { return null; }
     var bytes = this.ab.slice(this.offset, this.offset + length);
     this.offset += length;
     return bytes;
@@ -54,6 +59,7 @@ OffsetBuffer.prototype.readBytes = function(length) {
 
 // Length of the internal buffer
 OffsetBuffer.prototype.getLength = function() {
+    if(typeof(this.ab) === "undefined") { return -1; }
     return this.ab.byteLength;
 };
 
