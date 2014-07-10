@@ -24,11 +24,19 @@ angular.module('scratch.services', []).
       {projectId: "23600596"}, {isArray: false} // Defaults -- just a random, generic project
       );
   }]).
-  service('UserDetails', ['$resource', function($resource)	// Gets the project details of a project
+  service('UserDetails', ['$resource', function($resource)  // Gets the project details of a project
   {
-  	// Scrape from the website
-  	// Running a scraper on NPM.
-  	return $resource("/user/:userId",
-  		{userId: ""}, {isArray: false} // Defaults -- just a null
-  		);
+    // Scrape from the website
+    // Running a scraper on NPM.
+    return $resource("/user/projects/:userId",
+      {userId: ""}, {isArray: false} // Defaults -- just a null
+      );
+  }]).
+  service('UserFollowers', ['$resource', function($resource)  // Gets the project details of a project
+  {
+    // Scrape from the website
+    // Running a scraper on NPM.
+    return $resource("/user/followers/:userId",
+      {userId: ""}, {isArray: false} // Defaults -- just a null
+      );
   }]);

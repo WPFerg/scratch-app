@@ -171,7 +171,7 @@ body
 	min-height: 100px;
 	max-height: 200px;
 	box-shadow: 1px 1px 5px #888888;
-	margin: 0px 0px;
+	margin: 5px 1px;
 }
 
 .dashboard-app-block-icon

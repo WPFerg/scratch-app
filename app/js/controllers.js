@@ -3,16 +3,132 @@
 
 var ControllerModule = angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource', 'ngCookies'])
 
-ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', function($scope, $routeParams)
+ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window', 'UserDetails', 'UserFollowers', function($scope, $routeParams, $window, UserDetails, UserFollowers)
 {
 
+  // Method to resize all window elements
+  $scope.ResizeWindowElements = function()
+  {
+
+    // Calculate number of apps to fit in an app-block
+    var AppColCount = (screen.width - screen.width % 105) / 105;
+
+    // Create simple list containing number of items which can be displayed
+    $scope.userApps.display = [];
+    for (var count = 0; count < Math.min(AppColCount, $scope.userApps.all.length); count ++)
+    {
+      $scope.userApps.display.push($scope.userApps.all[count]);
+    }
+
+    // Calculate list items to display for a friend
+    for (var count = 0; count < $scope.friendsApps.length; count ++)
+    {
+
+      // Iterate for each friend limiting the apps to display
+      $scope.friendsApps[count].display = [];
+      for (var count2 = 0; count2 < Math.min(AppColCount, $scope.friendsApps[count].projects.length); count2 ++)
+      {
+        $scope.friendsApps[count].display.push($scope.friendsApps[count].projects[count2]);        
+      }
+
+    }
+
+    // Reming angular to update
+    $scope.$apply();
+  
+  };
+
+  function FindFollowerProjects(Index)
+  {
+
+    var userProject = UserDetails.get({"userId": $scope.friendsApps[Index].username}, function(response)
+    {
+
+      console.log(Index);
+      console.log($scope.friendsApps[Index].username);
+
+      // Link response project list to the users project list
+      $scope.friendsApps[Index].projects = response.projects;
+
+      // Process update on base case
+      if (Index == 0)
+      {
+        $scope.ResizeWindowElements();
+      } else {
+        FindFollowerProjects(Index-1);
+      }
+    
+    }, function(response) {
+
+      // Set user projects to nothing
+      $scope.error = response.data;
+
+    });
+
+  };
+
+  // Create function to navigate to project
+  $scope.NavigateToProject = function(project)
+  {
+    $window.location = "#/project/" + project.projectId;
+  };
+
+  // Create function to navigate to player
+  $scope.NavigateToPlayer = function(project)
+  {
+    $window.location = "/scratch-player/" + project.projectId;
+  };
+
   // Set default values
-  $scope.featuredApps = [];
-  $scope.userApps = [];
+  $scope.userApps = {};
+  $scope.userApps.all = [];
+  $scope.userApps.display = [];
   $scope.friendsApps = [];
 
   // Get user ID
   $scope.userID = $routeParams.userId;
+
+  // Run procedure to generate user projects
+  var userDetails = UserDetails.get({"userId": $routeParams.userId}, function(response)
+  {
+
+    // Link response project list to the user apps list
+    $scope.userApps.all = response.projects;
+
+    // Process update
+    $scope.ResizeWindowElements();
+    
+  }, function (response) {
+
+    // Store error information in an error holding variable
+    $scope.error = response.data;
+
+  });
+
+  // Run procedure to generate following projects
+  var userDetails = UserFollowers.get({"userId": $routeParams.userId}, function(response)
+  {
+
+    // Link response project list to the user apps list
+    $scope.friendsApps = response.followers;
+
+    // Find all of the projects created by followers
+    FindFollowerProjects($scope.friendsApps.length-1);
+
+  }, function (response) {
+
+    // Store error information in an error holding variable
+    $scope.error = response.data;
+
+  });
+
+  // Create orientation event variables
+  var supportsOrientationChange = "onorientationchange" in window;
+  var orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+
+  // Add event and link to event method
+  $scope.ResizeWindowElements();
+  window.addEventListener(orientationEvent, $scope.ResizeWindowElements, false);
 
 }]);
 

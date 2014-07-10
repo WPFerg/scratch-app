@@ -9,6 +9,7 @@ CACHE:
 /partials/index.html
 /partials/user.html
 /partials/project.html
+/partials/dashboard.html
 /media/scratch_large_logo.png
 /fonts/glyphicons-halflings-regular.ttf
 /fonts/glyphicons-halflings-regular.eot

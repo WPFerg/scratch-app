@@ -23,7 +23,8 @@ app.use('/projects/', proxy(url.parse('http://projects.scratch.mit.edu/internala
 app.use('/projectdetails/', proxy(url.parse('http://scratch.mit.edu/api/v1/project/')));
 app.use('/asset/', proxy(url.parse('http://cdn.scratch.mit.edu/internalapi/asset/')));
 app.use('/scratch-player/', scratch.serveScratchFolder);
-app.use('/user/', userDetails);
+app.use('/user/projects/', userDetails.GetUserProjects);
+app.use('/user/followers/', userDetails.GetUserFriends);
 app.use(express.static('./app'));
 app.use('/manifest', function(req, res) {
 
