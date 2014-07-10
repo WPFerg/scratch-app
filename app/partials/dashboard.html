@@ -74,5 +74,27 @@
 
 	</div>
 
+	<div id="contentcover" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #e5e5e5;" ng-hide="finishedLoading">
+
+		<!-- <div id="loader" class="spinner" style="width: 100%; height: 100%; text-align: center;"></div> -->
+		<img id="loader" src="media/loading_spinner.gif" style="width: 48px; height: 48px; text-align: center; margin: auto;"> </img>
+
+		<script>
+
+			var WorkHeight = $('#contentcover').height() - 25;
+			WorkHeight = WorkHeight - WorkHeight % 2;
+			
+			var WorkWidth = $('#contentcover').width() - 25;
+			WorkWidth = WorkWidth - WorkWidth % 2;
+			
+			var PaddingTop = WorkHeight / 2;
+			var PaddingLeft = WorkWidth / 2;
+
+			$('#loader').css('margin-top', PaddingTop.toString() + 'px');
+			$('#loader').css('margin-left', PaddingLeft.toString() + 'px');
+
+		</script>
+
+	</div>
 
 </div>

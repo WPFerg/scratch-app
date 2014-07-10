@@ -28,7 +28,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       $scope.friendsApps.display[count] = {};
       $scope.friendsApps.display[count].projects = [];
       $scope.friendsApps.display[count].username = $scope.friendsApps.all[count].username;
-      
+
       // Iterate for each friend limiting the apps to display
       if ($scope.friendsApps.all[count].projects !== null)
       {
@@ -57,6 +57,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       // Process update on base case
       if (Index == 0)
       {
+        $scope.finishedLoading = true;
         $scope.ResizeWindowElements();
       } else {
         FindFollowerProjects(Index-1);
@@ -82,6 +83,9 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   {
     $window.location = "/scratch-player/" + project.projectId;
   };
+
+  // Set finished loading boolean
+  $scope.finishedLoading = false;
 
   // Set default values
   $scope.userApps = {};
