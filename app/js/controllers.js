@@ -11,7 +11,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   {
 
     // Calculate number of apps to fit in an app-block
-    var AppColCount = (screen.width - screen.width % 105) / 105;
+    var AppColCount = (screen.width - screen.width % 107) / 107;
 
     // Create simple list containing number of items which can be displayed
     $scope.userApps.display = [];
@@ -21,34 +21,35 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     }
 
     // Calculate list items to display for a friend
-    for (var count = 0; count < $scope.friendsApps.length; count ++)
+    for (var count = 0; count < $scope.friendsApps.all.length; count ++)
     {
 
       // Iterate for each friend limiting the apps to display
-      $scope.friendsApps[count].display = [];
-      for (var count2 = 0; count2 < Math.min(AppColCount, $scope.friendsApps[count].projects.length); count2 ++)
+      $scope.friendsApps.display[count] = {};
+      $scope.friendsApps.display[count].projects = [];
+      if ($scope.friendsApps.all[count].projects !== null)
       {
-        $scope.friendsApps[count].display.push($scope.friendsApps[count].projects[count2]);        
+        for (var count2 = 0; count2 < Math.min(AppColCount, $scope.friendsApps.all[count].projects.length); count2 ++)
+        {
+          $scope.friendsApps.display[count].projects.push($scope.friendsApps.all[count].projects[count2]);        
+        }
       }
 
     }
 
     // Reming angular to update
-    $scope.$apply();
+    if(!$scope.$$phase) { $scope.$apply(); }
   
   };
 
   function FindFollowerProjects(Index)
   {
 
-    var userProject = UserDetails.get({"userId": $scope.friendsApps[Index].username}, function(response)
+    var userProject = UserDetails.get({"userId": $scope.friendsApps.all[Index].username}, function(response)
     {
 
-      console.log(Index);
-      console.log($scope.friendsApps[Index].username);
-
       // Link response project list to the users project list
-      $scope.friendsApps[Index].projects = response.projects;
+      $scope.friendsApps.all[Index].projects = response.projects;
 
       // Process update on base case
       if (Index == 0)
@@ -83,7 +84,9 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   $scope.userApps = {};
   $scope.userApps.all = [];
   $scope.userApps.display = [];
-  $scope.friendsApps = [];
+  $scope.friendsApps = {};
+  $scope.friendsApps.all = [];
+  $scope.friendsApps.display = [];
 
   // Get user ID
   $scope.userID = $routeParams.userId;
@@ -110,10 +113,10 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   {
 
     // Link response project list to the user apps list
-    $scope.friendsApps = response.followers;
+    $scope.friendsApps.all = response.followers;
 
     // Find all of the projects created by followers
-    FindFollowerProjects($scope.friendsApps.length-1);
+    FindFollowerProjects($scope.friendsApps.all.length-1);
 
   }, function (response) {
 
