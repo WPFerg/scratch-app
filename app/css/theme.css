@@ -9,12 +9,12 @@ body
 .container h1
 {
 	text-align: center;
-	width: 100%;
 }
 
 .container
 {
 
+	width: 100%;
 	min-height: 90%;
 
 }
@@ -192,6 +192,12 @@ body
 	color: #b2cb39;
 }
 
+.dashboard-app-block-title
+{
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+}
+
 /* ------------------------------ Login ------------------------------ */
 
 .login-details-notice
@@ -316,8 +322,8 @@ body
 
 .app-badge
 {
-	outline: 1px solid #aaa;
-	border: 1px solid #aaa;
+	/*outline: 1px solid #aaa;
+	border: 1px solid #aaa;*/
 
 	width: 100%;
 

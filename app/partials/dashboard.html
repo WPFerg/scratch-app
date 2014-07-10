@@ -18,7 +18,7 @@
 		<a href="{{ '#/user/' + userID }}"><button type="submit" class="col-xs-6 btn btn-success dashboard-top-buttons">{{userID}}</button></a>
 
 		<!-- Friends list -->
-		<a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="col-xs-6 btn btn-info dashboard-top-buttons" >{{Friend.username}}</button></a>
+		<a ng-repeat="Friend in friendsApps.display" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="col-xs-6 btn btn-info dashboard-top-buttons" >{{Friend.username}}</button></a>
 		<!-- <button type="submit" class="col-xs-6 btn btn-warning dashboard-top-buttons">Friend #2</button>
 		<button type="submit" class="col-xs-6 btn btn-danger dashboard-top-buttons">Friend #3</button>
 		<button type="submit" class="col-xs-6 btn btn-primary dashboard-top-buttons">Friend #4</button> -->
@@ -42,7 +42,7 @@
 
 				<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps.display" ng-click="NavigateToProject(DisplayItem);">
 					<img src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
-					<br/>{{DisplayItem.title}}
+					<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
 					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
 				</div>
 

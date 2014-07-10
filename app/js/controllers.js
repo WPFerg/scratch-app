@@ -24,9 +24,12 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     for (var count = 0; count < $scope.friendsApps.all.length; count ++)
     {
 
-      // Iterate for each friend limiting the apps to display
+      // Create new object
       $scope.friendsApps.display[count] = {};
       $scope.friendsApps.display[count].projects = [];
+      $scope.friendsApps.display[count].username = $scope.friendsApps.all[count].username;
+
+      // Iterate for each friend limiting the apps to display
       if ($scope.friendsApps.all[count].projects !== null)
       {
         for (var count2 = 0; count2 < Math.min(AppColCount, $scope.friendsApps.all[count].projects.length); count2 ++)
@@ -38,7 +41,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     }
 
     // Reming angular to update
-    if(!$scope.$$phase) { $scope.$apply(); }
+    if (!$scope.$$phase) { $scope.$apply(); }
   
   };
 
