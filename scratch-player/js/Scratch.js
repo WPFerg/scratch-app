@@ -65,6 +65,7 @@ function Scratch(project_id)
     // Load the requested project and go!
     io.loadProject(project_id, function()
     {
+
         // Project exists, so
         // Bind keydown events that are fired when executing the project
         $(window).keydown(function(e)

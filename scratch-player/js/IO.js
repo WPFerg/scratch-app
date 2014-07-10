@@ -99,32 +99,39 @@ IO.prototype.soundRequest = function(sound, sprite)
     // Create request object
     var request = new XMLHttpRequest();
     request.open('GET', this.asset_base + sound['md5'] + this.asset_suffix, true);
+    var requrl = this.asset_base + sound['md5'] + this.asset_suffix;
     request.responseType = 'arraybuffer';
 
     // Decode sound data on load
     request.onload = function()
     {
-        // Temp var - not needed as can be plugged in instead?
-        var waveData = request.response;
-
-        // Decode the waveData and populate a buffer channel with the samples
-        var snd = new SoundDecoder(waveData);
-        var samples = snd.getAllSamples();
-
-        //
-        sound.buffer = runtime.audioContext.createBuffer(1, samples.length, runtime.audioContext.sampleRate);
-        var data = sound.buffer.getChannelData(0);
-        for (var i = 0; i < data.length; i++)
+        // If there's a response -- will hopefully stop Safari from crashing on a null response error.
+        if(!!request.response)
         {
-            data[i] = samples[i];
-        };
+            // Temp var - not needed as can be plugged in instead?
+            var waveData = request.response;
+
+            // // Decode the waveData and populate a buffer channel with the samples
+            var snd = new SoundDecoder(waveData);
+            var samples = snd.getAllSamples();
+
+            //
+            sound.buffer = runtime.audioContext.createBuffer(1, samples.length, runtime.audioContext.sampleRate);
+            var data = sound.buffer.getChannelData(0);
+            for (var i = 0; i < data.length; i++)
+            {
+                data[i] = samples[i];
+            };
+        }
 
         // Increment number of sounds
+            // TODO: Temporary bypass to get GreenFlag working -- need to fix the null responses
         sprite.soundsLoaded++;
     };
 
     // Execute request
     request.send();
+    //sprite.soundsLoaded++;
 };
 
 //
@@ -144,15 +151,21 @@ IO.prototype.loadNotesDrums = function()
         // Onload decode data
         request.onload = function()
         {
-            var waveData = new OffsetBuffer(request.response);
+            // If there's a response -- will hopefully stop Safari from crashing on a null response error.
+            if(!!request.response)
+            {
+                var waveData = new OffsetBuffer(request.response);
 
-            // Decode the waveData and populate a buffer channel with the samples
-            var info = WAVFile.decode(request.response);
-            waveData.offset = info.sampleDataStart;
-            var soundBuffer = waveData.readBytes(2 * info.sampleCount);
+                // Decode the waveData and populate a buffer channel with the samples
+                var info = WAVFile.decode(request.response);
+                waveData.offset = info.sampleDataStart;
+                var soundBuffer = waveData.readBytes(2 * info.sampleCount);
 
-            // Store sound for later use
-            Instr.samples[name] = soundBuffer;
+                // Store sound for later use
+                Instr.samples[name] = soundBuffer;
+            }
+
+            // TODO: Temporary bypass to get GreenFlag working -- need to fix the null responses
             Instr.wavsLoaded++;
         };
 
@@ -237,8 +250,8 @@ IO.prototype.makeObjects = function()
     // Create runtime stage with scene and sound
     runtime.stage = new Stage(this.data);
     runtime.stage.attach(runtime.scene);
-    // runtime.stage.attachPenLayer(runtime.scene);
-    // runtime.stage.loadSounds();
+    runtime.stage.attachPenLayer(runtime.scene);
+    runtime.stage.loadSounds();
 
     // Create each child object in 'this.data.children'
     $.each(this.data.children, function(index, obj)

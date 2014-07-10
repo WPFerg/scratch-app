@@ -91,8 +91,6 @@ exports.listen = function()
         }
 
         appCache.onerror = function(e) {
-            $("#preloader-caption").text("Err...");
-            alert(e);
             showInfoMessage("Error checking or downloading updates.");
             $("#preloader").fadeOut();
         }
