@@ -86,7 +86,7 @@ IO.prototype.loadProject = function(project_id, successCallback, failureCallback
         self.loadNotesDrums();
 
         // Try to run the project
-        runtime.loadStart();
+        //runtime.loadStart();
     }).fail(function(error) {
         // If there's a problem, report back to the caller
         failureCallback(error);
