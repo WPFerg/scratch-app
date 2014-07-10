@@ -161,8 +161,10 @@ Sprite.prototype.attach = function(scene)
             sprite.SpriteWidth = $(sprite.textures[c]).width();
             sprite.SpriteHeight = $(sprite.textures[c]).height();
             
-        })
-        .attr('src', io.asset_base + this.costumes[c].baseLayerMD5 + io.asset_suffix);
+        }).attr({
+             'crossOrigin': 'anonymous',
+             'src': io.asset_base + this.costumes[c].baseLayerMD5 + io.asset_suffix
+         });
     }
 
     this.mesh = this.textures[this.currentCostumeIndex];

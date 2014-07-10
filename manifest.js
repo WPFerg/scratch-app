@@ -63,7 +63,7 @@ exports.generateManifest = function(projectId, manifestData, callbackFunction)
 	manifest += "\nNETWORK:\n*\nCACHE:";
 
 	// Add the project details url (that has all the code/instructions)
-	manifest += "\n/projects/" + projectId + "/get/";
+	manifest += "\nhttp://projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/";
 
 	// Add the files in the /scrach-player/ directory to the manifest so they can be cached.
 	manifest += addFilesInFolder("scratch-player/");
@@ -133,7 +133,7 @@ getFileList = function(manifestData, manifestFiles)
 	// If the pen layer exists, and the file isn't in the manifest add that.
 	if(manifestData.penLayerMD5 && manifestFiles.indexOf(manifestData.penLayerMD5) === -1)
 	{
-		manifest += "\n/asset/" + manifestData.penLayerMD5 + "/get/";
+		manifest += "\nhttp://cdn.scratch.mit.edu/internalapi/asset/" + manifestData.penLayerMD5 + "/get/";
 
 		manifestFiles.push(manifestData.penLayerMD5);
 	}
@@ -146,7 +146,7 @@ getFileList = function(manifestData, manifestFiles)
 		// Check to see if file exists. If it doesn't, add it. Otherwise, continue.
 		if(manifestFiles.indexOf(sound.md5) === -1)
 		{
-			manifest += "\n/asset/" + sound.md5 + "/get/";
+			manifest += "\nhttp://cdn.scratch.mit.edu/internalapi/asset/" + sound.md5 + "/get/";
 
 			manifestFiles.push(sound.md5);
 		}
@@ -161,7 +161,7 @@ getFileList = function(manifestData, manifestFiles)
 		// Check to see if file exists. If it doesn't, add it. Otherwise, continue.
 		if(manifestFiles.indexOf(costume.baseLayerMD5) === -1)
 		{
-			manifest += "\n/asset/" + costume.baseLayerMD5 + "/get/";
+			manifest += "\nhttp://cdn.scratch.mit.edu/internalapi/asset/" + costume.baseLayerMD5 + "/get/";
 
 			manifestFiles.push(costume.baseLayerMD5);
 		}

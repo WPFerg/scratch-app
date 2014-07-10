@@ -24,9 +24,9 @@ app.set('views', __dirname + "/scratch-player")
 
 app.use(morgan('dev')); 					// log every request to the console
 
-app.use('/projects/', proxy(url.parse('http://projects.scratch.mit.edu/internalapi/project/')));
-app.use('/projectdetails/', proxy(url.parse('http://scratch.mit.edu/api/v1/project/')));
-app.use('/asset/', proxy(url.parse('http://cdn.scratch.mit.edu/internalapi/asset/')));
+// app.use('/projects/', proxy(url.parse('http://projects.scratch.mit.edu/internalapi/project/')));
+// app.use('/projectdetails/', proxy(url.parse('http://scratch.mit.edu/api/v1/project/')));
+// app.use('/asset/', proxy(url.parse('http://cdn.scratch.mit.edu/internalapi/asset/')));
 app.use('/scratch-player/', scratch.serveScratchFolder);
 app.use('/user/projects/', userDetails.GetUserProjects);
 app.use('/user/followers/', userDetails.GetUserFriends);
@@ -35,8 +35,6 @@ app.use('/manifest', function(req, res) {
 
 	// Remove the leading /, and anything after the second /, so /projectid/application.manifest results in projectid
 	var projectId = req.url.substring(1).split("/")[0];
-
-	
 
 	// Ensure the project id is a number so it's the correct format.
 

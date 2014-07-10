@@ -60,8 +60,8 @@ var IO = function()
     // 
 
     // Modify paths to use proxy as opposed to local addresses
-    this.project_base = '/projects/';
-    this.asset_base = '/asset/';
+    this.project_base = 'http://projects.scratch.mit.edu/internalapi/project/';
+    this.asset_base = 'http://cdn.scratch.mit.edu/internalapi/asset/';
 
 };
 
