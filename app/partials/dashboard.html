@@ -18,7 +18,7 @@
 		<a href="{{ '#/user/' + userID }}"><button type="submit" class="col-xs-6 btn btn-success dashboard-top-buttons">{{userID}}</button></a>
 
 		<!-- Friends list -->
-		<a href=><button type="submit" class="col-xs-6 btn btn-info dashboard-top-buttons" ng-repeat="Friend in friendsApps">{{Friend.username}}</button></a>
+		<a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="col-xs-6 btn btn-info dashboard-top-buttons" >{{Friend.username}}</button></a>
 		<!-- <button type="submit" class="col-xs-6 btn btn-warning dashboard-top-buttons">Friend #2</button>
 		<button type="submit" class="col-xs-6 btn btn-danger dashboard-top-buttons">Friend #3</button>
 		<button type="submit" class="col-xs-6 btn btn-primary dashboard-top-buttons">Friend #4</button> -->
@@ -43,7 +43,6 @@
 				<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps.display" ng-click="NavigateToProject(DisplayItem);">
 					<img src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
 					<br/>{{DisplayItem.title}}
-					<br/>{{userID}}
 					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
 				</div>
 
@@ -52,7 +51,7 @@
 		</table>
 
 		<!-- Friend apps -->
-		<table class="dashboard-app-group-table" ng-repeat="Friend in friendsApps" ng-show="Friend.display.length > 0">
+		<table class="dashboard-app-group-table" ng-repeat="Friend in friendsApps.display" ng-show="Friend.projects.length > 0">
 
 			<!-- Title row -->
 			<tr> <td>
@@ -63,10 +62,9 @@
 			<!-- App list row -->
 			<tr> <td class="dashboard-app-group-list">
 
-				<div class="dashboard-app-block" ng-repeat="DisplayItem in Friend.display" ng-click="NavigateToProject(DisplayItem);">
+				<div class="dashboard-app-block" ng-repeat="DisplayItem in Friend.projects" ng-click="NavigateToProject(DisplayItem);">
 					<img src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
 					<br/>{{DisplayItem.title}}
-					<br/>{{Friend.username}}
 					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
 				</div>
 
