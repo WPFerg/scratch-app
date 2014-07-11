@@ -48,7 +48,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
     // Calculate the height and width which can be used
     var WorkHeight = $('body').height();
-    var WorkWidth = $('body').width() ;
+    var WorkWidth = $('body').width() - parseInt($('.container').css('padding-left').replace('px',''));
     
     // Calculate the size for the dashboard buttons
     var ButtonWidth = Math.max(WorkWidth / 4, 150)

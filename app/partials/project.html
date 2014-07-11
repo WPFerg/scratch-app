@@ -29,8 +29,8 @@
       		</div>
   		</div>
 
-      <input type="checkbox" ng-model="showflags" ng-true-value="true" ng-false-value="false" checked="checked">
-       Show play and stop flags?
+      <input type="checkbox" ng-model="showflags" ng-true-value="false" ng-false-value="true" checked="checked">
+       Hide play and stop flags?
 
   		<!-- Run description through the newLine filter (def. in filters.js) in order to format the description with new lines. -->
   		<div class="app-description" ng-bind-html="project.description | newLine"> </div>
