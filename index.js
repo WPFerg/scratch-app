@@ -37,15 +37,24 @@ app.use('/manifest', function(req, res) {
 	var projectId = req.url.substring(1).split("/")[0];
 
 	// Ensure the project id is a number so it's the correct format.
-
+	console.log(req.headers['user-agent']);
 	if(parseInt(projectId).toString().length == 8)
 	{
 		// Return the response as plain text cache manifest
 		res.setHeader("Content-Type", "text/cache-manifest");
 		// Project ID is a number, create the manifest.
-		manifest.createManifest(projectId, function(manifest) {
-			res.end(manifest);
-		});
+
+		// If the user is on an iPad/iPhone, don't cache the soundbank
+		if(req.headers['user-agent'].indexOf("iPad") !== -1 || req.headers['user-agent'].indexOf("iPhone") !== -1)
+		{
+			manifest.createManifest(projectId, "no-soundbank", function(manifest) {
+				res.end(manifest);
+			});
+		} else { // Otherwise, do.
+			manifest.createManifest(projectId, "", function(manifest) {
+				res.end(manifest);
+			});
+		};
 	} else {
 		// Project ID isn't a number, show an error.
 		res.writeHead(400, {"Content-Type": "text/plain"});

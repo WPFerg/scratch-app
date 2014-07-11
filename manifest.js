@@ -1,8 +1,15 @@
 var http = require('http');
 var fs = require('fs');
 
-exports.createManifest = function(projectId, callbackFunction)
+exports.createManifest = function(projectId, opts, callbackFunction)
 {
+	var getSoundbank = true;
+
+	// If no-soundbank is provided in the options, don't get the soundbank
+	if(opts.indexOf("no-soundbank") !== -1)
+	{
+		getSoundbank = false;
+	}
 	// Create a HTTP GET request with the ProjectID as a parameter
 	var requestOpts = {
 		host: "projects.scratch.mit.edu",
@@ -21,7 +28,7 @@ exports.createManifest = function(projectId, callbackFunction)
 		// If there's no more data, we can generate the manifest.
 		response.on('end', function() {
 			// Use exports. to ensure generateManifest is actually called. Without exports. it isn't.
-			exports.generateManifest(projectId, str, callbackFunction);
+			exports.generateManifest(projectId, getSoundbank, str, callbackFunction);
 		});
 
 		// If there's an error, call the callback function with an error parameter
@@ -32,7 +39,7 @@ exports.createManifest = function(projectId, callbackFunction)
 	http.request(requestOpts, responseCallback).end();
 }
 
-exports.generateManifest = function(projectId, manifestData, callbackFunction)
+exports.generateManifest = function(projectId, getSoundbank, manifestData, callbackFunction)
 {
 	// Parse manifestData into JSON
 	try
@@ -55,7 +62,7 @@ exports.generateManifest = function(projectId, manifestData, callbackFunction)
 	var manifestFiles = [];
 
 	// Create the manifest with an initial, constant, set of data
-	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\n\nNETWORK:\n*\n\nFALLBACK:\n/ /offline.html"
+	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\n\nFALLBACK:\n/ /offline.html"
 
 	// Add a random number to make the manifest regenerate per refresh (for testing)
 	//manifest += "4";
@@ -66,10 +73,14 @@ exports.generateManifest = function(projectId, manifestData, callbackFunction)
 	manifest += "\nhttp://projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/";
 
 	// Add the files in the /scrach-player/ directory to the manifest so they can be cached.
-	manifest += addFilesInFolder("scratch-player/");
-
-	// Add the soundbank to the manifest -- it's always requested.
-	//manifest += addFilesInFolder("soundbank/");
+	// If we have to get the soundbank, add everything in s-p
+	if(getSoundbank)
+	{
+		manifest += addFilesInFolder("scratch-player/", []);
+	} else {
+		// Otherwise, exclude the soundbank folder
+		manifest += addFilesInFolder("scratch-player/", ["soundbank"]);
+	}
 
 	// Add the project's root files to the manifest list
 	manifest += getFileList(manifestData, manifestFiles);
@@ -85,8 +96,9 @@ exports.generateManifest = function(projectId, manifestData, callbackFunction)
 }
 
 // Gets and adds all files in a folder. Used recursively to add subfolders
-addFilesInFolder = function(folderUrl)
+addFilesInFolder = function(folderUrl, excludeFolders)
 {
+
 	// Initialise an empty string to store the paths to the scratch player files
 	var scratchPlayerFiles = "";
 
@@ -107,10 +119,13 @@ addFilesInFolder = function(folderUrl)
 		// Check if folder, by using fs stats
 		stats = fs.lstatSync(folderUrl + file);
 
-		if(stats.isDirectory())
+		// If it's a folder AND it's not on the exclude folders, add files
+		if(stats.isDirectory() && excludeFolders.indexOf(file) === -1)
 		{
 			// If a folder, add its contents to the manifest.
-			scratchPlayerFiles += addFilesInFolder(folderUrl + file + "/");
+			scratchPlayerFiles += addFilesInFolder(folderUrl + file + "/", excludeFolders);
+		} else if (stats.isDirectory()) {
+			// If it's a directory and excluded, do nothing -- don't add
 		} else {
 			// Add to the manifest, replace hashes with escape char so it's a file and not a page with a hash.
 			file = file.replace(/#/g, "%23");
