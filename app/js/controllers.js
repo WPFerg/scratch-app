@@ -173,7 +173,7 @@ ControllerModule.controller('IndexCtrl', ['$scope', '$cookies', function($scope,
 
 }]);
 
-ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', function($scope, Projects, ProjectDetails, $routeParams)
+ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', '$window', function($scope, Projects, ProjectDetails, $routeParams, $window)
 {
 	
 	// Entering a project URL navigates the project back to Index. Therefore this is commented out.
@@ -209,28 +209,29 @@ ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetail
 		// Assign all the information to the scope
     $scope.projectExists = true;  
     $scope.projectInDepth = data;
+
+
+
   });
 
-	// Quick download stats variables
-	$scope.assetsDownloaded = 0;
+  // Set the image to scale with the screen
+  $scope.calcImageWidth = function() {
+    var workHeight = $window.innerHeight;
+    var workWidth = $window.innerHeight;
+  
+    if (!$scope.$$phase) { $scope.$apply(); }
 
-	$scope.isDownloading = false;
+    // Set to t he smaller of the width/heights so it will def. appear on screen.
+    return {"width": Math.min(0.8*workHeight, 0.8*workWidth) + "px"};
+  }
 
-	// Test; ignore
-	setInterval(function(){$scope.assetsDownloaded += 1; $scope.assetsDownloaded %= $scope.projectInDepth.assetLength}, 1000);
+    
+  // Create orientation event variables
+  var supportsOrientationChange = "onorientationchange" in window;
+  var orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
 
-	// Function to return the percent downloaded
-	$scope.percentDownloaded = function()
-	{
-		return {"width": ($scope.assetsDownloaded / $scope.projectInDepth.assetLength *100) + "%" };
-	}
-	// This will then just be displayed on the view.
-
-	// Function that does the logic to begin downloading the app contents
-	$scope.startDownloading = function()
-	{
-		$scope.isDownloading = true;
-	}
+  // Add event and link to event method
+  $window.addEventListener(orientationEvent, $scope.calcImageWidth, false);
 
 }]);
 
