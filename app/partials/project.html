@@ -15,10 +15,10 @@
 
   		<div class="row app-details-row">
   			<h4 class="col-xs-8">Shared {{project.datetime_shared | dateTimeToReadable}}</h4>
-  			  <a class="col-xs-4 btn btn-primary download-play-btn" href="{{'/scratch-player/' + projectId}}">Play</a>
+  			  <a class="col-xs-4 btn btn-primary download-play-btn" href="{{'/scratch-player/' + projectId + '#showflags=' + }}">Play</a>
   		</div>
 
-<!-- Not used, left for legacy -->
+      <!-- Not used, left for legacy -->
 			<div class="app-details-row">
       		<div class="progress progress-striped active" ng-show="isDownloading">
       			<div class="progress-bar"role="progressbar"
@@ -28,6 +28,13 @@
       			</div>
       		</div>
   		</div>
+
+      <input type="checkbox"
+       ng-model=""
+       [name=""]
+       [ng-true-value=""]
+       [ng-false-value=""]
+       [ng-change=""]>
 
   		<!-- Run description through the newLine filter (def. in filters.js) in order to format the description with new lines. -->
   		<div class="app-description" ng-bind-html="project.description | newLine">
@@ -39,6 +46,7 @@
 	<div ng-hide="project.title">
 		
     <p ng-show="loading">Loading the project...</p>
+
     <!-- If it's not published then see if the project exists and display a relevant message. -->
     <p ng-show="!loading && !projectExists">This project hasn't been published. This project also doesn't exist. </p>
     <p ng-show="!loading && projectExists">This project hasn't been published. However, the project exists. Click <a href="/scratch-player/{{projectId}}">here</a> to play it.</p>

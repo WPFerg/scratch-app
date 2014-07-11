@@ -27,7 +27,6 @@
 
         <div class="player-loading"><div class="downloading-text"></div></div>
 
-
         <div id="preloader">
             <div id="preloader-info-container">
                 <div id="preloader-progress"><div id="preloader-progress-bar"></div></div>
@@ -66,4 +65,49 @@
         </script>
 
     </body>
+
+    <script>
+
+        function KeyValue(Key)
+        {
+
+            // Find key and return value
+            for (var count = 0; count < window.Params.length; count ++)
+            {
+                if (window.Params[count].Key = Key)
+                {
+                    return window.Params[count].Value;
+                }
+            }
+
+            // Return default value
+            return "";
+        }
+
+        // Get params
+        var PassedParams = window.location.hash.substring(1, window.location.hash.length);
+        var UnformattedParams = PassedParams.split('&');
+        window.Params = [];
+
+        // Format each parameter
+        for (var count = 0; count < UnformattedParams.length; count ++)
+        {
+            // Format the parameter
+            var NewParam = {};
+            NewParam.Key = UnformattedParams[count].split('=')[0];
+            NewParam.Value = UnformattedParams[count].split('=')[1];
+
+            // Push to window params
+            window.Params.push(NewParam);
+        }
+
+        // Hide element if required
+        if (KeyValue('showflags') == 'false')
+        {
+            $('#trigger-green-flag').css('display', 'none');
+            $('#trigger-stop').css('display', 'none');
+        }
+
+    </script>
+
 </html>
