@@ -189,6 +189,8 @@ ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetail
 	// 	console.log(projectId);
 	// }
 
+  $scope.showflags = false;
+
   $scope.projectId = $routeParams.projectId;
 
   // Project status -- defaults for loading.
