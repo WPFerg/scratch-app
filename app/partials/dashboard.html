@@ -6,7 +6,7 @@
 </div>
 
 
-<div class="container page-has-navbar">
+<div class="container page-has-navbar" ng-hide="error">
 
 	<!-- {{friendsApps}} -->
 	<!-- {{userApps.display}} -->
@@ -64,7 +64,7 @@
 			<tr> <td class="dashboard-app-group-list">
 
 				<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps.display" ng-click="NavigateToProject(DisplayItem);">
-					<img src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
+					<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
 					<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
 					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
 				</div>
@@ -86,7 +86,7 @@
 			<tr> <td class="dashboard-app-group-list">
 
 				<div class="dashboard-app-block" ng-repeat="DisplayItem in Friend.projects" ng-click="NavigateToProject(DisplayItem);">
-					<img src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
+					<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
 					<br/>{{DisplayItem.title}}
 					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
 				</div>
@@ -110,3 +110,4 @@
 	</div>
 
 </div>
+<div class="container alert alert-danger page-has-navbar" ng-show="error"><b>Oh dear.</b> An error occurred. Perhaps you entered in the wrong username? The error code is: {{error.error}}.</div>

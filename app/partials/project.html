@@ -30,7 +30,12 @@
 	<!-- If not defined, then project doesn't exist. -->
 	<div ng-hide="project.title">
 		
-    <p ng-show="loading">Loading the project...</p>
+    <div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #e5e5e5;" ng-show="loading">
+      <div id="dashboardloader">
+        <img src="media/loading_spinner.gif" style="width: 48px; height: 48px; text-align: center; margin: auto;"></img>
+      </div>
+
+  </div>
 
     <!-- If it's not published then see if the project exists and display a relevant message. -->
     <p ng-show="!loading && !projectExists">This project hasn't been published. This project also doesn't exist. </p>

@@ -91,6 +91,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     }, function(response) {
 
       // Set user projects to nothing
+      $scope.finishedLoading = true;
       $scope.error = response.data;
 
     });
@@ -136,6 +137,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   }, function (response) {
 
     // Store error information in an error holding variable
+    $scope.finishedLoading = true;
     $scope.error = response.data;
 
   });
