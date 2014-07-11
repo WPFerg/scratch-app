@@ -58,7 +58,6 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     var PaddingLeft = (WorkWidth-25) / 2;
 
     // Apply sizing to navigation top buttons
-    //$('.dashboard-top-buttons').width(function(i, w) { return ButtonWidth; });
 
     // Apply padding to the loading gif
     $('#dashboardloader').css('margin-top', PaddingTop.toString() + 'px');
@@ -107,7 +106,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   // Create function to navigate to player
   $scope.NavigateToPlayer = function(project)
   {
-    $window.location = "/scratch-player/" + project.projectId;
+    $window.location = "/scratch-player/" + project.projectId + '/#/flags';
   };
 
   // Set finished loading boolean
@@ -189,6 +188,8 @@ ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetail
 	// 	projectId = projectId.substring(32);
 	// 	console.log(projectId);
 	// }
+
+  $scope.showflags = false;
 
   $scope.projectId = $routeParams.projectId;
 

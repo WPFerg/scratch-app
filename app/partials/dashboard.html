@@ -14,11 +14,9 @@
 	<!-- Display navigation buttons -->
 	<div style="text-align: center;">
 
-		<!-- User apps button -->
-		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a>
+		<!-- User and friends apps button -->
+		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a><a ng-repeat="Friend in friendsApps.display" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a>
 
-		<!-- Friends list -->
-		<a ng-repeat="Friend in friendsApps.display" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a>
 		<!-- <button type="submit" class="col-xs-6 btn btn-warning dashboard-top-buttons">Friend #2</button>
 		<button type="submit" class="col-xs-6 btn btn-danger dashboard-top-buttons">Friend #3</button>
 		<button type="submit" class="col-xs-6 btn btn-primary dashboard-top-buttons">Friend #4</button> -->
@@ -29,20 +27,29 @@
 
 	    // Calculate the height and width which can be used
 	    var WorkHeight = $('body').height();
-	    var WorkWidth = $('body').width() ;
+	    var WorkWidth = $('body').width() - 15 * 2;
+
+	    // Get width of margins as an integer
+	    var marginWidth = parseInt($('.dashboard-top-buttons').css('margin-left').replace('px', '')) +
+	                      parseInt($('.dashboard-top-buttons').css('margin-right').replace('px', '')) + 10;
 	    
 	    // Calculate the size for the dashboard buttons
-	    console.log(WorkWidth);
-	    var ButtonWidth = Math.max((WorkWidth / 4) * 0.99, 150);
-	    console.log(ButtonWidth);
+	    var ButtonWidth = 150;
+	    for (var count = 0; count < 5; count ++)
+	    {
+	    	if (WorkWidth > count * 130 && WorkWidth <= (count+1) * 130)
+	    	{
+	    		ButtonWidth = ((WorkWidth - count * marginWidth) / count);
+	    	}
+	    }
 	    
 	    // Apply sizing to navigation top buttons
-	    $('.dashboard-top-buttons').width(ButtonWidth);
+	    $('.dashboard-top-buttons').css('width', ButtonWidth.toString() + 'px');
 
 	</script>
 
 	<!-- Available apps -->
-	<div class="col-xs-12 dashboard-available-apps">
+	<div class="dashboard-available-apps">
 
 		<!-- User apps -->
 		<table class="dashboard-app-group-table">
