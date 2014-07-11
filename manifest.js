@@ -76,10 +76,10 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 	// If we have to get the soundbank, add everything in s-p
 	if(getSoundbank)
 	{
-		manifest += addFilesInFolder("scratch-player/", []);
+		manifest += addFilesInFolder("scratch-player/", ['js']);
 	} else {
 		// Otherwise, exclude the soundbank folder
-		manifest += addFilesInFolder("scratch-player/", ["soundbank"]);
+		manifest += addFilesInFolder("scratch-player/", ['js',"soundbank"]);
 	}
 
 	// Add the project's root files to the manifest list

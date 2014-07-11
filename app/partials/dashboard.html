@@ -5,8 +5,7 @@
     </div>
 </div>
 
-
-<div id="test" class="container page-has-navbar">
+<div id="test" class="container page-has-navbar" ng-hide="error">
 
 	<!-- {{friendsApps}} -->
 	<!-- {{userApps.display}} -->
@@ -147,3 +146,4 @@
 	</div>
 
 </div>
+<div class="container alert alert-danger page-has-navbar" ng-show="error"><b>Oh dear.</b> An error occurred. Perhaps you entered in the wrong username? The error code is: {{error.error}}.</div>

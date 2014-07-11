@@ -11,23 +11,13 @@
   		<h1 class="col-xs-12">{{project.title}}</h1>
   		<h3 class="col-xs-12">by {{project.creator.username}}</h3>
 
-  		<img class="app-picture-large" ng-src="{{project.thumbnail}}" alt="{{project.title + ' Thumbnail'}}" />
+  		<img class="app-picture-large" ng-style="calcImageWidth()" ng-src="{{project.thumbnail}}" alt="{{project.title + ' Thumbnail'}}" />
 
   		<div class="row app-details-row">
   			<h4 class="col-xs-8">Shared {{project.datetime_shared | dateTimeToReadable}}</h4>
   			  <a class="col-xs-4 btn btn-primary download-play-btn" href="{{'/scratch-player/' + projectId + '#showflags=' + showflags}}">Play</a>
   		</div>
 
-      <!-- Not used, left for legacy -->
-			<div class="app-details-row">
-      		<div class="progress progress-striped active" ng-show="isDownloading">
-      			<div class="progress-bar"role="progressbar"
-      					aria-valuenow="{{assetsDownloaded}}" aria-valuemax="{{projectInDepth.assetLength}}"
-      					ng-style="percentDownloaded()">
-      					Downloading ({{assetsDownloaded}}/{{projectInDepth.assetLength}})
-      			</div>
-      		</div>
-  		</div>
 
       <input type="checkbox" ng-model="showflags" ng-true-value="false" ng-false-value="true" checked="checked">
        Hide play and stop flags?
@@ -40,7 +30,12 @@
 	<!-- If not defined, then project doesn't exist. -->
 	<div ng-hide="project.title">
 		
-    <p ng-show="loading">Loading the project...</p>
+    <div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #e5e5e5;" ng-show="loading">
+      <div id="dashboardloader">
+        <img src="media/loading_spinner.gif" style="width: 48px; height: 48px; text-align: center; margin: auto;"></img>
+      </div>
+
+  </div>
 
     <!-- If it's not published then see if the project exists and display a relevant message. -->
     <p ng-show="!loading && !projectExists">This project hasn't been published. This project also doesn't exist. </p>

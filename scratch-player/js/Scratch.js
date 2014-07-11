@@ -177,6 +177,20 @@ function Scratch(project_id)
             runtime.mousePos = [absX-240, -absY+180];
         });
 
+        // Prevent iOS scrolling
+        // $("#trigger-green-flag").bind("touchstart", function(e) { e.preventDefault(); });
+        // $("#trigger-green-flag").bind("touchend", function(e) { e.preventDefault(); });
+        // $("#trigger-stop").bind("touchstart", function(e) { e.preventDefault(); });
+        // $("#trigger-stop").bind("touchend", function(e) { e.preventDefault(); });
+        // $("body").bind("touchstart", function(e) { e.preventDefault(); });
+        // $("body").bind("touchend", function(e) { e.preventDefault(); });
+        $("#preloader").bind("touchstart", function(e) { e.preventDefault(); });
+        $("#preloader").bind("touchend", function(e) { e.preventDefault(); });
+        $("#preloader-caption").bind("touchstart", function(e) { e.preventDefault(); });
+        $("#preloader-caption").bind("touchend", function(e) { e.preventDefault(); });
+        $("#preloader-progress-bar").bind("touchstart", function(e) { e.preventDefault(); });
+        $("#preloader-progress-bar").bind("touchend", function(e) { e.preventDefault(); });
+
         // Touch events - EXPERIMENTAL
         $(window).bind('touchstart', function(e)
         {
@@ -210,6 +224,7 @@ function Scratch(project_id)
         $('#container').bind('touchend', function(e)
         {
             runtime.mouseDown = true;
+            // Stop iOS scrolling.
             e.preventDefault();
         });
 
@@ -242,8 +257,7 @@ function Scratch(project_id)
     function(err)
     {
         // Called if there's a problem loading the project
-        $("#player-container").css("display", "none");
-        $("body").append("<h1>" + err.statusText + "</h1>");
+        $("body").html("<h1>An error occurred: " + err.statusText + "</h1>");
     });
 };
 

@@ -358,6 +358,11 @@ body
 
 /*  ------------------------------ For App Details Page ------------------------------ */
 
+.app-details
+{
+	min-height: 70%;
+}
+
 .row.app-details-row
 {
 	padding: 0px;
@@ -365,8 +370,9 @@ body
 
 .app-picture-large
 {
-	width: 100%;
 	display:block;
+	margin: auto;
+	max-width: 100%
 }
 
 .app-details-row
@@ -423,8 +429,8 @@ body
 
 .app-badge-image img
 {
-	width: 100%;
 	margin: auto;
+	width: 100%;
 }
 
 
