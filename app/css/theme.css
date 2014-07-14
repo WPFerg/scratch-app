@@ -234,10 +234,13 @@ body
 .dashboard-app-group-list
 {
 	margin: 0;
-	padding: 15px 0px;
-	text-align: center;
+	text-align: left;
+	vertical-align: top;
+	margin-bottom: 15px;
 	height: 168px;
 	overflow: hidden;
+	overflow-x: auto;
+	white-space: nowrap;
 }
 
 .dashboard-app-block
