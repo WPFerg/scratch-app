@@ -1,7 +1,7 @@
 'use strict';
 /* Controllers */
 
-var ControllerModule = angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource', 'ngCookies'])
+var ControllerModule = angular.module('scratch.controllers', ['scratch.directives', 'ngRoute', 'ngResource'])
 
 ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window', 'UserDetails', 'UserFollowers', function($scope, $routeParams, $window, UserDetails, UserFollowers)
 {
@@ -232,6 +232,19 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
   function FindFollowerProjects(Index)
   {
+    // Check to see if that follower exists
+    if(typeof($scope.friendsApps.all[Index]) === "undefined")
+    {
+      if(Index > 0)
+      {
+        // Even though this follower may not exist, previous ones might.
+        FindFollowerProjects(Index-1);
+      } else {
+        // No more followers to check.
+        $scope.finishedLoading = true;
+      }
+      return;
+    }
 
     var userProject = UserDetails.get({"userId": $scope.friendsApps.all[Index].username}, function(response)
     {
@@ -276,8 +289,13 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   {
 
     // Link response project list to the user apps list
-    $scope.userApps.all = response.projects;
-
+    if(response.projects.length !== 0)
+    {
+      $scope.userApps.all = response.projects;
+    } else {
+      $scope.userHasNoProjects = true;
+      $scope.finishedLoading = true;
+    }
     // Process update
     ResizeWindowElements();
     
@@ -294,11 +312,18 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   {
 
     // Link response project list to the user apps list
-    $scope.friendsApps.all = response.followers;
+    // check to see if followers exist
+    if(response.followers.length !== 0)
+    {
+      console.log(response.followers.length);
+      $scope.friendsApps.all = response.followers;
 
-    // Find all of the projects created by followers
-    FindFollowerProjects($scope.friendsApps.all.length-1);
-
+      // Find all of the projects created by followers
+      FindFollowerProjects($scope.friendsApps.all.length-1);
+    } else {
+      $scope.userHasNoFollowers = true;
+      $scope.finishedLoading = true;
+    }
   }, function (response) {
 
     // Store error information in an error holding variable
@@ -316,7 +341,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
 }]);
 
-ControllerModule.controller('IndexCtrl', ['$scope', '$cookies', function($scope, $cookies) 
+ControllerModule.controller('IndexCtrl', ['$scope', function($scope) 
 {
 
 }]);

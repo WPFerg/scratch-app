@@ -35,7 +35,7 @@ window.ScaleEquiv = function(InValue)
 // Method to calculate an equivalent scaled rectangle
 window.ScaleRectEquiv = function(InRect)
 {
-
+   
     // Calculate each position of the rectangle
     InRect.left = window.ScaleEquiv(InRect.left);
     InRect.left = window.ScaleEquiv(InRect.right);

@@ -146,5 +146,11 @@
 
 	</div>
 
+
+
 </div>
 <div class="container alert alert-danger page-has-navbar" ng-show="error"><b>Oh dear.</b> An error occurred. Perhaps you entered in the wrong username? The error code is: {{error.error}}.</div>
+
+<div class="container alert alert-danger page-has-navbar" ng-show="userHasNoProjects && userHasNoFollowers">Your dashboard is empty -- please publish some projects or add some followers!</div>
+<div class="container alert alert-info page-has-navbar" ng-show="userHasNoProjects && !userHasNoFollowers">You don't seem to have any published projects. Why don't you make this dashboard better by adding some?</div>
+<div class="container alert alert-info page-has-navbar" ng-show="userHasNoFollowers && !userHasNoProjects">You don't seem to have any followers. Why don't you make this dashboard better by adding some?</div>
