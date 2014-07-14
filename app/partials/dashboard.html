@@ -54,7 +54,7 @@
 	<div style="text-align: center;">
 
 		<!-- User and friends apps button -->
-		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a><a ng-repeat="Friend in friendsApps.display" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a>
+		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a><a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a>
 
 		<!-- <button type="submit" class="col-xs-6 btn btn-warning dashboard-top-buttons">Friend #2</button>
 		<button type="submit" class="col-xs-6 btn btn-danger dashboard-top-buttons">Friend #3</button>
@@ -91,7 +91,7 @@
 	<div class="dashboard-available-apps">
 
 		<!-- User apps -->
-		<div ng-show="userApps.all.length > 0">
+		<div ng-show="userApps.length > 0">
 
 			<!-- Title -->
 			<div class="dashboard-app-group-title"> My Apps </div>
@@ -102,7 +102,7 @@
 
 			<!-- App list row -->
 			<div class="dashboard-app-group-list">
-				<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps.all" ng-click="NavigateToProject(DisplayItem);">
+				<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps" ng-click="NavigateToProject(DisplayItem);">
 					<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
 					<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
 					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
@@ -112,7 +112,7 @@
 		</div>
 
 		<!-- Friend apps -->
-		<div ng-repeat="Friend in friendsApps.all" ng-show="Friend.projects.length > 0">
+		<div ng-repeat="Friend in friendsApps" ng-show="Friend.projects.length > 0">
 
 			<!-- Title -->
 			<div class="dashboard-app-group-title"> {{Friend.username}} </div>
@@ -134,21 +134,20 @@
 
 	</div>
 
-	<div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #e5e5e5;" ng-hide="finishedLoading">
+</div>
 
-		<!-- Wills loader (may return to this one) -->
-		<!-- <div id="loader" class="spinner" style="width: 100%; height: 100%; text-align: center;"></div> -->
+<div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #e5e5e5;" ng-hide="finishedLoading">
 
-		<!-- Use div as text message may be added below loader -->
-		<div id="dashboardloader">
-			<img src="media/loading_spinner.gif" style="width: 48px; height: 48px; text-align: center; margin: auto;"></img>
-		</div>
+	<!-- Wills loader (may return to this one) -->
+	<!-- <div id="loader" class="spinner" style="width: 100%; height: 100%; text-align: center;"></div> -->
 
+	<!-- Use div as text message may be added below loader -->
+	<div id="dashboardloader">
+		<img src="media/loading_spinner.gif" style="width: 48px; height: 48px; text-align: center; margin: auto;"></img>
 	</div>
 
-
-
 </div>
+
 <div class="container alert alert-danger page-has-navbar" ng-show="error"><b>Oh dear.</b> An error occurred. Perhaps you entered in the wrong username? The error code is: {{error.error}}.</div>
 
 <div class="container alert alert-danger page-has-navbar" ng-show="userHasNoProjects && userHasNoFollowers">Your dashboard is empty -- please publish some projects or add some followers!</div>

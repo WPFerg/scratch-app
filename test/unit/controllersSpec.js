@@ -10,6 +10,7 @@ describe('Scratch Controllers', function(){
       }
     });
   });
+   
    // Import stuff
   beforeEach(module('scratch.controllers'));
   beforeEach(module('scratch.services'));
@@ -91,8 +92,34 @@ describe('Scratch Controllers', function(){
   describe("DashboardCtrl", function()
   {
 
-    // Create http catch system
-    var $httpBackend, scope, ctrl;
+    // // Create http catch system
+    // var $httpBackend, scope, ctrl;
+
+    // beforeEach(inject(function($rootScope, $controller, _$httpBackend_, $routeParams)
+    // {
+
+    //   $httpBackend = _$httpBackend_;
+
+    //   // Set http test controls
+    //   $httpBackend.expectGET("").respond({"success": 200, });
+
+    //   // Set route params
+    //   $routeParams.userId = "Vader";
+
+    //   // Finish setup
+    //   scope = $rootScope.$new;
+    //   ctrl = $controller("DashboardCtrl", {$scope: scope});
+
+    // }));
+
+    // it("should generate a list of 3 friends", function()
+    // {
+    //   expect(scope.userApps).toBe([]);
+    //   expect(scope.friendsApps).toBe([]);
+
+
+
+    // });
 
   });
 

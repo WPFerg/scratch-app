@@ -11,55 +11,15 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   $scope.finishedLoading = false;
 
   // Set default values for projects
-  $scope.userApps = {};
-  $scope.userApps.all = [];
-  $scope.userApps.display = [];
-  $scope.friendsApps = {};
-  $scope.friendsApps.all = [];
-  $scope.friendsApps.display = [];
+  $scope.userApps = [];
+  $scope.friendsApps = [];
 
   // Get user ID
   $scope.userID = $routeParams.userId;
 
-  // Method to allow updating of loader method
-  function UpdateLoadingMessage(NewMessage)
-  {
-
-  };
-
   // Method to resize all window elements
   function ResizeWindowElements()
   {
-
-    // Calculate number of apps to fit in an app-block
-    var AppColCount = (screen.width - screen.width % 107) / 107;
-
-    // Create simple list containing number of items which can be displayed
-    $scope.userApps.display = [];
-    for (var count = 0; count < Math.min(AppColCount, $scope.userApps.all.length); count ++)
-    {
-      $scope.userApps.display.push($scope.userApps.all[count]);
-    }
-
-    // Calculate list items to display for a friend
-    for (var count = 0; count < $scope.friendsApps.all.length; count ++)
-    {
-
-      // Create new object
-      $scope.friendsApps.display[count] = {};
-      $scope.friendsApps.display[count].projects = [];
-      $scope.friendsApps.display[count].username = $scope.friendsApps.all[count].username;
-
-      // Iterate for each friend limiting the apps to display
-      if ($scope.friendsApps.all[count].projects !== null)
-      {
-        for (var count2 = 0; count2 < Math.min(AppColCount, $scope.friendsApps.all[count].projects.length); count2 ++)
-        {
-          $scope.friendsApps.display[count].projects.push($scope.friendsApps.all[count].projects[count2]);        
-        }
-      }
-
-    }
 
     // Calculate the height and width which can be used
     var WorkHeight = $('body').height();
@@ -233,7 +193,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   function FindFollowerProjects(Index)
   {
     // Check to see if that follower exists
-    if(typeof($scope.friendsApps.all[Index]) === "undefined")
+    if(typeof($scope.friendsApps[Index]) === "undefined")
     {
       if(Index > 0)
       {
@@ -246,11 +206,11 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       return;
     }
 
-    var userProject = UserDetails.get({"userId": $scope.friendsApps.all[Index].username}, function(response)
+    var userProject = UserDetails.get({"userId": $scope.friendsApps[Index].username}, function(response)
     {
 
       // Link response project list to the users project list
-      $scope.friendsApps.all[Index].projects = response.projects;
+      $scope.friendsApps[Index].projects = response.projects;
 
       // Process update on base case
       if (Index == 0)
@@ -291,7 +251,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     // Link response project list to the user apps list
     if(response.projects.length !== 0)
     {
-      $scope.userApps.all = response.projects;
+      $scope.userApps = response.projects;
     } else {
       $scope.userHasNoProjects = true;
       $scope.finishedLoading = true;
@@ -316,10 +276,10 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     if(response.followers.length !== 0)
     {
       console.log(response.followers.length);
-      $scope.friendsApps.all = response.followers;
+      $scope.friendsApps = response.followers;
 
       // Find all of the projects created by followers
-      FindFollowerProjects($scope.friendsApps.all.length-1);
+      FindFollowerProjects($scope.friendsApps.length-1);
     } else {
       $scope.userHasNoFollowers = true;
       $scope.finishedLoading = true;
