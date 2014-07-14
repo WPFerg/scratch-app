@@ -24,8 +24,8 @@ describe('Scratch Controllers', function(){
       $httpBackend = _$httpBackend_;
 
       // The 2 GET requests made during launch
-      $httpBackend.expectGET("/projectdetails/ScratchProject/?format=json ").respond({name: "Mr Scratch"});
-      $httpBackend.expectGET("/projects/ScratchProject/get/ ").respond({children:["1"], sounds:["2", "3"], costumes:["4"]});
+      $httpBackend.expectGET("http://scratch.mit.edu/api/v1/project/ScratchProject/?format=json ").respond({name: "Mr Scratch"});
+      $httpBackend.expectGET("http://projects.scratch.mit.edu/internalapi/project/ScratchProject/get/ ").respond({children:["1"], sounds:["2", "3"], costumes:["4"]});
 
       // Specify it's the "ScratchProject" project we want
       $routeParams.projectId = "ScratchProject";
@@ -65,7 +65,7 @@ describe('Scratch Controllers', function(){
     beforeEach(inject(function($rootScope, $controller, _$httpBackend_, $routeParams) {
       $httpBackend = _$httpBackend_;
 
-      $httpBackend.expectGET("/user/AlanSugar").respond({"success": 200, "projects": [{"title": "You're Fired (out of a cannon)",
+      $httpBackend.expectGET("/user/projects/AlanSugar/1 ").respond({"success": 200, "projects": [{"title": "You're Fired (out of a cannon)",
                                                                                           "projectId": "1234"},
                                                                                         {"title": "Amstrad: The Game", 
                                                                                           "projectId": "5678"}]});
@@ -87,4 +87,13 @@ describe('Scratch Controllers', function(){
       expect(scope.projectList[1].projectId).toEqual("5678");
     });
   });
+
+  describe("DashboardCtrl", function()
+  {
+
+    // Create http catch system
+    var $httpBackend, scope, ctrl;
+
+  });
+
 });

@@ -28,7 +28,7 @@ angular.module('scratch.services', []).
   {
     // Scrape from the website
     // Running a scraper on NPM.
-    return $resource("/user/projects/:userId/:page",
+    return $resource("/user/projects/:userId/:page ",
       {userId: "", page: 1}, {isArray: false} // Defaults -- just a null
       );
   }]).
@@ -36,7 +36,7 @@ angular.module('scratch.services', []).
   {
     // Scrape from the website
     // Running a scraper on NPM.
-    return $resource("/user/followers/:userId",
+    return $resource("/user/followers/:userId ",
       {userId: ""}, {isArray: false} // Defaults -- just a null
       );
   }]);
