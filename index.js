@@ -37,7 +37,6 @@ app.use('/manifest', function(req, res) {
 	var projectId = req.url.substring(1).split("/")[0];
 
 	// Ensure the project id is a number so it's the correct format.
-	console.log(req.headers['user-agent']);
 	if(parseInt(projectId).toString().length == 8)
 	{
 		// Return the response as plain text cache manifest

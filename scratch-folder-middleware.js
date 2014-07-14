@@ -3,8 +3,11 @@ var fs = require('fs');
 
 exports.serveScratchFolder = function(req, res)
 {
-	// Get the URL request
+	// Get the URL request - remove leading and trailing /
 	var url = req.url.substring(1);
+	// Match / if it's followed by the end of the string
+	url = url.replace(/\/+$/, "");
+
 	// Response to the client. 200 is a success.
 	var responseCode = 200;
 
@@ -19,6 +22,15 @@ exports.serveScratchFolder = function(req, res)
 	// If the url requests a folder/file, return that.
 	if(url.indexOf(".") !== -1 || url.indexOf("/") !== -1)
 	{
+		var urlParams = url.split("/");
+		if(parseInt(urlParams[0]))
+		{
+			// If the first segment of the URL request is a project ID, remove it and treat the rest as usual
+			// (Stops relative path errors ie. /12345678/index.html)
+
+			url = urlParams.slice(1).join("/");
+		}
+
 		// Convert % notation to the #.
 		url = url.replace(/%23/g, '#');
 		url = decodeURI(url);
