@@ -46,7 +46,6 @@
 			}
 
 		});
-
 	</script>
 			
 
@@ -95,14 +94,14 @@
 
 			<!-- Title -->
 			<div class="dashboard-app-group-title"> My Apps </div>
-			<a href="{{ '#/user/' + userID }}"><div class="dashboard-app-group-more">See More</div></a>
+			<a href="{{ '#/user/' + userID }}"><div class="dashboard-app-group-more"> See More </div></a>
 
 			<!-- Clear float settings -->
 			<div style="clear:both;"></div>
 
 			<!-- App list row -->
-			<div class="dashboard-app-group-list">
-				<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps.all" ng-click="NavigateToProject(DisplayItem);">
+			<div class="dashboard-app-group-list" style="overflow: hidden; max-height: 200px;">
+				<div class="dashboard-app-block" style="display: inline-block; vertical-align: top;" ng-repeat="DisplayItem in userApps.all" ng-click="NavigateToProject(DisplayItem);">
 					<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
 					<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
 					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
@@ -116,16 +115,16 @@
 
 			<!-- Title -->
 			<div class="dashboard-app-group-title"> {{Friend.username}} </div>
-			<a href="{{ '#/user/' + Friend.username }}"><div class="dashboard-app-group-more">See More</div></a>
+			<a href="{{ '#/user/' + Friend.username }}"><div class="dashboard-app-group-more"> See More </div></a>
 
 			<!-- Clear float settings -->
-			<div style="clear: both;"></div>
+			<div style="clear:both;"></div>
 
 			<!-- App list row -->
-			<div class="dashboard-app-group-list">
-				<div class="dashboard-app-block" ng-repeat="DisplayItem in Friend.projects" ng-click="NavigateToProject(DisplayItem);">
+			<div class="dashboard-app-group-list" style="overflow: hidden; vertical-align: top;">
+				<div class="dashboard-app-block" style="display: inline-block; vertical-align: top;" ng-repeat="DisplayItem in Friend.projects" ng-click="NavigateToProject(DisplayItem);">
 					<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
-					<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
+					<br/><span class="dashboard-app-block-title" style="display: block; text-overflow: ellipsis; white-space: nowrap; word-break: normal; overflow: hidden; max-height: 50px;">{{DisplayItem.title}}</span>
 					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
 				</div>
 			</div>

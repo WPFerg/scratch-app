@@ -1,0 +1,52 @@
+<<<<<<< HEAD
+'use strict';
+
+/* Directives */
+
+// Create transaction visualisation
+var scratch = angular.module('scratch.directives', ['ngRoute']);
+
+
+// Version notice directive
+scratch.directive('getAppVersion', function()
+{
+    return {
+    	restrict: 'E',
+    	scope:
+    	{
+
+    	},
+    	link: function(scope, element)
+    	{
+
+    	}
+  	}
+});
+
+=======
+'use strict';
+
+/* Directives */
+
+// Create transaction visualisation
+var scratch = angular.module('scratch.directives', ['ngRoute']);
+
+
+// Version notice directive
+scratch.directive('getAppVersion', function()
+{
+    return {
+    	restrict: 'E',
+    	scope:
+    	{
+
+    	},
+    	link: function(scope, element)
+    	{
+
+    	}
+  	}
+});
+
+>>>>>>> 514aec36de854f35551a3d853394e1542835e90b
+// Copyright notice directive

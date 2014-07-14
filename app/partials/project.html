@@ -18,9 +18,10 @@
   			  <a class="col-xs-4 btn btn-primary download-play-btn" href="{{'/scratch-player/' + projectId + '#showflags=' + showflags}}">Play</a>
   		</div>
 
-
-      <input type="checkbox" ng-model="showflags" ng-true-value="false" ng-false-value="true" checked="checked">
-       Hide play and stop flags?
+      <label>
+        <input type="checkbox" ng-model="showflags" ng-true-value="false" ng-false-value="true" checked="checked">
+         Hide play and stop flags?
+      </label>
 
   		<!-- Run description through the newLine filter (def. in filters.js) in order to format the description with new lines. -->
   		<div class="app-description" ng-bind-html="project.description | newLine"> </div>
