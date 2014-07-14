@@ -65,7 +65,7 @@ describe('Scratch Controllers', function(){
     beforeEach(inject(function($rootScope, $controller, _$httpBackend_, $routeParams) {
       $httpBackend = _$httpBackend_;
 
-      $httpBackend.expectGET("/user/AlanSugar").respond({"success": 200, "projects": [{"title": "You're Fired (out of a cannon)",
+      $httpBackend.expectGET("/user/projects/AlanSugar/1").respond({"success": 200, "projects": [{"title": "You're Fired (out of a cannon)",
                                                                                           "projectId": "1234"},
                                                                                         {"title": "Amstrad: The Game", 
                                                                                           "projectId": "5678"}]});

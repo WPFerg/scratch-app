@@ -12,23 +12,25 @@ describe('service', function() {
     }));
   });
 
-  describe("Projects", function() {
-  	 // var Projects, $httpBackend;
+ // ***  Services tested in controllers.  *** //
 
-    // // Set up the project service for testing
-    // beforeEach(inject(function(_$httpBackend_, _ProjectsService_ ) {
-    //   $httpBackend = _$httpBackend_;
+  // describe("Projects", function() {
+  // 	 var Projects, $httpBackend;
 
-    //   // The 2 GET requests made during launch
-    //   $httpBackend.expectGET("/projectdetails/ScratchProject/?format=json ").respond({name: "Mr Scratch"});
-    //   Projects = _ProjectsService_;
-    // }));
+  //   // Set up the project service for testing
+  //   beforeEach(inject(function(_$httpBackend_, _ProjectsService_ ) {
+  //     $httpBackend = _$httpBackend_;
 
-    // it('should get project details', function() {
-    //   // Get the project details
+  //     // The 2 GET requests made during launch
+  //     $httpBackend.expectGET("/projectdetails/ScratchProject/?format=json ").respond({name: "Mr Scratch"});
+  //     Projects = _ProjectsService_;
+  //   }));
 
-    //   $httpBackend.flush();
+  //   it('should get project details', function() {
+  //     // Get the project details
 
-    // });
+  //     $httpBackend.flush();
+
+  //   });
   });
 });
