@@ -13,6 +13,10 @@ module.exports = function(config){
       'test/unit/**/*.js'
     ],
 
+    exclude: [
+      'app/js/touchSwipe.js'
+    ],
+
     autoWatch : true,
 
     frameworks: ['jasmine'],

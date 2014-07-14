@@ -309,19 +309,6 @@ ControllerModule.controller('IndexCtrl', ['$scope', function($scope)
 ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', '$window', function($scope, Projects, ProjectDetails, $routeParams, $window)
 {
   
-  // Entering a project URL navigates the project back to Index. Therefore this is commented out.
-  // Left here for future reference.
-
-  
-  //
-  // var projectId = $routeParams.projectId; 
-  // // If the Project link appears,
-  // if(projectId.indexOf("http://scratch.mit.edu/projects/") !== -1)
-  // {
-  //  // Remove it
-  //  projectId = projectId.substring(32);
-  //  console.log(projectId);
-  // }
 
   $scope.showflags = false;
 
@@ -344,8 +331,6 @@ ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetail
     // Assign all the information to the scope
     $scope.projectExists = true;  
     $scope.projectInDepth = data;
-
-
 
   });
 
@@ -399,6 +384,20 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
     });
   }
 
+  $scope.loadingNextPage = false;
+
+  // Bind a touch event to enable
+  $(window).scroll(function(e) {
+    var height = $(document).height();
+    var location = $(document).scrollTop();
+
+    // If the user has scrolled through 90% of the page and there's another page to load, load it.
+    if(location >= 0.9* height && $scope.anotherPage && !$scope.loadingNextPage)
+    {
+      $scope.loadNextPage();
+    }
+
+  })
 
   // Function to move to the player's project.
   $scope.playProject = function(project)
@@ -409,10 +408,12 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
   // Load the next page for pagination
   $scope.loadNextPage = function()
   {
+    $scope.loadingNextPage = true;
     $scope.currentPage++;
     console.log("Loading page " + $scope.currentPage);
     UserDetails.get({"userId": $routeParams.userId, "page": $scope.currentPage}, function(response) {
 
+      $scope.loadingNextPage = false;
       // On success, add the projects associate with the user to the list
       $scope.projectList = $scope.projectList.concat(response.projects);
 
