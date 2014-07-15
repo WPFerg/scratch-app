@@ -5,7 +5,6 @@ var ControllerModule = angular.module('scratch.controllers', ['scratch.directive
 
 ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window', 'UserDetails', 'UserFollowers', function($scope, $routeParams, $window, UserDetails, UserFollowers)
 {
-
   // Set booleans
   $scope.finishedLoading = false;
   $scope.showAllFriends = false;
@@ -21,6 +20,11 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
   // Get user ID
   $scope.userID = $routeParams.userId;
+
+  // Capitalise/possessify the user ID in a friendly manner
+  $scope.userIDCapitalised = $scope.userID.charAt(0).toUpperCase() + $scope.userID.slice(1).toLowerCase();
+
+  $scope.userIDCapitalised += ($scope.userIDCapitalised.charAt($scope.userIDCapitalised.length - 1) == "s") ? "'" : "'s";
 
   function FindFollowerProjects(Count)
   {
