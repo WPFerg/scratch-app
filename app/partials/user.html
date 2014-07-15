@@ -9,7 +9,7 @@
 
 	<div ng-show="!error && projectList">
 		
-		<div class="app-list">
+		<div class="app-list" load-on-vertical-scroll loading-next-page="loadingNextPage" another-page="anotherPage" load-next-page="loadNextPage()">
 
 
 			<div class="dashboard-app-block app-badge" ng-repeat="project in projectList" ng-click="playProject(project);">
