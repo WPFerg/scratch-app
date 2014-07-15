@@ -219,7 +219,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   // Create show/hide all follower toggles
   $scope.toggleAllFriends = function()
   {
-
+    $scope.showAllFriends = ($scope.showAllFriends == false);
   };
 
   // Run procedure to generate user projects
