@@ -457,13 +457,19 @@ version-info
 	/*outline: 1px solid #aaa;
 	border: 1px solid #aaa;*/
 
+	border-radius: 3px;
+	text-align: center;
+	vertical-align: top;
+	min-height: 80px;
+	max-height: 80px;
+	box-shadow: 1px 1px 5px #888888;
+	margin: 0px 1px;
 	width: 100%;
-
 	overflow: hidden;
-
-	margin: 20px 0px;
-
+	margin: 10px 0px;
 	display: table;
+	padding-left: 2px;
+	background-color: #FFFFFF;
 }
 
 .app-badge-image

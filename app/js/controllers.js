@@ -23,7 +23,6 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
   // Capitalise/possessify the user ID in a friendly manner
   $scope.userIDCapitalised = $scope.userID.charAt(0).toUpperCase() + $scope.userID.slice(1).toLowerCase();
-
   $scope.userIDCapitalised += ($scope.userIDCapitalised.charAt($scope.userIDCapitalised.length - 1) == "s") ? "'" : "'s";
 
   function FindFollowerProjects(Count)
