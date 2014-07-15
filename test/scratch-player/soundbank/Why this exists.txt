@@ -1,1 +1,0 @@
-This file's for testing the Soundbank manifest generator, since the folders it searches are relative to the script, and the script is run offline.
