@@ -6,14 +6,18 @@ var ControllerModule = angular.module('scratch.controllers', ['scratch.directive
 ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window', 'UserDetails', 'UserFollowers', function($scope, $routeParams, $window, UserDetails, UserFollowers)
 {
 
-
   // Set booleans
   $scope.finishedLoading = false;
   $scope.showAllFriends = false;
+  $scope.loadingNextChunk = false;
+  $scope.followersLeft = true;
 
   // Set default values for projects
   $scope.userApps = [];
   $scope.friendsApps = [];
+  $scope.visibleFollowerCount = 5;
+  $scope.visibleFollowerIncrement = 5;
+  $scope.lastLoadedProjectIndex = 0;
 
   // Get user ID
   $scope.userID = $routeParams.userId;
@@ -163,35 +167,40 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
   }
 
-  function FindFollowerProjects(Index, Count)
+  function FindFollowerProjects(Count)
   {
-    // Check to see if that follower exists
-    if(typeof($scope.friendsApps[Index]) === "undefined")
+
+    // Error checking to make sure follower is assigned
+    if(typeof($scope.friendsApps[$scope.lastLoadedProjectIndex]) === "undefined")
     {
-      if(Index > 0)
+      if($scope.lastLoadedProjectIndex < $scope.friendsApps.length-1)
       {
         // Even though this follower may not exist, previous ones might.
-        FindFollowerProjects(Index-1, Count + 1);
+        $scope.lastLoadedProjectIndex = $scope.lastLoadedProjectIndex + 1;
+        FindFollowerProjects(Count);
       } else {
         // No more followers to check.
         $scope.finishedLoading = true;
+        $scope.loadingNextChunk = false;
       }
       return;
     }
 
-    var userProject = UserDetails.get({"userId": $scope.friendsApps[Index].username}, function(response)
+    var userProject = UserDetails.get({"userId": $scope.friendsApps[$scope.lastLoadedProjectIndex].username}, function(response)
     {
 
       // Link response project list to the users project list
-      $scope.friendsApps[Index].projects = response.projects;
+      $scope.friendsApps[$scope.lastLoadedProjectIndex].projects = response.projects;
 
       // Process update on base case
-      if (Index == 0)
+      if ($scope.lastLoadedProjectIndex == $scope.friendsApps.length-1 || Count >= ($scope.visibleFollowerCount-1))
       {
         $scope.finishedLoading = true;
+        $scope.loadingNextChunk = false;
         BindTouchEvents();
       } else {
-        FindFollowerProjects(Index-1, Count + 1);
+        $scope.lastLoadedProjectIndex = $scope.lastLoadedProjectIndex + 1;
+        FindFollowerProjects(Count + 1);
       }
     
     }, function(response) {
@@ -222,6 +231,23 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     $scope.showAllFriends = ($scope.showAllFriends == false);
   };
 
+  // Load the next set of followers and their projects
+  $scope.loadNextFollowerChunk = function()
+  {
+
+    // Increase the amount of followers to display
+    var oldVisibleCount = $scope.visibleFollowerCount;
+    $scope.visibleFollowerCount = Math.min($scope.visibleFollowerCount + $scope.visibleFollowerIncrement, $scope.friendsApps.length)
+
+    // Mark as loading
+    $scope.loadingNextChunk = true;
+
+    // Call method to load next chunk of follower projects
+    $scope.lastLoadedProjectIndex = $scope.lastLoadedProjectIndex + 1;
+    FindFollowerProjects(oldVisibleCount);
+
+  };
+
   // Run procedure to generate user projects
   var userDetails = UserDetails.get({"userId": $routeParams.userId}, function(response)
   {
@@ -249,13 +275,15 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
     // Link response project list to the user apps list
     // check to see if followers exist
-    if(response.followers.length !== 0)
+    if(response.followers.length > 0)
     {
-      console.log(response.followers.length);
+      // console.log(response.followers.length);
       $scope.friendsApps = response.followers;
 
       // Find all of the projects created by followers
-      FindFollowerProjects($scope.friendsApps.length-1, 0);
+      $scope.loadingNextChunk = true;
+      FindFollowerProjects(0);
+
     } else {
       $scope.userHasNoFollowers = true;
       $scope.finishedLoading = true;
@@ -329,12 +357,17 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
   // Get the list of installed apps, stored as a cookie CSV. Do type check to see if it exists first
   if(typeof($routeParams.userId) !== "undefined")
   {
+
+    // Initialize variables
     $scope.userId = $routeParams.userId;
     $scope.currentPage = 1;
     $scope.loadingNextPage = false;
+
     // And get the User's Projects from the API and add the project to the list.
     // This should be cached by the manifest.
-    var userDetails = UserDetails.get({"userId": $routeParams.userId}, function(response) {
+    var userDetails = UserDetails.get({"userId": $routeParams.userId}, function(response)
+    {
+
       // On success, add the projects associate with the user to the list
       $scope.projectList = response.projects;
 
@@ -347,9 +380,11 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
       }
 
     }, function (response) {
+
       // Callback function after projectDetails GET has failed
       //  Set the projectList to contain an error JSON object.
       $scope.error = response.data;
+
     });
   }
 
@@ -363,11 +398,16 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
   // Load the next page for pagination
   $scope.loadNextPage = function()
   {
+
+    // Initialize variables
     $scope.loadingNextPage = true;
     $scope.currentPage++;
+
     UserDetails.get({"userId": $routeParams.userId, "page": $scope.currentPage}, function(response)
     {
+
       $scope.loadingNextPage = false;
+
       // On success, add the projects associate with the user to the list
       $scope.projectList = $scope.projectList.concat(response.projects);
 
@@ -384,6 +424,7 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
       } else {
         $scope.anotherPage = false;
       }
+
     });
   }
 

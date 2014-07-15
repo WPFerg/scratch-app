@@ -5,13 +5,13 @@
     </div>
 </div>
 
-<div class="container page-has-navbar" ng-hide="error">
+<div class="container page-has-navbar" load-on-vertical-scroll loading-next-page="loadingNextChunk" another-page="followersLeft" load-next-page="loadNextFollowerChunk()" ng-hide="error">
 
 	<!-- Display navigation buttons -->
 	<div style="text-align: center;">
 
 		<!-- User and friends apps button -->
-		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a><a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}" ng-hide="(showAllFriends == false) && ($index > 5)"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a><button type="submit" class="btn btn-success dashboard-top-buttons" ng-hide="showAllFriends" ng-click="toggleAllFriends()">More...</button><button type="submit" class="btn btn-success dashboard-top-buttons" ng-show="showAllFriends" ng-click="toggleAllFriends()">Less...</button>
+		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a><a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}" ng-hide="(showAllFriends == false) && ($index >= 5)"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a><button type="submit" class="btn btn-success dashboard-top-buttons" ng-hide="showAllFriends" ng-click="toggleAllFriends()">More...</button><button type="submit" class="btn btn-success dashboard-top-buttons" ng-show="showAllFriends" ng-click="toggleAllFriends()">Less...</button>
 
 		<!-- <button type="submit" class="col-xs-6 btn btn-warning dashboard-top-buttons">Friend #2</button>
 		<button type="submit" class="col-xs-6 btn btn-danger dashboard-top-buttons">Friend #3</button>
@@ -88,6 +88,9 @@
 			</div>
 
 		</div>
+
+		<!-- Loading spinner for next chunk of projects -->
+		<div class="user-load-gif" style="background-image: url('media/loading_spinner.gif');" ng-show="loadingNextChunk && finishedLoading"></div>
 
 	</div>
 

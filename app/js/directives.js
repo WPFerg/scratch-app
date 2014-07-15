@@ -7,7 +7,7 @@ var scratch = angular.module('scratch.directives', ['ngRoute']);
 
 
 // Version notice directive
-scratch.directive('loadOnVerticalScroll', ['$document', function($document)
+scratch.directive('loadOnVerticalScroll', ['$document', '$window', function($document, $window)
 {
     return {
     	restrict: 'A',
@@ -27,7 +27,7 @@ scratch.directive('loadOnVerticalScroll', ['$document', function($document)
 		    var location = $document.scrollTop();
 
 		    // If the user has scrolled through 90% of the page and there's another page to load, load it.
-		    if(location >= 0.9* height && scope.anotherPage && !scope.loadingNextPage)
+		    if(location + $window.innerHeight >= 0.9* height && scope.anotherPage && !scope.loadingNextPage)
 		    {
 		      	scope.loadNextPage();
 		    }
