@@ -363,6 +363,7 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
   {
     $scope.userId = $routeParams.userId;
     $scope.currentPage = 1;
+    $scope.loadingNextPage = false;
     // And get the User's Projects from the API and add the project to the list.
     // This should be cached by the manifest.
     var userDetails = UserDetails.get({"userId": $routeParams.userId}, function(response) {
@@ -384,20 +385,6 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
     });
   }
 
-  $scope.loadingNextPage = false;
-
-  // Bind a touch event to enable
-  $(window).scroll(function(e) {
-    var height = $(document).height();
-    var location = $(document).scrollTop();
-
-    // If the user has scrolled through 90% of the page and there's another page to load, load it.
-    if(location >= 0.9* height && $scope.anotherPage && !$scope.loadingNextPage)
-    {
-      $scope.loadNextPage();
-    }
-
-  })
 
   // Function to move to the player's project.
   $scope.playProject = function(project)
@@ -410,9 +397,7 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
   {
     $scope.loadingNextPage = true;
     $scope.currentPage++;
-    console.log("Loading page " + $scope.currentPage);
     UserDetails.get({"userId": $routeParams.userId, "page": $scope.currentPage}, function(response) {
-
       $scope.loadingNextPage = false;
       // On success, add the projects associate with the user to the list
       $scope.projectList = $scope.projectList.concat(response.projects);
