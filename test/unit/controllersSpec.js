@@ -92,34 +92,68 @@ describe('Scratch Controllers', function(){
   describe("DashboardCtrl", function()
   {
 
-    // // Create http catch system
-    // var $httpBackend, scope, ctrl;
+    // Create http catch system
+    var $httpBackend, scope, ctrl;
 
-    // beforeEach(inject(function($rootScope, $controller, _$httpBackend_, $routeParams)
-    // {
+    beforeEach(inject(function($rootScope, $controller, _$httpBackend_, $routeParams)
+    {
 
-    //   $httpBackend = _$httpBackend_;
+      $httpBackend = _$httpBackend_;
 
-    //   // Set http test controls
-    //   $httpBackend.expectGET("").respond({"success": 200, });
+      // Set http test controls
+      $httpBackend.expectGET("/user/projects/Vader/1 ").respond({"success": 200, "projects": [{"title": "Becoming a better father", "projectId": "1234"},
+                                                                                              {"title": "Winning the emperors love", "projectId": "5678"}]});
+      $httpBackend.expectGET("/user/followers/Vader ").respond({"success": 200, "followers": [{"username": "Luke", "projects": null},
+                                                                                              {"username": "Leya", "projects": null},
+                                                                                              {"username": "Yoda", "projects": null}]});
+      $httpBackend.expectGET("/user/projects/Luke/1 ").respond({"success": 200, "projects": []});
+      $httpBackend.expectGET("/user/projects/Leya/1 ").respond({"success": 200, "projects": [{"title": "Acting like a stuck up cow", "projectId": "9101"},
+                                                                                             {"title": "Running a rebellion", "projectId": "1121"}]});
+      $httpBackend.expectGET("/user/projects/Yoda/1 ").respond({"success": 200, "projects": [{"title": "Finding Jedi robes that fit", "projectId": "3141"}]});
 
-    //   // Set route params
-    //   $routeParams.userId = "Vader";
+      // Set route params
+      $routeParams.userId = "Vader";
 
-    //   // Finish setup
-    //   scope = $rootScope.$new;
-    //   ctrl = $controller("DashboardCtrl", {$scope: scope});
+      // Finish setup
+      scope = $rootScope.$new;
+      ctrl = $controller("DashboardCtrl", {$scope: scope});
 
-    // }));
+    }));
 
-    // it("should generate a list of 3 friends", function()
-    // {
-    //   expect(scope.userApps).toBe([]);
-    //   expect(scope.friendsApps).toBe([]);
+    it("should generate user projects and projects for 3 friends", function()
+    {
+      
+      // Check default values are received
+      expect(scope.userApps.length).toBe(0);
+      expect(scope.friendsApps.length).toBe(0);
 
+      // Pass HTML requests
+      $httpBackend.flush();
 
+      // Check fetched sizes
+      expect(scope.userApps.length).toBe(2);
+      expect(scope.friendsApps[0].projects.length).toBe(0);
+      expect(scope.friendsApps[1].projects.length).toBe(2);
+      expect(scope.friendsApps[2].projects.length).toBe(1);
 
-    // });
+      // Check received content for userApps
+      expect(scope.userApps[0].title).toEqual("Becoming a better father");
+      expect(scope.userApps[0].projectId).toEqual("1234");
+      expect(scope.userApps[1].title).toEqual("Winning the emperors love");
+      expect(scope.userApps[1].projectId).toEqual("5678");
+
+      // Check received content for friends
+      expect(scope.friendsApps[0].username).toEqual("Luke");
+      expect(scope.friendsApps[1].username).toEqual("Leya");
+      expect(scope.friendsApps[1].projects[0].title).toEqual("Acting like a stuck up cow");
+      expect(scope.friendsApps[1].projects[0].projectId).toEqual("9101");
+      expect(scope.friendsApps[1].projects[1].title).toEqual("Running a rebellion");
+      expect(scope.friendsApps[1].projects[1].projectId).toEqual("1121");
+      expect(scope.friendsApps[2].username).toEqual("Yoda");
+      expect(scope.friendsApps[2].projects[0].title).toEqual("Finding Jedi robes that fit");
+      expect(scope.friendsApps[2].projects[0].projectId).toEqual("3141");
+
+    });
 
   });
 
