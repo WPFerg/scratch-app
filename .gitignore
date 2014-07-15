@@ -3,3 +3,5 @@ scratch-player
 scratch-player/**/*
 
 node-modules
+node-modules/*
+node-modules/**/*
