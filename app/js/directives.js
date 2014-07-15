@@ -4,7 +4,16 @@
 
 // Create transaction visualisation
 var scratch = angular.module('scratch.directives', ['ngRoute']);
-
+scratch.directive('versionInfo', ['version', function(version)
+{
+	return {
+		restrict: 'E',
+		link: function(scope, element, attrs)
+			{
+				element.text(version);
+			}
+	}
+}]);
 
 // Version notice directive
 scratch.directive('loadOnVerticalScroll', ['$document', '$window', function($document, $window)

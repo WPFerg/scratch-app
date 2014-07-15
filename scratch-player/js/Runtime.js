@@ -106,12 +106,12 @@ Runtime.prototype.loadStart = function()
     }
 
     // Make sure all wavefront format audio files are loaded [start loading after 50ms]
-
-    if (Instr.wavsLoaded != Instr.wavCount)
-    {
-        setTimeout(function(runtime) { runtime.loadStart(); }, 50, this);
-        return;
-    }
+    // DON'T CHECK wavsLoaded, as iPad doesn't load.
+    // if (Instr.wavsLoaded != Instr.wavCount)
+    // {
+    //     setTimeout(function(runtime) { runtime.loadStart(); }, 50, this);
+    //     return;
+    // }
 
     console.log("Wavs loaded");
 
