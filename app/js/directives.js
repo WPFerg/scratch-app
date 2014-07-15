@@ -27,7 +27,7 @@ scratch.directive('loadOnVerticalScroll', ['$document', function($document)
 		    var location = $document.scrollTop();
 
 		    // If the user has scrolled through 90% of the page and there's another page to load, load it.
-		    if(location >= 0.9* height && scope.anotherPage && !scope.loadingNextPage)
+		    if(location >= 0.9 * height && scope.anotherPage && !scope.loadingNextPage)
 		    {
 		      	scope.loadNextPage();
 		    }
