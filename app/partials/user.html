@@ -23,7 +23,9 @@
 
 
 		</div>
-		<div ng-show="anotherPage"><a ng-click="loadNextPage()">Load more projects</a></div>
+
+		<div class="user-load-gif" style="background-image: url('media/loading_spinner.gif');" ng-show="loadingNextPage"></div>
+
 	</div>
 	<div ng-show="projectList.length === 0" class="alert alert-info">
 		{{userId}} hasn't shared any projects.
