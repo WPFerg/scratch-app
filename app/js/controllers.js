@@ -7,8 +7,9 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 {
 
 
-  // Set finished loading boolean
+  // Set booleans
   $scope.finishedLoading = false;
+  $scope.showAllFriends = false;
 
   // Set default values for projects
   $scope.userApps = [];
@@ -16,34 +17,6 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
   // Get user ID
   $scope.userID = $routeParams.userId;
-
-  // Method to resize all window elements
-  function ResizeWindowElements()
-  {
-
-    // Calculate the height and width which can be used
-    var WorkHeight = $('body').height();
-    var WorkWidth = $('body').width() - parseInt($('.container').css('padding-left').replace('px',''));
-    
-    // Calculate the size for the dashboard buttons
-    var ButtonWidth = Math.max(WorkWidth / 4, 150)
-    
-    // Calculate the padding vertically and horizontally making sure it is reasonable
-    var PaddingTop = Math.max((WorkHeight-25) / 2, 250);
-    var PaddingLeft = (WorkWidth-25) / 2;
-
-    // Apply sizing to navigation top buttons
-
-    // Apply padding to the loading gif
-    $('#dashboardloader').css('margin-top', PaddingTop.toString() + 'px');
-    $('#dashboardloader').css('margin-bottom', PaddingTop.toString() + 'px');
-    $('#dashboardloader').css('margin-left', PaddingLeft.toString() + 'px');
-    $('#dashboardloader').css('margin-right', PaddingLeft.toString() + 'px');
-
-    // Reming angular to update
-    if (!$scope.$$phase) { $scope.$apply(); }
-  
-  };
 
   function BindTouchEvents()
   {
@@ -190,7 +163,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
   }
 
-  function FindFollowerProjects(Index)
+  function FindFollowerProjects(Index, Count)
   {
     // Check to see if that follower exists
     if(typeof($scope.friendsApps[Index]) === "undefined")
@@ -198,7 +171,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       if(Index > 0)
       {
         // Even though this follower may not exist, previous ones might.
-        FindFollowerProjects(Index-1);
+        FindFollowerProjects(Index-1, Count + 1);
       } else {
         // No more followers to check.
         $scope.finishedLoading = true;
@@ -216,10 +189,9 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       if (Index == 0)
       {
         $scope.finishedLoading = true;
-        ResizeWindowElements();
         BindTouchEvents();
       } else {
-        FindFollowerProjects(Index-1);
+        FindFollowerProjects(Index-1, Count + 1);
       }
     
     }, function(response) {
@@ -244,6 +216,12 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     $window.location = "/scratch-player/" + project.projectId + '/#/flags';
   };
 
+  // Create show/hide all follower toggles
+  $scope.toggleAllFriends = function()
+  {
+
+  };
+
   // Run procedure to generate user projects
   var userDetails = UserDetails.get({"userId": $routeParams.userId}, function(response)
   {
@@ -256,8 +234,6 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       $scope.userHasNoProjects = true;
       $scope.finishedLoading = true;
     }
-    // Process update
-    ResizeWindowElements();
     
   }, function (response) {
 
@@ -279,7 +255,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
       $scope.friendsApps = response.followers;
 
       // Find all of the projects created by followers
-      FindFollowerProjects($scope.friendsApps.length-1);
+      FindFollowerProjects($scope.friendsApps.length-1, 0);
     } else {
       $scope.userHasNoFollowers = true;
       $scope.finishedLoading = true;
@@ -290,14 +266,6 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     $scope.error = response.data;
 
   });
-
-  // Create orientation event variables
-  var supportsOrientationChange = "onorientationchange" in window;
-  var orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
-
-  // Add event and link to event method
-  ResizeWindowElements();
-  window.addEventListener(orientationEvent, ResizeWindowElements, false);
 
 }]);
 
@@ -411,7 +379,8 @@ ControllerModule.controller("UserCtrl", ['$scope', 'UserDetails', '$routeParams'
     $scope.loadingNextPage = true;
     $scope.currentPage++;
     console.log("Loading page " + $scope.currentPage);
-    UserDetails.get({"userId": $routeParams.userId, "page": $scope.currentPage}, function(response) {
+    UserDetails.get({"userId": $routeParams.userId, "page": $scope.currentPage}, function(response)
+    {
 
       $scope.loadingNextPage = false;
       // On success, add the projects associate with the user to the list

@@ -5,56 +5,13 @@
     </div>
 </div>
 
-<div id="test" class="container page-has-navbar" ng-hide="error">
-
-	<!-- {{friendsApps}} -->
-	<!-- {{userApps.display}} -->
-
-
-	<script id='code_1'>
-		$(function() {			
-			//Enable swiping...
-			$("#test").swipe( {
-
-				swipeLeft: LeftSwipe,
-				swipeRight: RightSwipe,
-				//swipeUp: UpSwipe,
-				//swipeDown: DownSwipe,
-
-				allowPageScroll: 'auto'
-
-			});
-
-			// Directional swiping functions
-			function LeftSwipe(event, direction, distance, duration, fingerCount, fingerData)
-			{
-			}
-
-			// Directional swiping functions
-			function RightSwipe(event, direction, distance, duration, fingerCount, fingerData)
-			{
-			}
-
-			// Directional swiping functions
-			function UpSwipe(event, direction, distance, duration, fingerCount, fingerData)
-			{
-			}
-
-			// Directional swiping functions
-			function DownSwipe(event, direction, distance, duration, fingerCount, fingerData)
-			{
-			}
-
-		});
-
-	</script>
-			
+<div class="container page-has-navbar" ng-hide="error">
 
 	<!-- Display navigation buttons -->
 	<div style="text-align: center;">
 
 		<!-- User and friends apps button -->
-		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a><a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a>
+		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a><a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a><button type="submit" class="btn btn-success dashboard-top-buttons" ng-hide="showAllFriends" ng-click="toggleAllFriends()">More...</button><button type="submit" class="btn btn-success dashboard-top-buttons" ng-show="showAllFriends" ng-click="toggleAllFriends()">Less...</button>
 
 		<!-- <button type="submit" class="col-xs-6 btn btn-warning dashboard-top-buttons">Friend #2</button>
 		<button type="submit" class="col-xs-6 btn btn-danger dashboard-top-buttons">Friend #3</button>
@@ -136,15 +93,14 @@
 
 </div>
 
-<div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #e5e5e5;" ng-hide="finishedLoading">
+<!-- Hide background from view -->
+<div class="dashboard-load-overlay" ng-hide="finishedLoading">
 
 	<!-- Wills loader (may return to this one) -->
 	<!-- <div id="loader" class="spinner" style="width: 100%; height: 100%; text-align: center;"></div> -->
 
-	<!-- Use div as text message may be added below loader -->
-	<div id="dashboardloader">
-		<img src="media/loading_spinner.gif" style="width: 48px; height: 48px; text-align: center; margin: auto;"></img>
-	</div>
+	<!-- Centeralise animated loading icon -->
+	<div class="dashboard-load-gif" style="background-image: url('media/loading_spinner.gif');">  </div>
 
 </div>
 
