@@ -6,6 +6,7 @@
 // Demonstrate how to register services
 // In this case it is a simple value service.
 angular.module('scratch.services', []).
+  value("version", "0.1").
   service('Projects', ['$resource', function($resource)			// Gets the project *functionality*, ie. the code, assets, etc.
   {
   	// Get from the Scratch API
