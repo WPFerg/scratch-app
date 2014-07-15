@@ -11,7 +11,7 @@
 	<div style="text-align: center;">
 
 		<!-- User and friends apps button -->
-		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a><a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}" ng-hide="(showAllFriends == false) && ($index >= 5)"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a><button type="submit" class="btn btn-success dashboard-top-buttons" ng-hide="showAllFriends" ng-click="toggleAllFriends()">More...</button><button type="submit" class="btn btn-success dashboard-top-buttons" ng-show="showAllFriends" ng-click="toggleAllFriends()">Less...</button>
+		<a href="{{ '#/user/' + userID }}"><button type="submit" class="btn btn-success dashboard-top-buttons">{{userID}}</button></a><a ng-repeat="Friend in friendsApps" href="{{ '#/user/' + Friend.username }}" ng-hide="(showAllFriends == false) && ($index >= 5)"><button type="submit" class="btn btn-info dashboard-top-buttons">{{Friend.username}}</button></a><button type="submit" class="btn btn-success dashboard-top-buttons" ng-hide="showAllFriends || friendsApps.length <= 5" ng-click="toggleAllFriends()">More...</button><button type="submit" class="btn btn-success dashboard-top-buttons" ng-show="showAllFriends" ng-click="toggleAllFriends()">Less...</button>
 
 		<!-- <button type="submit" class="col-xs-6 btn btn-warning dashboard-top-buttons">Friend #2</button>
 		<button type="submit" class="col-xs-6 btn btn-danger dashboard-top-buttons">Friend #3</button>
@@ -45,7 +45,7 @@
 	</script>
 
 	<script id='code_1'>
-	
+
 		$(function() {			
 			//Enable swiping...
 			$("#test").swipe( {
@@ -97,11 +97,13 @@
 			<div style="clear:both;"></div>
 
 			<!-- App list row -->
-			<div class="dashboard-app-group-list" scrollable>
-				<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps" ng-click="NavigateToProject(DisplayItem);">
-					<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
-					<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
-					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
+			<div class="dashboard-app-group-container">
+				<div class="dashboard-app-group-list" scrollable>
+					<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps" ng-click="NavigateToProject(DisplayItem);">
+						<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
+						<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
+						<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
+					</div>
 				</div>
 			</div>
 
@@ -118,11 +120,13 @@
 			<div style="clear: both;"></div>
 
 			<!-- App list row -->
-			<div class="dashboard-app-group-list" scrollable>
-				<div class="dashboard-app-block" ng-repeat="DisplayItem in Friend.projects" ng-click="NavigateToProject(DisplayItem);">
-					<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
-					<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
-					<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
+			<div class="dashboard-app-group-container">
+				<div class="dashboard-app-group-list" scrollable>
+					<div class="dashboard-app-block" ng-repeat="DisplayItem in Friend.projects" ng-click="NavigateToProject(DisplayItem);">
+						<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
+						<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
+						<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
+					</div>
 				</div>
 			</div>
 

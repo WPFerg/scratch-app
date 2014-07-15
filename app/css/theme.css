@@ -254,14 +254,20 @@ body
 
 .dashboard-app-group-list
 {
+	overflow: hidden;
+	overflow-x: auto;
+	white-space: nowrap;
+	height: 178px;
+}
+
+.dashboard-app-group-container
+{
 	margin: 0;
 	text-align: left;
 	vertical-align: top;
 	margin-bottom: 15px;
-	height: 168px;
-	overflow: hidden;
-	overflow-x: auto;
-	white-space: nowrap;
+	height: 161px;
+	overflow : hidden;
 }
 
 .dashboard-app-block
