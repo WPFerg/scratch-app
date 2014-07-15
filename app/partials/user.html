@@ -30,7 +30,7 @@
 		{{userId}} hasn't shared any projects.
 	</div>
 	<div ng-show="error" class="alert alert-danger">
-		That user account doesn't exist. Please go back and try again.
+		There was an error loading {{userId}}'s projects. Please go back and try again. Error: {{error.error}}.
 	</div>
 
 

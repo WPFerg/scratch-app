@@ -20,40 +20,22 @@
 				<!-- Login details and submission button -->
 				<div class="login-form-container">
 
-					<!-- Username input box and glyph  -->
-					<!-- <div class="col-xs-12 left-inner-addon login-field">
-						<i class="glyphicon glyphicon-user"> </i>
-						<input type="text" ng-model="userId" placeholder="Username" class="form-control" required />
-					</div> -->
-
-					<!-- Password input box and glyph  -->
-					<!-- <div class="col-xs-12 left-inner-addon login-field">
-						<i class="glyphicon glyphicon-lock"> </i>
-						<input type="text" ng-model="projectId" placeholder="Project ID" class="form-control" ng-change="checkForScratchLink()" required />
-					</div> -->
-
 					Enter your Scratch username:
 					<div class="row">
-						<form action="{{ '#/user/' + userId }}">
 
-							<!-- Username input box and glyph  -->
-							<div class="col-xs-12 left-inner-addon login-field">
-								<i class="glyphicon glyphicon-user"> </i>
-								<input type="text" ng-model="userId" placeholder="Username" class="form-control" required />
+						<!-- Username input box and glyph  -->
+						<div class="col-xs-12 left-inner-addon login-field">
+							<i class="glyphicon glyphicon-user"> </i>
+							<input type="text" ng-model="userId" placeholder="Username" class="form-control" required />
+						</div>
+						
+						<!-- Testing the dashboard -->
+						<a href="{{'#/dashboard/' + userId}}">
+							<div class="col-xs-12 login-field">
+								<input type="submit" value="Enter!" class="col-xs-12 btn btn-primary login-field" />
 							</div>
+						</a>
 							
-							<!-- <div class="col-xs-12 login-field">
-								<input type="submit" value="Go!" class="col-xs-12 btn btn-primary login-field" />
-							</div> -->
-
-							<!-- Testing the dashboard -->
-							<a href="{{'#/dashboard/' + userId}}">
-								<div class="col-xs-12 login-field">
-									<input type="submit" value="Enter!" class="col-xs-12 btn btn-primary login-field" />
-								</div>
-							</a>
-
-						</form>
 					</div>
 
 				</div>
