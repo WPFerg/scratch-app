@@ -51,7 +51,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 		}
 	} catch (err) {
 		// If the JSON parse fails...
-		callbackFunction("Not a valid scratch file.");
+		callbackFunction("INVALID CACHE MANIFEST");
 		return;
 	}
 
