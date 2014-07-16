@@ -397,6 +397,13 @@ version-info
 	color: #fff;
 }
 
+@media (max-height: 380px)
+{
+	.login-details-notice
+	{
+		display: none;
+	}
+}
 /*  ------------------------------ For App Details Page ------------------------------ */
 
 .app-details
