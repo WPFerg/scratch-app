@@ -75,11 +75,11 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 	// Add the files in the /scrach-player/ directory to the manifest so they can be cached.
 	// If we have to get the soundbank, add everything in s-p
 	if(getSoundbank)
-	{
-		manifest += addFilesInFolder("scratch-player/", [".git","test"]);
+	{													// excluded files/folders. ^[A-Z... checks for wholly uppercase text
+		manifest += addFilesInFolder("scratch-player/", /.git|test|.gitignore|.jscsrc|^[A-Z/ ._]*$/);
 	} else {
 		// Otherwise, exclude the soundbank folder
-		manifest += addFilesInFolder("scratch-player/", [".git","test","soundbank"]);
+		manifest += addFilesInFolder("scratch-player/", /.git|test|.gitignore|.jscsrc|soundbank/);
 	}
 
 	// Add the project's root files to the manifest list
@@ -96,7 +96,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 }
 
 // Gets and adds all files in a folder. Used recursively to add subfolders
-addFilesInFolder = function(folderUrl, excludeFolders)
+addFilesInFolder = function(folderUrl, excludes)
 {
 
 	// Initialise an empty string to store the paths to the scratch player files
@@ -119,14 +119,16 @@ addFilesInFolder = function(folderUrl, excludeFolders)
 		// Check if folder, by using fs stats
 		stats = fs.lstatSync(folderUrl + file);
 
+		var isExcluded = file.match(excludes);
+
 		// If it's a folder AND it's not on the exclude folders, add files
-		if(stats.isDirectory() && excludeFolders.indexOf(file) === -1)
+		if(stats.isDirectory() && !isExcluded)
 		{
 			// If a folder, add its contents to the manifest.
-			scratchPlayerFiles += addFilesInFolder(folderUrl + file + "/", excludeFolders);
+			scratchPlayerFiles += addFilesInFolder(folderUrl + file + "/", excludes);
 		} else if (stats.isDirectory()) {
 			// If it's a directory and excluded, do nothing -- don't add
-		} else {
+		} else if (!isExcluded) {
 			// Add to the manifest, replace hashes with escape char so it's a file and not a page with a hash.
 			file = file.replace(/#/g, "%23");
 			file = file.replace(/\(/g, "%28");

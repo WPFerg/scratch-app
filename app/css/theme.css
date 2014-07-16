@@ -397,7 +397,7 @@ version-info
 	color: #fff;
 }
 
-@media (max-height: 380px)
+@media (max-height: 400px)
 {
 	.login-details-notice
 	{
