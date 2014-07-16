@@ -110,7 +110,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   {
 
     // Link response project list to the user apps list
-    if(response.projects.length !== 0)
+    if(!!response.projects && response.projects.length !== 0)
     {
       $scope.userApps = response.projects;
     } else {
@@ -132,7 +132,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
 
     // Link response project list to the user apps list
     // check to see if followers exist
-    if(response.followers.length > 0)
+    if(!!response.followers && response.followers.length > 0)
     {
       // console.log(response.followers.length);
       $scope.friendsApps = response.followers;

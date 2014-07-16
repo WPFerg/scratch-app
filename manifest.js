@@ -62,12 +62,12 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 	var manifestFiles = [];
 
 	// Create the manifest with an initial, constant, set of data
-	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\n\nFALLBACK:\n/ /offline.html"
+	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\n"
 
 	// Add a random number to make the manifest regenerate per refresh (for testing)
 	//manifest += "4";
 
-	manifest += "\nNETWORK:\n*\nCACHE:";
+	manifest += "\nCACHE:";
 
 	// Add the project details url (that has all the code/instructions)
 	manifest += "\nhttp://projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/";
@@ -76,10 +76,10 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 	// If we have to get the soundbank, add everything in s-p
 	if(getSoundbank)
 	{
-		manifest += addFilesInFolder("scratch-player/", ['js']);
+		manifest += addFilesInFolder("scratch-player/", [".git","test"]);
 	} else {
 		// Otherwise, exclude the soundbank folder
-		manifest += addFilesInFolder("scratch-player/", ['js',"soundbank"]);
+		manifest += addFilesInFolder("scratch-player/", [".git","test","soundbank"]);
 	}
 
 	// Add the project's root files to the manifest list
@@ -181,6 +181,10 @@ getFileList = function(manifestData, manifestFiles)
 			manifestFiles.push(costume.baseLayerMD5);
 		}
 	}
+
+	// Add jQuery
+	manifest += "\nhttp://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
+
 
 	return manifest;
 }
