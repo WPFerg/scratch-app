@@ -51,7 +51,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 		}
 	} catch (err) {
 		// If the JSON parse fails...
-		callbackFunction("INVALID CACHE MANIFEST");
+		callbackFunction("CACHE MANIFEST\nCACHE MANIFEST INVALID\n# That causes fetch to fail\nNETWORK:\n*");
 		return;
 	}
 
@@ -62,7 +62,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 	var manifestFiles = [];
 
 	// Create the manifest with an initial, constant, set of data
-	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\n"
+	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\nNETWORK:\n*"
 
 	// Add a random number to make the manifest regenerate per refresh (for testing)
 	//manifest += "4";
@@ -71,15 +71,16 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 
 	// Add the project details url (that has all the code/instructions)
 	manifest += "\nhttp://projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/";
+	manifest += "\nhttp://scratch.mit.edu/api/v1/project/" + projectId + "/?format=json";
 
 	// Add the files in the /scrach-player/ directory to the manifest so they can be cached.
 	// If we have to get the soundbank, add everything in s-p
 	if(getSoundbank)
-	{													// excluded files/folders. ^[A-Z... checks for wholly uppercase text
+	{													// excluded files/folders. ^[A-Z... checks for wholly uppercase text	
 		manifest += addFilesInFolder("scratch-player/", /.git|test|.gitignore|.jscsrc|^[A-Z/ ._]*$/);
 	} else {
 		// Otherwise, exclude the soundbank folder
-		manifest += addFilesInFolder("scratch-player/", /.git|test|.gitignore|.jscsrc|soundbank/);
+		manifest += addFilesInFolder("scratch-player/", /.git|test|.gitignore|.jscsrc|^[A-Z/ ._]*$|soundbank/);
 	}
 
 	// Add the project's root files to the manifest list
