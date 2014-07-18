@@ -438,6 +438,11 @@ version-info
 
 /* ------------------------------ For list of downloaded/installed apps.  ------------------------------*/
 
+.container-app-listing
+{
+	padding: 3px;
+}
+
 .user-load-gif
 {
 	background-repeat: no-repeat;
@@ -450,6 +455,17 @@ version-info
 {
 	display: table;
 	width: 100%;
+	text-align: center;
+}
+
+.test-app-badge
+{
+	display: inline-block;
+	width: 170px;
+	height: 100px;
+	box-shadow: 1px 1px 5px #888888;
+	background-color: #ffffff;/*f2f2f2*/
+	text-align: left;
 }
 
 .app-badge
