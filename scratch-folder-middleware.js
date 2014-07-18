@@ -35,21 +35,42 @@ exports.serveScratchFolder = function(req, res)
 		url = url.replace(/%23/g, '#');
 		url = decodeURI(url);
 		// Get the file info and return it to the client
-		fs.readFile("scratch-player/" + url, function (err, data) {
-			if(err)
-			{
-				responseCode = 500;
-				data = "System Error -- Can't get file details";
-				// Internal server error 500
-				if (err.code === "ENOENT")
-				{
-					responseCode = 404;
-					data = url + " not found.";
-				}
-				res.writeHead(responseCode);
-			}
-			res.end(data);
-		});
+		// fs.readFile("scratch-player/" + url, function (err, data) {
+		// 	if(err)
+		// 	{
+		// 		responseCode = 500;
+		// 		data = "System Error -- Can't get file details";
+		// 		// Internal server error 500
+		// 		if (err.code === "ENOENT")
+		// 		{
+		// 			responseCode = 404;
+		// 			data = url + " not found.";
+		// 		}
+
+		// 		var fileExtension = url.split('.').pop();
+		// 		var contentType = "text/plain"
+		// 		switch(fileExtension.toLowerCase())
+		// 		{
+		// 			case "js":
+		// 				contentType = "text/javascript";
+		// 				break;
+		// 			case "css":
+		// 				contentType = "text/css"
+		// 				break;
+		// 			case "jpg" || "jpeg":
+		// 				contentType = "image/jpeg"
+		// 				break;
+		// 			case "png":
+		// 				contentType = "image/png"
+		// 				break;
+		// 		}
+
+		// 		res.writeHead(responseCode, {"Content-Type": contentType});
+		// 	}
+		// 	res.end(data);
+		// ALTERNATIVE: send the file straight off, but browsers complain
+		res.sendfile("scratch-player/" + url);
+		// });
 	} else {
 
 		// Otherwise return the index with the dynamic manifest generated.
