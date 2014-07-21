@@ -145,10 +145,10 @@ describe("Manifest", function() {
 		});
 	});
 
-	it("should not generate a manifest from an invalid id", function(done) {
+	it("should generate an empty manifest from an invalid id", function(done) {
 		manifest.createManifest("", "", function (data) {
 			// Check to see if a manifest's created.
-			expect(data.indexOf("CACHE MANIFEST")).toBe(-1);
+			expect(data.indexOf("CACHE MANIFEST\nCACHE MANIFEST INVALID")).toBe(0);
 			done();
 		});
 	});
