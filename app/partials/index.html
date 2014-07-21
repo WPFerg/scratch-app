@@ -24,17 +24,16 @@
 					<div class="row">
 
 						<!-- Username input box and glyph  -->
-						<div class="col-xs-12 left-inner-addon login-field">
-							<i class="glyphicon glyphicon-user"> </i>
-							<input type="text" ng-model="userId" placeholder="Username" class="form-control" required />
-						</div>
+						<form ng-attr-action="{{'#/dashboard/' + userId}}">
+							<div class="col-xs-12 left-inner-addon login-field">
+								<i class="glyphicon glyphicon-user"> </i>
+								<input type="text" ng-model="userId" placeholder="Username" class="form-control" required />
+							</div>
 						
-						<!-- Testing the dashboard -->
-						<a href="{{'#/dashboard/' + userId}}">
 							<div class="col-xs-12 login-field">
 								<input type="submit" value="Enter!" class="col-xs-12 btn btn-primary login-field" />
 							</div>
-						</a>
+						</form>
 							
 					</div>
 
