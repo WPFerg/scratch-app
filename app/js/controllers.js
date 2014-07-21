@@ -63,9 +63,17 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
     }, function(response) {
 
       // Set user projects to nothing
-      $scope.finishedLoading = true;
-      $scope.error = response.data;
+      // Called on error
 
+      if($scope.lastLoadedProjectIndex != $scope.friendsApps.length-1)
+      {
+        $scope.finishedLoading = true;
+        $scope.loadingNextChunk = false;
+        $scope.error = response.data;
+      } else {
+        $scope.lastLoadedProjectIndex = $scope.lastLoadedProjectIndex + 1;
+        FindFollowerProjects(Count + 1);
+      }
     });
 
   };

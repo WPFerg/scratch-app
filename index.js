@@ -67,5 +67,4 @@ var port = process.env.PORT || 3000;
 http.createServer(app).listen(port);
 
 console.log("Listening on port " + port + " for requests.");
-console.log("Proxy active. Forwarding on /projects, /projectdetails and /asset");
 console.log("App manifest generator active on /manifest.");
