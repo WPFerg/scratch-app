@@ -73,23 +73,34 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 	manifest += "\nhttp://projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/";
 	manifest += "\nhttp://scratch.mit.edu/api/v1/project/" + projectId + "/?format=json";
 
-	// Add the files in the /scrach-player/ directory to the manifest so they can be cached.
-	// If we have to get the soundbank, add everything in s-p
-	if(getSoundbank)
-	{													// excluded files/folders. ^[A-Z... checks for wholly uppercase text	
-		manifest += addFilesInFolder("scratch-player/", /.git|test|.gitignore|.jscsrc|^[A-Z/ ._]*$/);
-	} else {
-		// Otherwise, exclude the soundbank folder
-		manifest += addFilesInFolder("scratch-player/", /.git|test|.gitignore|.jscsrc|^[A-Z/ ._]*$|soundbank/);
+	// Add jQuery
+	manifest += "\nhttp://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
+
+	// The excluded files and folders designated by an array of regexes. The last element of the array checks for all uppercase characters
+	// Stops extra development files being added.
+	var excludedFilesAndFolders = [/.git/,/test/,/.gitignore/,/.jscsrc/,/^[A-Z/ .\_]*$/];
+
+	// The excluded files in the project details (ie. wav/svg/png assets)
+	var projectExcludes = [];
+
+	// Don't add any sound files if not getting the sound bank.
+	if(!getSoundbank)
+	{
+		excludedFilesAndFolders.push(/soundbank/);
+		projectExcludes.push(/\.mp3/);
+		projectExcludes.push(/\.wav/);
 	}
+	
+	// Add the non-excluded files in the /scrach-player/ directory to the manifest so they can be cached.
+	manifest += addFilesInFolder("scratch-player/", manifestFiles, excludedFilesAndFolders);
 
 	// Add the project's root files to the manifest list
-	manifest += getFileList(manifestData, manifestFiles);
+	manifest += getFileList(manifestData, manifestFiles, projectExcludes);
 
 	// Now add the each project's child to the manifest list
 	for(var childIndex in manifestData.children)
 	{
-		manifest += getFileList(manifestData.children[childIndex], manifestFiles);
+		manifest += getFileList(manifestData.children[childIndex], manifestFiles, projectExcludes);
 	}
 
 	// Execute the callback function with the manifest data.
@@ -97,7 +108,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 }
 
 // Gets and adds all files in a folder. Used recursively to add subfolders
-addFilesInFolder = function(folderUrl, excludes)
+addFilesInFolder = function(folderUrl, manifestFiles, excludes)
 {
 
 	// Initialise an empty string to store the paths to the scratch player files
@@ -120,15 +131,13 @@ addFilesInFolder = function(folderUrl, excludes)
 		// Check if folder, by using fs stats
 		stats = fs.lstatSync(folderUrl + file);
 
-		var isExcluded = file.match(excludes);
+		var isExcluded = regexCheck(folderUrl, excludes);
 
 		// If it's a folder AND it's not on the exclude folders, add files
 		if(stats.isDirectory() && !isExcluded)
 		{
 			// If a folder, add its contents to the manifest.
-			scratchPlayerFiles += addFilesInFolder(folderUrl + file + "/", excludes);
-		} else if (stats.isDirectory()) {
-			// If it's a directory and excluded, do nothing -- don't add
+			scratchPlayerFiles += addFilesInFolder(folderUrl + file + "/", manifestFiles, excludes);
 		} else if (!isExcluded) {
 			// Add to the manifest, replace hashes with escape char so it's a file and not a page with a hash.
 			file = file.replace(/#/g, "%23");
@@ -136,7 +145,7 @@ addFilesInFolder = function(folderUrl, excludes)
 			file = file.replace(/\)/g, "%29");
 			// This breaks but I'm keeping it here fore future reference.
 			//file = encodeURIComponent(file);
-			scratchPlayerFiles += ("\n/" + folderUrl + file);
+			scratchPlayerFiles += addToManifest("/" + folderUrl + file, manifestFiles, excludes);
 		}
 	}
 
@@ -144,50 +153,73 @@ addFilesInFolder = function(folderUrl, excludes)
 }
 
 // Creates a file list based off the manifestData supplied. Looks for costumes and sounds.
-getFileList = function(manifestData, manifestFiles)
+getFileList = function(manifestData, manifestFiles, excludedFiles)
 {
 	var manifest = "";
 
 	// If the pen layer exists, and the file isn't in the manifest add that.
-	if(manifestData.penLayerMD5 && manifestFiles.indexOf(manifestData.penLayerMD5) === -1)
+	if(manifestData.penLayerMD5)
 	{
-		manifest += "\nhttp://cdn.scratch.mit.edu/internalapi/asset/" + manifestData.penLayerMD5 + "/get/";
+		var penLayer = "\nhttp://cdn.scratch.mit.edu/internalapi/asset/" + manifestData.penLayerMD5 + "/get/";
 
-		manifestFiles.push(manifestData.penLayerMD5);
+		manifest += addToManifest(penLayer, manifestFiles, excludedFiles);
 	}
 
 	for(var soundIndex in manifestData.sounds)
 	{
 		// Current sound being worked on
-		var sound = manifestData.sounds[soundIndex];
+		var sound = "http://cdn.scratch.mit.edu/internalapi/asset/" + manifestData.sounds[soundIndex].md5 + "/get/";
 
-		// Check to see if file exists. If it doesn't, add it. Otherwise, continue.
-		if(manifestFiles.indexOf(sound.md5) === -1)
-		{
-			manifest += "\nhttp://cdn.scratch.mit.edu/internalapi/asset/" + sound.md5 + "/get/";
-
-			manifestFiles.push(sound.md5);
-		}
+		manifest += addToManifest(sound, manifestFiles, excludedFiles);
 	}
 
 	// And the costumes
 	for(var costumeIndex in manifestData.costumes)
 	{
 		// Current costume being worked on
-		var costume = manifestData.costumes[costumeIndex];
+		var costume = "http://cdn.scratch.mit.edu/internalapi/asset/" + manifestData.costumes[costumeIndex].baseLayerMD5 + "/get/";
 
-		// Check to see if file exists. If it doesn't, add it. Otherwise, continue.
-		if(manifestFiles.indexOf(costume.baseLayerMD5) === -1)
-		{
-			manifest += "\nhttp://cdn.scratch.mit.edu/internalapi/asset/" + costume.baseLayerMD5 + "/get/";
-
-			manifestFiles.push(costume.baseLayerMD5);
-		}
+		manifest += addToManifest(costume, manifestFiles, excludedFiles);
 	}
 
-	// Add jQuery
-	manifest += "\nhttp://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
-
-
 	return manifest;
+}
+
+// Adds an item to the manifest and manifest files if it isn't excluded. If it is excluded, it will return an empty string
+// This provides a single chunk of code where everything's done so one change changes everything.
+addToManifest = function(item, manifestFiles, excludes)
+{
+	var manifestAddition = "";
+	// If the item isn't excluded and it doesn't already exist in the manifest and it's defined
+	if(!regexCheck(item, excludes) && manifestFiles.indexOf(item) === -1 && !!item)
+	{
+		manifestAddition += "\n";
+		manifestAddition += item;
+
+		manifestFiles.push(item);
+	}
+	return manifestAddition;
+}
+
+// Checks a string against an array of regexes, returning true if at least one matches.
+regexCheck = function(string, regexArray)
+{
+	for(var index in regexArray)
+	{
+		var regex = regexArray[index];
+
+		// If the regex is a string, make it into a regex object
+		if(typeof(regex) === "string")
+		{
+			regex = new RegExp(regex);
+		}
+
+		// If this regex matches return true
+		if(regex.test(string) || string.match(regex))
+		{
+			return true;
+		}
+	}
+	// If none match, return false
+	return false;
 }
