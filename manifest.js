@@ -157,14 +157,6 @@ getFileList = function(manifestData, manifestFiles, excludedFiles)
 {
 	var manifest = "";
 
-	// If the pen layer exists, and the file isn't in the manifest add that.
-	if(manifestData.penLayerMD5)
-	{
-		var penLayer = "\nhttp://cdn.scratch.mit.edu/internalapi/asset/" + manifestData.penLayerMD5 + "/get/";
-
-		manifest += addToManifest(penLayer, manifestFiles, excludedFiles);
-	}
-
 	for(var soundIndex in manifestData.sounds)
 	{
 		// Current sound being worked on
