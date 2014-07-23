@@ -18,17 +18,10 @@ module.exports = function(grunt)
         tasks: ["copy"]
       },
       shell: {
-        changeToBuildFolder:
-        {
-          command: "cd ../scratch-web-build/"
-        },
         gitOperations:
         {
-          command: ["git add .", "git commit -m \"Grunt auto-build\""].join("&&")
-        },
-        pushToHeroku:
-        {
-          command: "git push heroku master"
+          command: ["cd ../scratch-web-build/", "git add .", "git commit -m \"Grunt auto-build\"" , "git push heroku master"].join("&&"),
+          options: { stderr: false, execOptions: {maxBuffer: 90000*1024} }
         }
       }
 
