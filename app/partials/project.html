@@ -36,7 +36,7 @@
 
 	<!-- If not defined, then project doesn't exist. -->
 	<div ng-hide="project.title">
-		
+
     <div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background-color: #e5e5e5;" ng-show="loading">
       <div id="dashboardloader">
         <img src="media/loading_spinner.gif" style="width: 48px; height: 48px; text-align: center; margin: auto;"></img>
@@ -45,7 +45,7 @@
   </div>
 
     <!-- If it's not published then see if the project exists and display a relevant message. -->
-    <p ng-show="!loading && !projectExists">This project hasn't been published. This project also doesn't exist. </p>
-    <p ng-show="!loading && projectExists">This project hasn't been published. However, the project exists. Click <a href="/scratch-player/{{projectId}}">here</a> to play it.</p>
+    <div ng-show="!loading && !projectExists" class="alert alert-danger">This project doesn't exist. </div>
+    <div ng-show="!loading && projectExists" class="alert alert-info">This project hasn't been published. However, the project exists. Click <a href="/scratch-player/{{projectId}}">here</a> to play it.</div>
 	</div>
 </div>
