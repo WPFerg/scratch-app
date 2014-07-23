@@ -10,7 +10,7 @@
 	// Get the params from the GET request
 	// Of the format "/username/page"
 	var params = req.url.substring(1).split("/");
-	
+
 	var userId = params[0], page = params[1];
 
 	// Check to see if the page exists in the GET request
@@ -35,7 +35,7 @@
 	// Create a HTTP GET request with the userId as a parameter
 	var requestOpts = {
 		host: "scratch.mit.edu",
-		path: "/users/" + userId + "/projects/?page=" + page 
+		path: "/users/" + userId + "/projects/?page=" + page
 	};
 
 	// Create a function that parses the responses from the HTTP request

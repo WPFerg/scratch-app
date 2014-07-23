@@ -3,7 +3,6 @@ var ejs = require('ejs');
 var http = require('http');
 
 var url = require('url');
-var proxy = require('proxy-middleware');
 var morgan = require('morgan');
 
 
