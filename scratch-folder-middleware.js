@@ -76,4 +76,4 @@ exports.serveScratchFolder = function(req, res)
 		// Otherwise return the index with the dynamic manifest generated.
 		res.render("index.html", {"projectId": url});
 	}
-}
+};

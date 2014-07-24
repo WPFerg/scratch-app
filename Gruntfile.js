@@ -44,4 +44,4 @@ module.exports = function(grunt)
         grunt.task.run("copy");
       });
     grunt.registerTask("build", ["jshint", "copy", "shell"]);
-}
+};

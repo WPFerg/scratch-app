@@ -33,11 +33,11 @@ exports.createManifest = function(projectId, opts, callbackFunction)
 
 		// If there's an error, call the callback function with an error parameter
 		response.on('error', callbackFunction);
-	}
+	};
 
 	// Create and send the request
 	http.request(requestOpts, responseCallback).end();
-}
+};
 
 exports.generateManifest = function(projectId, getSoundbank, manifestData, callbackFunction)
 {
@@ -62,7 +62,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 	var manifestFiles = [];
 
 	// Create the manifest with an initial, constant, set of data
-	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\nNETWORK:\n*"
+	manifest = "CACHE MANIFEST\n# Version 1\n\n# Automatically Generated From the Scratch API\nNETWORK:\n*";
 
 	// Add a random number to make the manifest regenerate per refresh (for testing)
 	//manifest += "4";
@@ -90,7 +90,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 		projectExcludes.push(/\.mp3/);
 		projectExcludes.push(/\.wav/);
 	}
-	
+
 	// Add the non-excluded files in the /scrach-player/ directory to the manifest so they can be cached.
 	manifest += addFilesInFolder("scratch-player/", manifestFiles, excludedFilesAndFolders);
 
@@ -105,7 +105,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 
 	// Execute the callback function with the manifest data.
 	callbackFunction(manifest);
-}
+};
 
 // Gets and adds all files in a folder. Used recursively to add subfolders
 addFilesInFolder = function(folderUrl, manifestFiles, excludes)
@@ -113,11 +113,12 @@ addFilesInFolder = function(folderUrl, manifestFiles, excludes)
 
 	// Initialise an empty string to store the paths to the scratch player files
 	var scratchPlayerFiles = "";
+	var files;
 
 	// Read the directory. If there's an error instantly return
 	try
 	{
-		var files = fs.readdirSync(folderUrl);
+		files = fs.readdirSync(folderUrl);
 	} catch (err) {
 		return "";
 	}
@@ -150,7 +151,7 @@ addFilesInFolder = function(folderUrl, manifestFiles, excludes)
 	}
 
 	return scratchPlayerFiles;
-}
+};
 
 // Creates a file list based off the manifestData supplied. Looks for costumes and sounds.
 getFileList = function(manifestData, manifestFiles, excludedFiles)
@@ -175,7 +176,7 @@ getFileList = function(manifestData, manifestFiles, excludedFiles)
 	}
 
 	return manifest;
-}
+};
 
 // Adds an item to the manifest and manifest files if it isn't excluded. If it is excluded, it will return an empty string
 // This provides a single chunk of code where everything's done so one change changes everything.
@@ -191,7 +192,7 @@ addToManifest = function(item, manifestFiles, excludes)
 		manifestFiles.push(item);
 	}
 	return manifestAddition;
-}
+};
 
 // Checks a string against an array of regexes, returning true if at least one matches.
 regexCheck = function(string, regexArray)
@@ -214,4 +215,4 @@ regexCheck = function(string, regexArray)
 	}
 	// If none match, return false
 	return false;
-}
+};

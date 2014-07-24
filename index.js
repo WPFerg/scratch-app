@@ -12,14 +12,14 @@ var manifest = require("./manifest");
 var fs = require('fs');
 var userDetails = require("./userdetails");
 
-var app = express()
+var app = express();
   //.use(express.logger('dev'));
 
 // Set the dynamic HTML renderer as EJS.
 // This is for the scratch-player folder to dynamically generate the HTML for the manifest.
 app.engine('html', ejs.renderFile);
 // Set the views for EJS to be in the HTML player folder, since that's the only place EJS needs to know about.
-app.set('views', __dirname + "/scratch-player")
+app.set('views', __dirname + "/scratch-player");
 
 app.use(morgan('dev')); 					// log every request to the console
 
@@ -52,7 +52,7 @@ app.use('/manifest', function(req, res) {
 			manifest.createManifest(projectId, "", function(manifest) {
 				res.end(manifest);
 			});
-		};
+		}
 	} else {
 		// Project ID isn't a number, show an error.
 		res.writeHead(400, {"Content-Type": "text/plain"});

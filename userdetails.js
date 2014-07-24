@@ -61,7 +61,7 @@
 			{
 				responseJson = {"error": response.statusCode};
 			} else {
-				responseJson = {"success": response.statusCode, "projects": []}
+				responseJson = {"success": response.statusCode, "projects": []};
 			}
 
 			// Load the HTML into a scraper
@@ -85,18 +85,18 @@
 			});
 
 			// Send the response (200, in JSON format)
-			res.writeHead(response.statusCode, {"Content-Type": "application/json"})
+			res.writeHead(response.statusCode, {"Content-Type": "application/json"});
 			res.end(JSON.stringify(responseJson));
 
 		});
 
 		// If there's an error, return the error code and end.
 		response.on('error', function(err) { console.log(err); res.writeHead(err.code); res.end(); });
-	}
+	};
 
 	// Create and send the request
 	http.request(requestOpts, responseCallback).end();
-}
+};
 
  // Get the user details
  module.exports.GetUserFriends = function(req, res) {
@@ -139,7 +139,7 @@
 			{
 				responseJson = {"error": response.statusCode};
 			} else {
-				responseJson = {"success": response.statusCode, "followers": []}
+				responseJson = {"success": response.statusCode, "followers": []};
 			}
 
 			// Load the HTML into a scraper
@@ -165,15 +165,15 @@
 			});
 
 			// Send the response (200, in JSON format)
-			res.writeHead(response.statusCode, {"Content-Type": "application/json"})
+			res.writeHead(response.statusCode, {"Content-Type": "application/json"});
 			res.end(JSON.stringify(responseJson));
 
 		});
 
 		// If there's an error, return the error code and end.
 		response.on('error', function(err) { console.log(err); res.writeHead(err.code); res.end(); });
-	}
+	};
 
 	// Create and send the request
 	http.request(requestOpts, responseCallback).end();
-}
+};
