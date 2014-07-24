@@ -78,7 +78,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 
 	// The excluded files and folders designated by an array of regexes. The last element of the array checks for all uppercase characters
 	// Stops extra development files being added.
-	var excludedFilesAndFolders = [/.git/,/test/,/.gitignore/,/.jscsrc/,/^[A-Z/ .\_]*$/];
+	var excludedFilesAndFolders = [/.git/,/test/,/.gitignore/,/.jscsrc/,/^[A-Z/ .\_]*$/,/node\_modules/];
 
 	// The excluded files in the project details (ie. wav/svg/png assets)
 	var projectExcludes = [];

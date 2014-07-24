@@ -26,6 +26,8 @@ module.exports = function(grunt)
       },
       jshint: {
         options: {
+          browser: true,
+          jquery: true,
           reporterOutput: "js-hint-results.txt",
           "-W097": false, // 'use strict' as a function
           "-W041": false, // == null
@@ -35,10 +37,8 @@ module.exports = function(grunt)
           eqnull: false,
           asi: true,
           globals: {
-            "$": false,
             "runtime":false,
             "Runtime":false,
-            "XMLHttpRequest":false,
             "SoundDecoder":false,
             "Instr":false,
             "OffsetBuffer":false,
@@ -48,22 +48,18 @@ module.exports = function(grunt)
             "Sprite":false,
             "List":false,
             "Reporter":false,
+            "console":false,
             "interp":false,
             "Interpreter":false,
             "WAVFile":false,
-            "window":false,
-            "document": false,
             "Point": false,
             "Color":false,
             "Rectangle":false,
             "Timer":false,
             "Thread":false,
-            "console":false,
             "io":false,
             "IO":false,
             "Primitives":false,
-            "setTimeout":false,
-            "setInterval":false,
             "Scalar":false,
             "SoundBank":false,
             "projectId":false
