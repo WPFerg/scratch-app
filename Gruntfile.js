@@ -23,6 +23,12 @@ module.exports = function(grunt)
           command: ["cd ../scratch-web-build/", "git add .", "git commit -m \"Grunt auto-build\"" , "git push heroku master"].join("&&"),
           options: { stderr: false, execOptions: {maxBuffer: 90000*1024} }
         }
+      },
+      jshint: {
+        src: ["*.js", "scratch-player/**/*.js", "app/**/*.js"],
+        options: {
+          reporterOutput: "js-hint-results.txt"
+        }
       }
 
     });
@@ -30,11 +36,12 @@ module.exports = function(grunt)
     grunt.loadNpmTasks("grunt-shell");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-contrib-jshint");
 
     grunt.task.registerTask("default", function(arg)
       {
         grunt.log.writeln("Copying folder. If you want for it to be automatically copied, then run 'grunt watch'");
         grunt.task.run("copy");
       });
-    grunt.registerTask("build", ["copy", "shell"]);
+    grunt.registerTask("build", ["jshint", "copy", "shell"]);
 }
