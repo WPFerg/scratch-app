@@ -4,5 +4,4 @@ scratch-player/**/*
 
 node_modules
 src
-js-hint-results.js
-.jshintrc
+js-hint-results.txt
