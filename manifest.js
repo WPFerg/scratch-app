@@ -71,7 +71,7 @@ exports.generateManifest = function(projectId, getSoundbank, manifestData, callb
 
 	// Add the project details url (that has all the code/instructions)
 	manifest += "\nhttp://projects.scratch.mit.edu/internalapi/project/" + projectId + "/get/";
-	manifest += "\nhttp://scratch.mit.edu/api/v1/project/" + projectId + "/?format=json";
+	// manifest += "\nhttp://scratch.mit.edu/api/v1/project/" + projectId + "/?format=json";
 
 	// Add jQuery
 	manifest += "\nhttp://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
