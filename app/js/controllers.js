@@ -170,7 +170,9 @@ ControllerModule.controller('IndexCtrl', ['$scope', function($scope)
 ControllerModule.controller('ProjectCtrl', ['$scope', 'Projects', 'ProjectDetails', '$routeParams', '$window', function($scope, Projects, ProjectDetails, $routeParams, $window)
 {
   
-  $scope.showflags = false;
+  $scope.showflags = true;
+  $scope.autostart = false;
+  $scope.fullscreen = true;
 
   $scope.projectId = $routeParams.projectId;
 
