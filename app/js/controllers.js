@@ -87,7 +87,7 @@ ControllerModule.controller('DashboardCtrl', ['$scope', '$routeParams', '$window
   // Create function to navigate to player
   $scope.NavigateToPlayer = function(project)
   {
-    $window.location = "/scratch-player/" + project.projectId + '/#/flags';
+    $window.location = "/scratch-player/" + project.projectId + '/#showflags=true&autoplay=false&fullscreen=true';
   };
 
   // Create show/hide all follower toggles

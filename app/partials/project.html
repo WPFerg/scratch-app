@@ -25,12 +25,12 @@
       </label>
 
       <br/><label>
-        <input type="checkbox" ng-model="autostart" ng-true-value="true" ng-false-value="false">
+        <input type="checkbox" ng-model="autostart" ng-true-value="true" ng-false-value="false" ng-checked="fullscreen === 'false'" ng-disabled="fullscreen === 'true'">
          Automatically start the app playing?
       </label>
 
       <br/><label>
-        <input type="checkbox" ng-model="fullscreen" ng-true-value="true" ng-false-value="false" checked>
+        <input type="checkbox" ng-model="fullscreen" ng-true-value="true" ng-false-value="false" ng-checked="autostart === 'false'" ng-disabled="autostart === 'true'">
          Fullscreen the app when the green flag is pressed?
       </label>
 
@@ -51,6 +51,23 @@
 
     <!-- If it's not published then see if the project exists and display a relevant message. -->
     <div ng-show="!loading && !projectExists" class="alert alert-danger">This project doesn't exist. </div>
-    <div ng-show="!loading && projectExists" class="alert alert-info">This project hasn't been published. However, the project exists. Click <a href="/scratch-player/{{projectId}}">here</a> to play it.</div>
+    <div ng-show="!loading && projectExists" class="alert alert-info">This project hasn't been published. However, you can still play it.
+      <h3>Project Options</h3>
+      <label>
+        <input type="checkbox" ng-model="showflags" ng-true-value="false" ng-false-value="true" checked>
+         Hide play and stop flags?
+      </label>
+
+      <br/><label>
+        <input type="checkbox" ng-model="autostart" ng-true-value="true" ng-false-value="false" ng-checked="fullscreen === 'false'" ng-disabled="fullscreen === 'true'">
+         Automatically start the app playing?
+      </label>
+
+      <br/><label>
+        <input type="checkbox" ng-model="fullscreen" ng-true-value="true" ng-false-value="false" ng-checked="autostart === 'false'" ng-disabled="autostart === 'true'">
+         Fullscreen the app when the green flag is pressed?
+      </label><br />
+      <a href="{{'/scratch-player/' + projectId + '#showflags=' + showflags + '&autostart=' + autostart + '&fullscreen=' + fullscreen}}" class="btn btn-primary">Play</a>
+    </div>
 	</div>
 </div>
