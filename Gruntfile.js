@@ -25,50 +25,52 @@ module.exports = function(grunt)
         }
       },
       jshint: {
-        options: {
-          browser: true,
-          jquery: true,
-          reporterOutput: "js-hint-results.txt",
-          "-W097": false, // 'use strict' as a function
-          "-W041": false, // == null
-          "-W069": false, // dot notation over ['Something']
-          undef: false, // x,y,z is undefined
-          eqeqeq: false, // === over ==
-          eqnull: false,
-          asi: true,
-          globals: {
-            "runtime":false,
-            "Runtime":false,
-            "SoundDecoder":false,
-            "Instr":false,
-            "OffsetBuffer":false,
-            "SoundPrims":false,
-            "SensingPrims":false,
-            "Stage":false,
-            "Sprite":false,
-            "List":false,
-            "Reporter":false,
-            "console":false,
-            "interp":false,
-            "Interpreter":false,
-            "WAVFile":false,
-            "Point": false,
-            "Color":false,
-            "Rectangle":false,
-            "Timer":false,
-            "Thread":false,
-            "io":false,
-            "IO":false,
-            "Primitives":false,
-            "Scalar":false,
-            "SoundBank":false,
-            "projectId":false
-          }
-        },
-        src: ["*.js", "scratch-player/js/**/*.js", "app/*.js"],
-        exclude: ["**/bower_components/**/*.js"],
+        runHint:
+        {
+          options: {
+            browser: true,
+            jquery: true,
+            reporterOutput: "js-hint-results.txt",
+            "-W097": false, // 'use strict' as a function
+            "-W041": false, // == null
+            "-W069": false, // dot notation over ['Something']
+            undef: false, // x,y,z is undefined
+            eqeqeq: false, // === over ==
+            eqnull: false,
+            asi: true,
+            globals: {
+              "runtime":false,
+              "Runtime":false,
+              "SoundDecoder":false,
+              "Instr":false,
+              "OffsetBuffer":false,
+              "SoundPrims":false,
+              "SensingPrims":false,
+              "Stage":false,
+              "Sprite":false,
+              "List":false,
+              "Reporter":false,
+              "console":false,
+              "interp":false,
+              "Interpreter":false,
+              "WAVFile":false,
+              "Point": false,
+              "Color":false,
+              "Rectangle":false,
+              "Timer":false,
+              "Thread":false,
+              "io":false,
+              "IO":false,
+              "Primitives":false,
+              "Scalar":false,
+              "SoundBank":false,
+              "projectId":false
+            }
+          },
+          src: ["*.js", "scratch-player/js/**/*.js", "app/*.js"],
+          exclude: ["**/bower_components/**/*.js"],
+        }
       }
-
     });
 
     grunt.loadNpmTasks("grunt-shell");
