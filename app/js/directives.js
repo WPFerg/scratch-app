@@ -14,8 +14,6 @@ scratch.directive('versionInfo', ['version', function(version)
 			}
 	}
 }]);
-
-// Version notice directive
 scratch.directive('loadOnVerticalScroll', ['$document', '$window', function($document, $window)
 {
     return {
@@ -44,6 +42,37 @@ scratch.directive('loadOnVerticalScroll', ['$document', '$window', function($doc
 		  });
     	}
   	}
+}]);
+
+scratch.directive("loadProjectPage", ["$window", function($window)
+{
+	return {
+		restrict: "A",
+		scope: {
+			projectSettings: "="
+		},
+		link: function(scope, element, attrs) {
+			element.click(function() {
+    			$window.location = "#/project/" + scope.projectSettings.projectId;
+			});
+		}
+	}
+}]);
+
+scratch.directive("loadProjectPlayer", ["$window", function($window)
+{
+	return {
+		restrict: "A",
+		scope: {
+			projectSettings: "="
+		},
+		link: function(scope, element, attrs) {
+			element.click(function(e) {
+				e.stopPropagation();
+    			$window.location = "/scratch-player/" + scope.projectSettings.projectId + '/#showflags=true&autoplay=false&fullscreen=true';
+			});
+		}
+	}
 }]);
 
 scratch.directive('scrollable', ['$window', function($window)
@@ -182,6 +211,3 @@ scratch.directive('scrollable', ['$window', function($window)
 	}
 }
 }]);
-
-
-// Copyright notice directive

@@ -99,10 +99,10 @@
 			<!-- App list row -->
 			<div class="dashboard-app-group-container">
 				<div class="dashboard-app-group-list" scrollable>
-					<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps" ng-click="NavigateToProject(DisplayItem);">
+					<div class="dashboard-app-block" ng-repeat="DisplayItem in userApps" load-project-page project-settings="DisplayItem">
 						<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
 						<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
-						<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
+						<br/><span class="dashboard-app-block-play" load-project-player project-settings="DisplayItem">PLAY</span>
 					</div>
 				</div>
 			</div>
@@ -122,10 +122,10 @@
 			<!-- App list row -->
 			<div class="dashboard-app-group-container">
 				<div class="dashboard-app-group-list" scrollable>
-					<div class="dashboard-app-block" ng-repeat="DisplayItem in Friend.projects" ng-click="NavigateToProject(DisplayItem);">
+					<div class="dashboard-app-block" ng-repeat="DisplayItem in Friend.projects" load-project-page project-settings="DisplayItem">
 						<img ng-src="http://cdn2.scratch.mit.edu/get_image/project/{{DisplayItem.projectId}}_192x192.png" class="dashboard-app-block-icon"></img>
 						<br/><span class="dashboard-app-block-title">{{DisplayItem.title}}</span>
-						<br/><span class="dashboard-app-block-play" ng-click="NavigateToPlayer(DisplayItem);">PLAY</span>
+						<br/><span class="dashboard-app-block-play" load-project-player project-settings="DisplayItem">PLAY</span>
 					</div>
 				</div>
 			</div>
