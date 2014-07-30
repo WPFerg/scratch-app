@@ -69,7 +69,7 @@ scratch.directive("loadProjectPlayer", ["$window", function($window)
 		link: function(scope, element, attrs) {
 			element.click(function(e) {
 				e.stopPropagation();
-    			$window.location = "/scratch-player/" + scope.projectSettings.projectId + '/#showflags=true&autoplay=false&fullscreen=true';
+    			$window.location = "/scratch-player/" + scope.projectSettings.projectId + '#showflags=true&autoplay=false&fullscreen=true';
 			});
 		}
 	}
