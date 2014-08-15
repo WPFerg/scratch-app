@@ -1,4 +1,3 @@
-# ~~angular-seed — the seed for AngularJS apps~~
 # Mobile Scratch Player Frontend
 
 This project is the Scott Logic intern's web front-end for the Scratch player. 
@@ -69,12 +68,12 @@ To run the unit tests for the web front end: `npm test`
 
 To run the tests for the server:
 
-  Ensure Jasmine v2's installed by
-  `$ npm install jasmine-node@2.0`
-  then ensure the node server's up with
-  `$ npm start`
-  in another terminal, cd into test, and run
-  `$ jasmine-node --verbose test/node-server-test.js  --matchAll`
+    Ensure Jasmine v2's installed by
+    $ npm install jasmine-node@2.0
+    then ensure the node server's up with
+    $ npm start
+    in another terminal, run
+    $ jasmine-node --verbose test/node-server-test.js  --matchAll
 
 To run the unit tests for the Scratch player:
 ```
