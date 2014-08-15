@@ -5,3 +5,5 @@ scratch-player/**/*
 node_modules
 src
 js-hint-results.txt
+Gruntfile.js
+.idea
